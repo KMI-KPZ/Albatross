@@ -2,9 +2,9 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 
 # Filepaths
-grid_fp = r"/home/databio/repos/databio_viz/data/TravelTimes_to_5975375_RailwayStation.shp"
-roads_fp = r"/home/databio/repos/databio_viz/data/roads.shp"
-metro_fp = r"/home/databio/repos/databio_viz/data/metro.shp"
+grid_fp = r"./data/TravelTimes_to_5975375_RailwayStation.shp"
+roads_fp = r"./data/roads.shp"
+metro_fp = r"./data/metro.shp"
 
 # Read files
 grid = gpd.read_file(grid_fp)
@@ -49,5 +49,5 @@ metro.plot(
 plt.tight_layout()
 
 # Save the figure as png file with resolution of 300 dpi
-outfp = r"/home/databio/repos/databio_viz/static_map.png"
+outfp = r"./static_map.png"
 plt.savefig(outfp, dpi=300)
