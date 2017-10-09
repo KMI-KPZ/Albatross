@@ -1,0 +1,46 @@
+<config>
+    <sparql>
+        <endpoint>https://foodie-cloud.org/sparql</endpoint>
+        <prefixes>
+            <prefix short="foodie">http://foodie-cloud.com/model/foodie#</prefix>
+            <prefix short="foodie-es">http://foodie-cloud.com/model/foodie-es#</prefix>
+            <prefix short="iso19103">http://def.seegrid.csiro.au/isotc211/iso19103/2005/basic#</prefix>
+            <prefix short="geos">http://www.opengis.net/ont/geosparql#</prefix>
+        </prefixes>
+        <select>mzone</select>
+        <select>crop_desc</select>
+        <select>amount_unit</select>
+        <where>
+            ?mzone a foodie:ManagementZone .
+            ?mzone foodie:cropSpecies ?crop .
+            ?mzone geos:hasGeometry ?geometry .
+            ?geometry geos:asWKT ?geosc .
+            ?crop foodie:description ?crop_desc .
+            ?crop foodie:family ?crop_family .
+            ?crop foodie:genus ?crop_genus .
+            ?crop foodie:species ?crop_species .
+            ?crop foodie:variety ?crop_variety .
+            ?prod foodie-es:productionTypeManagementZone ?mzone .
+            ?prod a foodie:ProductionType .
+            ?prod foodie:productionDate ?prod_date .
+            ?prod foodie:productionAmount ?amount .
+            ?amount iso19103:uom ?amount_unit .
+            ?amount iso19103:value ?amount_value .
+        </where>
+        <from>http://w3id.org/foodie/core/es#</from>
+    </sparql> 
+    <properties>
+        <property>
+            <sparql>
+                <select>amount_value</select>
+            </sparql>
+        </property>
+        <property>
+            <sparql>
+                <select>crop_variety</select>
+            </sparql>
+        </property>
+        <date>prod_date</date>
+        <geo>geosc</geo>
+    </properties>
+</config>
