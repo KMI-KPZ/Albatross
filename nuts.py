@@ -121,7 +121,13 @@ p.patches('x', 'y', source=gsource,
   #        fill_alpha=0.5, line_color="yellow", line_width=0.1)
 
 
-hover = HoverTool()
+hover = HoverTool(tooltips=[
+    ("index", "$index"),
+    ("(x,y)", "($x, $y)"),
+    ("prop2", "@prop_0"),
+    ("prop1", "@prop_1"),
+])
+
 
 p.add_tools(hover)
 
