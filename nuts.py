@@ -6,6 +6,7 @@ from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper
 from bokeh.palettes import Plasma256 as palette
 from bokeh.plotting import show, output_file, figure
 from bokeh.tile_providers import STAMEN_TONER
+from bokeh.models import WMTSTileSource
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 
@@ -104,7 +105,10 @@ gsource = ColumnDataSource(g_df)
 
 
 p = figure(width=800, height=600, title="NUTS LVL 3")
-p.add_tile(STAMEN_TONER)
+tile_options = {}
+tile_options['url'] = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{Z}/{Y}/{X}.jpg'
+tile_source = WMTSTileSource(**tile_options)
+p.add_tile(tile_source)
 
 # Plot grid
 p.patches('x', 'y', source=gsource,
