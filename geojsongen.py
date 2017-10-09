@@ -24,12 +24,15 @@ for result in results["results"]["bindings"]:
     er = result["geosc"]["value"].split('(', 1)
     #testing
     #finalfeatures = ''
-
+    #TODO MULTIPOLYGON etc.
     if er[0] == 'POLYGON':
         #replacing to valid geojson
         Gcoord = result["geosc"]["value"].replace('(', '[').replace(')',']').replace(',', '] [').replace(' ', ', ').replace('POLYGON', '\"coordinates\": [') + ']';
         Gtype = "Polygon"
-        finalfeatures = finalfeatures + ' { "type": "Feature", "geometry": { "type": "' + Gtype + '", ' + Gcoord + ' }, "properties": { ' + properties + ' }  }'     
+        finalfeatures = finalfeatures + ' { "type": "Feature", "geometry": { "type": "' + Gtype + '", ' + Gcoord + ' }, "properties": { ' + properties + ' }  }'
+        finalfeatures = finalfeatures + """,""" 
+    
+finalfeatures = finalfeatures[:-1]        
 final = final + finalfeatures + ' ]}'
 file = open(os.path.join(os.path.dirname(__file__), 'testfile.geojson'),'w')
 file.write(final.encode('ascii', 'xmlcharrefreplace')) 

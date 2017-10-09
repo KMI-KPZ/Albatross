@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pysal as ps
 import math
+import os
 from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper
 from bokeh.palettes import Plasma256 as palette
 from bokeh.plotting import show, output_file, figure
@@ -58,49 +59,65 @@ def explode(indata):
 # File paths
 grid_fp = r"data/nuts_rg_60M_2013_lvl_3.geojson"
 
+#integrate new data
+grid_fp = os.path.join(os.path.dirname(__file__), 'testfile.geojson')
 
 # Read files
 grid = explode(grid_fp)
+#grid_ex = explode(grid_test)
 
 # Set and transform CRS
 grid.crs = {'init' :'epsg:4326'}
 grid = grid.to_crs({'init': 'epsg:3857'})
+
+#grid_ex.crs = {'init' :'epsg:4326'}
+#grid_ex = grid_ex.to_crs({'init': 'epsg:3857'})
 
 
 # Get the x and y coordinates
 grid['x'] = grid.apply(get_poly_coords, geom='geometry', coord_type='x', axis=1)
 grid['y'] = grid.apply(get_poly_coords, geom='geometry', coord_type='y', axis=1)
 
+#grid_ex['x'] = grid_ex.apply(get_poly_coords, geom='geometry', coord_type='x', axis=1)
+#grid_ex['y'] = grid_ex.apply(get_poly_coords, geom='geometry', coord_type='y', axis=1)
+
+
 # Create color mapper
 color_mapper = LogColorMapper(palette=palette)
-min = math.floor(grid['SHAPE_AREA'].min())
-max = math.ceil(grid['SHAPE_AREA'].max())
+#min = math.floor(grid['SHAPE_AREA'].min())
+#max = math.ceil(grid['SHAPE_AREA'].max())
 lvls = 21
-step_size = round((max - min)/lvls)
-breaks = [x for x in range(min, max, step_size)]
-classifier = ps.User_Defined.make(bins=breaks)
-pt_classif = grid[['SHAPE_AREA']].apply(classifier)
+#step_size = round((max - min)/lvls)
+#breaks = [x for x in range(min, max, step_size)]
+#classifier = ps.User_Defined.make(bins=breaks)
+#pt_classif = grid[['SHAPE_AREA']].apply(classifier)
 
-# Rename classified column
-pt_classif.columns = ['SHAPE_AREA_ud']
-grid = grid.join(pt_classif)
+#grid_ex = grid_ex.join(pt_classif)
+
 
 # Make a copy, drop the geometry column and create ColumnDataSource
 g_df = grid.drop('geometry', axis=1).copy()
 gsource = ColumnDataSource(g_df)
+
+#g_df_ex = grid_ex.drop('geometry', axis=1).copy()
+#gsource_ex = ColumnDataSource(g_df_ex)
+
 
 p = figure(width=800, height=600, title="NUTS LVL 3")
 p.add_tile(STAMEN_TONER)
 
 # Plot grid
 p.patches('x', 'y', source=gsource,
-          fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper},
+          fill_color={'field': 'prop_0', 'transform': color_mapper},
           fill_alpha=0.5, line_color="black", line_width=0.1)
+
+# Plot grid
+#p.patches('x', 'y', source=gsource_ex,
+ #         fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper},
+  #        fill_alpha=0.5, line_color="yellow", line_width=0.1)
 
 
 hover = HoverTool()
-hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Area', '@SHAPE_AREA')]
-
 
 p.add_tools(hover)
 
