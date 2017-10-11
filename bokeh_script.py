@@ -113,9 +113,16 @@ options = [
 color_mapper = LogColorMapper(palette=palette)
 
 
-gsource = ColumnDataSource(data["Level 1"].data)
+patch_source = ColumnDataSource(data["Level 1"].data)
 
-p = figure(width=800, height=600, title="NUTS")
+p = figure(
+    width=800,
+    height=600,
+    title="NUTS Areas",
+)
+p.title.text_font_size = "25px"
+p.title.align = "center"
+
 
 # Set Tiles
 tile_source = WMTSTileSource(
@@ -124,23 +131,22 @@ tile_source = WMTSTileSource(
 p.add_tile(tile_source)
 
 # Plot grid
-p.patches('x', 'y', source=gsource,
+p.patches('x', 'y', source=patch_source,
           fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper},
           fill_alpha=0.5, line_color="black", line_width=0.3)
 
 
-hover = HoverTool()
-hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Area', '@SHAPE_AREA')]
-
-
 def select_on_change(attr, old, new):
-    gsource.data = data[new].data
+    patch_source.data = data[new].data
 
 
 # define Select
 select = Select(title="Nuts Level:", value="Level 1", options=options)
 select.on_change("value", select_on_change)
 
+
+hover = HoverTool()
+hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Area', '@SHAPE_AREA')]
 p.add_tools(hover)
 
 # do some styling
