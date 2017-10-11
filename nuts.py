@@ -5,7 +5,8 @@ from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper
 from bokeh.palettes import Plasma256 as palette
 from bokeh.plotting import figure
 from bokeh.io import curdoc
-from bokeh.layouts import layout
+from bokeh.layouts import widgetbox
+from bokeh.models.widgets import Select
 from bokeh.tile_providers import WMTSTileSource
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
@@ -69,8 +70,19 @@ def explode(indata):
 
 
 # File paths
-grid_fp = r"data/nuts_rg_60M_2013_lvl_3.geojson"
+paths = {
+    "Level 1": r"data/nuts_rg_60M_2013_lvl_1.geojson",
+    "Level 2": r"data/nuts_rg_60M_2013_lvl_2.geojson",
+    "Level 3": r"data/nuts_rg_60M_2013_lvl_3.geojson"
+}
+options = [
+    "Level 1",
+    "Level 2",
+    "Level 3"
+]
 
+
+grid_fp = paths["Level 1"]
 
 # Read files
 grid = explode(grid_fp)
@@ -115,6 +127,46 @@ hover = HoverTool()
 hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Area', '@SHAPE_AREA')]
 
 
+def select_on_change(attr, old, new):
+    grid_fp = paths[new]
+
+    # Read files
+    grid = explode(grid_fp)
+
+    # Set and transform CRS
+    grid.crs = {'init': 'epsg:4326'}
+    grid = grid.to_crs({'init': 'epsg:3857'})
+
+    # Get the x and y coordinates
+    grid['x'] = grid.apply(get_poly_coords, geom='geometry', coord_type='x', axis=1)
+    grid['y'] = grid.apply(get_poly_coords, geom='geometry', coord_type='y', axis=1)
+
+    # Create color mapper
+    color_mapper = LogColorMapper(palette=palette)
+    min = math.floor(grid['SHAPE_AREA'].min())
+    max = math.ceil(grid['SHAPE_AREA'].max())
+    lvls = 21
+    step_size = round((max - min) / lvls)
+    breaks = [x for x in range(min, max, step_size)]
+    classifier = ps.User_Defined.make(bins=breaks)
+    pt_classif = grid[['SHAPE_AREA']].apply(classifier)
+
+    # Rename classified column
+    pt_classif.columns = ['SHAPE_AREA_ud']
+    grid = grid.join(pt_classif)
+
+    # Make a copy, drop the geometry column and create ColumnDataSource
+    g_df = grid.drop('geometry', axis=1).copy()
+    g_df_cds = ColumnDataSource(g_df)
+    gsource.data = g_df_cds.data
+
+
+# define Select
+select = Select(title="Nuts Level:", value="Level 1", options=options)
+select.on_change("value", select_on_change)
+
 p.add_tools(hover)
 
+
 curdoc().add_root(p)
+curdoc().add_root(widgetbox(select))
