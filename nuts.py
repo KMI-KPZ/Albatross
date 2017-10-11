@@ -167,6 +167,16 @@ select.on_change("value", select_on_change)
 
 p.add_tools(hover)
 
+# do some styling
+p.toolbar.logo = None
+p.xgrid.grid_line_color = None
+p.ygrid.grid_line_color = None
+p.axis.visible = None
+p.xaxis.major_tick_line_color = None
+p.xaxis.minor_tick_line_color = None
+p.yaxis.major_tick_line_color = None
+p.yaxis.minor_tick_line_color = None
+
 
 curdoc().add_root(p)
 curdoc().add_root(widgetbox(select))
