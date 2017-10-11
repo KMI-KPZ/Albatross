@@ -3,10 +3,23 @@ import pysal as ps
 import math
 from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper
 from bokeh.palettes import Plasma256 as palette
-from bokeh.plotting import show, output_file, figure
-from bokeh.tile_providers import STAMEN_TONER
+from bokeh.plotting import figure
+from bokeh.io import curdoc
+from bokeh.layouts import layout
+from bokeh.tile_providers import WMTSTileSource
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
+
+
+STAMEN_TONER = WMTSTileSource(
+    url='http://tile.stamen.com/toner/{Z}/{X}/{Y}.png',
+    attribution=(
+        'Map tiles by <a href="http://stamen.com">Stamen Design</a>, '
+        'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>.'
+        'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, '
+        'under <a href="http://www.openstreetmap.org/copyright">ODbL</a>'
+    )
+)
 
 
 def get_poly_coords(row, geom, coord_type):
@@ -104,6 +117,4 @@ hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Area', '@SHAPE_AREA')]
 
 p.add_tools(hover)
 
-
-output_file("travel_time_map.html")
-show(p)
+curdoc().add_root(p)
