@@ -2,7 +2,7 @@ import geopandas as gpd
 import pysal as ps
 import math
 from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper
-from bokeh.palettes import Plasma256 as palette
+from bokeh.palettes import Greys256 as palette
 from bokeh.plotting import figure
 from bokeh.io import curdoc
 from bokeh.layouts import widgetbox
@@ -12,15 +12,15 @@ from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 
 
-STAMEN_TONER = WMTSTileSource(
-    url='http://tile.stamen.com/toner/{Z}/{X}/{Y}.png',
-    attribution=(
-        'Map tiles by <a href="http://stamen.com">Stamen Design</a>, '
-        'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>.'
-        'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, '
-        'under <a href="http://www.openstreetmap.org/copyright">ODbL</a>'
-    )
-)
+# STAMEN_TONER = WMTSTileSource(
+#     url='http://tile.stamen.com/toner/{Z}/{X}/{Y}.png',
+#     attribution=(
+#         'Map tiles by <a href="http://stamen.com">Stamen Design</a>, '
+#         'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>.'
+#         'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, '
+#         'under <a href="http://www.openstreetmap.org/copyright">ODbL</a>'
+#     )
+# )
 
 
 def get_poly_coords(row, geom, coord_type):
@@ -69,11 +69,40 @@ def explode(indata):
     return outdf
 
 
+def produce_column_data(indata):
+    raw_data = explode(indata)
+
+    # Transform CRS
+    raw_data.crs = {'init': 'epsg:4326'}
+    raw_data = raw_data.to_crs({'init': 'epsg:3857'})
+
+    # Get coordinates
+    raw_data['x'] = raw_data.apply(get_poly_coords, geom='geometry', coord_type='x', axis=1)
+    raw_data['y'] = raw_data.apply(get_poly_coords, geom='geometry', coord_type='y', axis=1)
+
+    # Classify for color mapper
+    min_area = math.floor(raw_data['SHAPE_AREA'].min())
+    max_area = math.ceil(raw_data['SHAPE_AREA'].max())
+    lvls = 21
+    step_size = round((max_area - min_area)/lvls)
+    breaks = [x for x in range(min_area, max_area, step_size)]
+    classifier = ps.User_Defined.make(bins=breaks)
+    pt_classif = raw_data[['SHAPE_AREA']].apply(classifier)
+
+    # Rename classifier column
+    pt_classif.columns = ['SHAPE_AREA_ud']
+    raw_data = raw_data.join(pt_classif)
+
+    # Make a copy, drop the geometry column and create ColumnDataSource
+    dataframe = raw_data.drop('geometry', axis=1).copy()
+    return ColumnDataSource(dataframe)
+
+
 # File paths
-paths = {
-    "Level 1": r"data/nuts_rg_60M_2013_lvl_1.geojson",
-    "Level 2": r"data/nuts_rg_60M_2013_lvl_2.geojson",
-    "Level 3": r"data/nuts_rg_60M_2013_lvl_3.geojson"
+data = {
+    "Level 1": produce_column_data(r"data/nuts_rg_60M_2013_lvl_1.geojson"),
+    "Level 2": produce_column_data(r"data/nuts_rg_60M_2013_lvl_2.geojson"),
+    "Level 3": produce_column_data(r"data/nuts_rg_60M_2013_lvl_3.geojson")
 }
 options = [
     "Level 1",
@@ -81,46 +110,23 @@ options = [
     "Level 3"
 ]
 
-
-grid_fp = paths["Level 1"]
-
-# Read files
-grid = explode(grid_fp)
-
-# Set and transform CRS
-grid.crs = {'init' :'epsg:4326'}
-grid = grid.to_crs({'init': 'epsg:3857'})
-
-
-# Get the x and y coordinates
-grid['x'] = grid.apply(get_poly_coords, geom='geometry', coord_type='x', axis=1)
-grid['y'] = grid.apply(get_poly_coords, geom='geometry', coord_type='y', axis=1)
-
-# Create color mapper
 color_mapper = LogColorMapper(palette=palette)
-min = math.floor(grid['SHAPE_AREA'].min())
-max = math.ceil(grid['SHAPE_AREA'].max())
-lvls = 21
-step_size = round((max - min)/lvls)
-breaks = [x for x in range(min, max, step_size)]
-classifier = ps.User_Defined.make(bins=breaks)
-pt_classif = grid[['SHAPE_AREA']].apply(classifier)
 
-# Rename classified column
-pt_classif.columns = ['SHAPE_AREA_ud']
-grid = grid.join(pt_classif)
 
-# Make a copy, drop the geometry column and create ColumnDataSource
-g_df = grid.drop('geometry', axis=1).copy()
-gsource = ColumnDataSource(g_df)
+gsource = ColumnDataSource(data["Level 1"].data)
 
-p = figure(width=800, height=600, title="NUTS LVL 3")
-p.add_tile(STAMEN_TONER)
+p = figure(width=800, height=600, title="NUTS")
+
+# Set Tiles
+tile_source = WMTSTileSource(
+    url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{Z}/{Y}/{X}.jpg'
+)
+p.add_tile(tile_source)
 
 # Plot grid
 p.patches('x', 'y', source=gsource,
           fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper},
-          fill_alpha=0.5, line_color="black", line_width=0.1)
+          fill_alpha=0.5, line_color="black", line_width=0.3)
 
 
 hover = HoverTool()
@@ -128,37 +134,7 @@ hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Area', '@SHAPE_AREA')]
 
 
 def select_on_change(attr, old, new):
-    grid_fp = paths[new]
-
-    # Read files
-    grid = explode(grid_fp)
-
-    # Set and transform CRS
-    grid.crs = {'init': 'epsg:4326'}
-    grid = grid.to_crs({'init': 'epsg:3857'})
-
-    # Get the x and y coordinates
-    grid['x'] = grid.apply(get_poly_coords, geom='geometry', coord_type='x', axis=1)
-    grid['y'] = grid.apply(get_poly_coords, geom='geometry', coord_type='y', axis=1)
-
-    # Create color mapper
-    color_mapper = LogColorMapper(palette=palette)
-    min = math.floor(grid['SHAPE_AREA'].min())
-    max = math.ceil(grid['SHAPE_AREA'].max())
-    lvls = 21
-    step_size = round((max - min) / lvls)
-    breaks = [x for x in range(min, max, step_size)]
-    classifier = ps.User_Defined.make(bins=breaks)
-    pt_classif = grid[['SHAPE_AREA']].apply(classifier)
-
-    # Rename classified column
-    pt_classif.columns = ['SHAPE_AREA_ud']
-    grid = grid.join(pt_classif)
-
-    # Make a copy, drop the geometry column and create ColumnDataSource
-    g_df = grid.drop('geometry', axis=1).copy()
-    g_df_cds = ColumnDataSource(g_df)
-    gsource.data = g_df_cds.data
+    gsource.data = data[new].data
 
 
 # define Select

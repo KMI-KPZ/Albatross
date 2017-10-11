@@ -1,8 +1,8 @@
 # DataBio-Viz
 
-Run with: `python -m bokeh serve nuts.py`
+Run with: `python -m bokeh serve bokeh_script.py`
 
-The service will be accessible at [localhost:5006/nuts](localhost:5006/nuts).
+The service will be accessible at [localhost:5006](localhost:5006).
 
 
 ### required python3 packages
