@@ -1,7 +1,12 @@
 import geopandas as gpd
 import pysal as ps
 import math
-from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper, LassoSelectTool
+from bokeh.models import \
+    ColumnDataSource, \
+    HoverTool, \
+    LogColorMapper, \
+    LassoSelectTool
+from bokeh.models.glyphs import Patches
 from bokeh.palettes import Greys256 as palette
 from bokeh.plotting import figure
 from bokeh.io import curdoc
@@ -12,7 +17,6 @@ from bokeh.tile_providers import WMTSTileSource
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 
-# TODO: the tap selection is not ideal, yet. Only the currently selected areas are visible.
 # TODO: neither lasso nor box select work at the moment
 # TODO: the bar graph is only a demonstration for the selection
 
@@ -145,6 +149,20 @@ p.add_tile(tile_source)
 glyphs = p.patches('x', 'y', source=patch_source,
                    fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper},
                    fill_alpha=0.5, line_color="black", line_width=0.3)
+glyphs.nonselection_glyph = Patches(
+    fill_alpha=0.2,
+    line_width=0.3,
+    fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper}
+)
+glyphs.selection_glyph = Patches(
+    fill_alpha=0.8,
+    line_width=0.8,
+    fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper}
+)
+glyphs.hover_glyph = Patches(
+    line_width=1,
+    fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper}
+)
 
 
 # Plot bar graph
@@ -188,7 +206,6 @@ def tap_callback(attr, old, new):
 
 # set the callback for the tap tool
 glyphs.data_source.on_change('selected', tap_callback)
-
 
 # do some styling
 p.toolbar.logo = None
