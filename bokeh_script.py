@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pysal as ps
 import math
+import numpy as np
 from bokeh.models import \
     ColumnDataSource, \
     HoverTool, \
@@ -11,7 +12,7 @@ from bokeh.palettes import Greys256 as palette
 from bokeh.plotting import figure
 from bokeh.io import curdoc
 from bokeh.models.ranges import FactorRange
-from bokeh.layouts import widgetbox, row
+from bokeh.layouts import widgetbox, row, column
 from bokeh.models.widgets import Select
 from bokeh.tile_providers import WMTSTileSource
 from shapely.geometry.polygon import Polygon
@@ -168,7 +169,7 @@ glyphs.hover_glyph = Patches(
 # Plot bar graph
 p2 = figure(
     width=800,
-    height=600,
+    height=200,
     title="Areas",
     x_range=FactorRange()
 )
@@ -179,6 +180,13 @@ area_vbars = p2.vbar(
     top="AREA",
     source=area_source
 )
+
+####################################
+# some random data to draw
+curve_source = ColumnDataSource({'colors': [[]], 'xs': [[]], 'ys': [[]]})
+p3 = figure(width=800, height=200, title="random data")
+p3.multi_line(xs='xs', ys='ys', color='colors', source=curve_source)
+####################################
 
 
 # callback for the level select
@@ -203,6 +211,27 @@ def tap_callback(attr, old, new):
     p2.x_range.factors = new_area_data['ID'].tolist()
     area_vbars.data_source.data = ColumnDataSource(new_area_data).data
 
+    colors = []
+    xs = []
+    ys = []
+    for k in new_area_data['ID']:
+        color_list = np.random.rand(3) * 255
+        color = "#{:02x}{:02x}{:02x}".format(
+            int(round(color_list[0])),
+            int(round(color_list[1])),
+            int(round(color_list[2]))
+        )
+        rand_y_offset = np.random.rand(200)
+        rand_x_offset = np.random.rand(1) * math.pi / 2
+        x = np.linspace(0, 4 * math.pi, 200)
+        curve = np.sin(x + rand_x_offset) * 3 + rand_y_offset
+        colors.append(color)
+        xs.append(x.tolist())
+        ys.append(curve.tolist())
+
+    new_random = ColumnDataSource({'colors': colors, 'xs': xs, 'ys': ys})
+    curve_source.data = new_random.data
+
 
 # set the callback for the tap tool
 glyphs.data_source.on_change('selected', tap_callback)
@@ -217,8 +246,16 @@ p.xaxis.minor_tick_line_color = None
 p.yaxis.major_tick_line_color = None
 p.yaxis.minor_tick_line_color = None
 
+p.min_border = 20
+p2.min_border = 20
+p2.min_border = 20
+
 p2.toolbar.logo = None
 
 
-curdoc().add_root(row(p, p2))
+curdoc().add_root(
+    row(
+        [p, column([p2, p3])]
+    )
+)
 curdoc().add_root(widgetbox(select))
