@@ -200,6 +200,8 @@ p.xaxis.minor_tick_line_color = None
 p.yaxis.major_tick_line_color = None
 p.yaxis.minor_tick_line_color = None
 
+p2.toolbar.logo = None
+
 
 curdoc().add_root(row(p, p2))
 curdoc().add_root(widgetbox(select))
