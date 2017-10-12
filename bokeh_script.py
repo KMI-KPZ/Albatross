@@ -1,15 +1,20 @@
 import geopandas as gpd
 import pysal as ps
 import math
-from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper
+from bokeh.models import ColumnDataSource, HoverTool, LogColorMapper, LassoSelectTool
 from bokeh.palettes import Greys256 as palette
 from bokeh.plotting import figure
 from bokeh.io import curdoc
-from bokeh.layouts import widgetbox
+from bokeh.models.ranges import FactorRange
+from bokeh.layouts import widgetbox, row
 from bokeh.models.widgets import Select
 from bokeh.tile_providers import WMTSTileSource
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
+
+# TODO: the tap selection is not ideal, yet. Only the currently selected areas are visible.
+# TODO: neither lasso nor box select work at the moment
+# TODO: the bar graph is only a demonstration for the selection
 
 
 # STAMEN_TONER = WMTSTileSource(
@@ -98,7 +103,7 @@ def produce_column_data(indata):
     return ColumnDataSource(dataframe)
 
 
-# File paths
+# Data sources
 data = {
     "Level 1": produce_column_data(r"data/nuts_rg_60M_2013_lvl_1.geojson"),
     "Level 2": produce_column_data(r"data/nuts_rg_60M_2013_lvl_2.geojson"),
@@ -110,19 +115,26 @@ options = [
     "Level 3"
 ]
 
-color_mapper = LogColorMapper(palette=palette)
+# area size plot
+area_data = {'ID': [], 'AREA': []}
+area_source = ColumnDataSource(area_data)
 
+color_mapper = LogColorMapper(palette=palette)
 
 patch_source = ColumnDataSource(data["Level 1"].data)
 
+
+# Plot map
+TOOLS = "pan,wheel_zoom,box_zoom,reset,tap"
 p = figure(
     width=800,
     height=600,
     title="NUTS Areas",
+    tools=TOOLS
 )
 p.title.text_font_size = "25px"
 p.title.align = "center"
-
+p.select(LassoSelectTool).select_every_mousemove = False
 
 # Set Tiles
 tile_source = WMTSTileSource(
@@ -130,12 +142,28 @@ tile_source = WMTSTileSource(
 )
 p.add_tile(tile_source)
 
-# Plot grid
-p.patches('x', 'y', source=patch_source,
-          fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper},
-          fill_alpha=0.5, line_color="black", line_width=0.3)
+glyphs = p.patches('x', 'y', source=patch_source,
+                   fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper},
+                   fill_alpha=0.5, line_color="black", line_width=0.3)
 
 
+# Plot bar graph
+p2 = figure(
+    width=800,
+    height=600,
+    title="Areas",
+    x_range=FactorRange()
+)
+area_vbars = p2.vbar(
+    x="ID",
+    width=0.5,
+    bottom=0,
+    top="AREA",
+    source=area_source
+)
+
+
+# callback for the level select
 def select_on_change(attr, old, new):
     patch_source.data = data[new].data
 
@@ -144,10 +172,23 @@ def select_on_change(attr, old, new):
 select = Select(title="Nuts Level:", value="Level 1", options=options)
 select.on_change("value", select_on_change)
 
-
+# setup hover tool
 hover = HoverTool()
 hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Area', '@SHAPE_AREA')]
 p.add_tools(hover)
+
+
+# callback for the tap tool
+def tap_callback(attr, old, new):
+    new_area_data = {'ID': glyphs.data_source.data["NUTS_ID"][new["1d"]["indices"]],
+                     'AREA': glyphs.data_source.data["SHAPE_AREA"][new["1d"]["indices"]]}
+    p2.x_range.factors = new_area_data['ID'].tolist()
+    area_vbars.data_source.data = ColumnDataSource(new_area_data).data
+
+
+# set the callback for the tap tool
+glyphs.data_source.on_change('selected', tap_callback)
+
 
 # do some styling
 p.toolbar.logo = None
@@ -160,5 +201,5 @@ p.yaxis.major_tick_line_color = None
 p.yaxis.minor_tick_line_color = None
 
 
-curdoc().add_root(p)
+curdoc().add_root(row(p, p2))
 curdoc().add_root(widgetbox(select))
