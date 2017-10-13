@@ -95,7 +95,7 @@ def produce_column_data(indata):
     max_area = math.ceil(raw_data['SHAPE_AREA'].max())
     lvls = 21
     step_size = round((max_area - min_area)/lvls)
-    breaks = [x for x in range(min_area, max_area, step_size)]
+    breaks = [x for x in range(int(min_area), int(max_area), int(step_size))]
     classifier = ps.User_Defined.make(bins=breaks)
     pt_classif = raw_data[['SHAPE_AREA']].apply(classifier)
 
