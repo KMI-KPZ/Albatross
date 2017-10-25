@@ -1,0 +1,13 @@
+<module>
+    <menu>
+        <title>Testing</title>
+        <point>
+            <name>vis</name>
+            <callback>call_vis</callback>
+        </point>
+        <point>
+            <name>config</name>
+            <callback>call</callback>
+        </point>
+    </menu>
+</module>
