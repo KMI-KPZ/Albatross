@@ -6,10 +6,10 @@ from bokeh.models.widgets import Select, TextInput, Div
 from bokeh.plotting import figure, curdoc, reset_output
 from bokeh.io.doc import set_curdoc
 
-
 div_menu = Div()
 p = figure()
 layout = row([column(div_menu), column(p), column()])
 curdoc().add_root(layout)
+
     
 

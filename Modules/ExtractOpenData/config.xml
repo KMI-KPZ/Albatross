@@ -1,0 +1,9 @@
+<module>
+    <menu>
+        <title>ExtractOpenData</title>
+        <point>
+            <name>getTOC</name>
+            <callback>showTOC</callback>
+        </point>
+    </menu>
+</module>
