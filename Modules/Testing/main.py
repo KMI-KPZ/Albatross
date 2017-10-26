@@ -10,7 +10,7 @@ from bokeh.models import Button, CustomJS
 from bokeh.palettes import RdYlBu3
 from bokeh.models.widgets import Select, TextInput, Div
 from bokeh.plotting import figure, curdoc, reset_output
-from bokeh.io.doc import set_curdoc
+from bokeh.io import set_curdoc
 import spq_plat
 
 

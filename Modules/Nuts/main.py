@@ -147,6 +147,8 @@ def show_data():
     global p2
     global area_vbars
     global curve_source
+    global data
+    global patch_source
     # Data sources
     data = {
         "Level 1": produce_column_data(r"data/nuts_rg_60M_2013_lvl_1.geojson"),
@@ -166,8 +168,8 @@ def show_data():
     color_mapper = LogColorMapper(palette=palette)
     
     patch_source = ColumnDataSource(data["Level 1"].data)
-    
-    
+
+
     # Plot map
     TOOLS = "pan,wheel_zoom,box_zoom,reset,tap"
     p = figure(
@@ -203,8 +205,8 @@ def show_data():
         line_width=1,
         fill_color={'field': 'SHAPE_AREA_ud', 'transform': color_mapper}
     )
-    
-    
+
+
     # Plot bar graph
     p2 = figure(
         width=800,

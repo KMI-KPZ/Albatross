@@ -10,7 +10,7 @@ from bokeh.models import Button, CustomJS
 from bokeh.palettes import RdYlBu3
 from bokeh.models.widgets import Select, TextInput, Div
 from bokeh.plotting import figure, curdoc, reset_output
-from bokeh.io.doc import set_curdoc
+from bokeh.io import set_curdoc
 import spq_plat
 
 
@@ -24,10 +24,10 @@ def define_menu():
     t = []
     for sub in get_sub_direct('Modules'):
         
-        if sub != 'Menu':
-            e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), '../' + sub +'/config.xml')).getroot()
+        if sub != 'Menu' and sub != '__pycache__':
+            e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), '../' + sub + '/config.xml')).getroot()
             titleMenu = e.find('menu').find('title').text;
-            print titleMenu
+            print(titleMenu)
             module = importlib.import_module('Modules.' + titleMenu + '.main') 
         
         
@@ -35,7 +35,7 @@ def define_menu():
             button_box = []
             for point in e.find('menu').findall('point'):
             #set button
-                print point.find('name').text
+                print(point.find('name').text)
                 button_inner = Button(label=point.find('name').text, button_type="success")
                 function = point.find('callback').text
                 f = getattr(module, function);
@@ -43,5 +43,5 @@ def define_menu():
                 button_box.append(button_inner)
             
             t.append(row(Div(text=menu_inner), column(button_box)))
-    print t        
+    print(t)
     spq_plat.layout.children[0] = column(t);
