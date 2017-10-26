@@ -9,8 +9,8 @@ results = sparql.query();
 final = '{ "type": "FeatureCollection", "features": ['
 finalfeatures = ''
 
-#TODO: Implement https://pypi.python.org/pypi/geojson
-#todo: named properties
+# TODO: Implement https://pypi.python.org/pypi/geojson
+# TODO: named properties
 # loop the results and set properties with the help of the config 
 for result in results["results"]["bindings"]:
     for prop in e.findall('properties'):
@@ -22,9 +22,9 @@ for result in results["results"]["bindings"]:
             i = i +1;
         properties = properties[:-1]
     er = result["geosc"]["value"].split('(', 1)
-    #testing
-    #finalfeatures = ''
-    #TODO MULTIPOLYGON etc.
+    # testing
+    # finalfeatures = ''
+    # TODO: MULTIPOLYGON etc.
     if er[0] == 'POLYGON':
         #replacing to valid geojson
         Gcoord = result["geosc"]["value"].replace('(', '[').replace(')',']').replace(',', '] [').replace(' ', ', ').replace('POLYGON', '\"coordinates\": [') + ']';

@@ -1,6 +1,6 @@
 # Format of the GeoJSON
 
-The expansion of the GeoJSON with multidimensional data should be in the `propertys` field with the `OBSERVATIONS` field:
+The expansion of the GeoJSON with multidimensional data should be in the `properties` field with the `OBSERVATIONS` field:
 
 ```json
 {

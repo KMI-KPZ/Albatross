@@ -4,8 +4,9 @@ import os
 
 e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), 'config.xml')).getroot()
 
-#TODO improve xml query
-def buildqueryselect():
+
+# TODO improve xml query
+def build_query_select():
     # read xml file
     # first only selects without using them as properties for geojson
     for atype in e.findall('sparql'):
@@ -22,23 +23,26 @@ def buildqueryselect():
     
     return selectstring
 
-def buildquerywhere():
+
+def build_query_where():
     for atype in e.findall('sparql'):
         wherestring = atype.find('where').text
     return wherestring;
 
-def buildqueryfrom():
+
+def build_query_from():
     for atype in e.findall('sparql'):
         fromstring = '<' + atype.find('from').text + '>'
     return fromstring;
 
-def buildqueryendpoint():
+
+def build_query_endpoint():
     for atype in e.findall('sparql'):
         endstring = atype.find('endpoint').text
     return endstring;
 
 
-def buildqueryprefix():
+def build_query_prefix():
     prestring = '';
     for a in e.findall('sparql'):
         for atype in a.findall('prefixes'):
@@ -49,16 +53,16 @@ def buildqueryprefix():
 
     
 def query():
-    sparql = SPARQLWrapper(buildqueryendpoint())
+    sparql = SPARQLWrapper(build_query_endpoint())
     sparql.setQuery(
-        buildqueryprefix() +
+        build_query_prefix() +
         """
         
-        select """ + buildqueryselect() + """
-        from """ + buildqueryfrom() + """
+        select """ + build_query_select() + """
+        from """ + build_query_from() + """
         where 
         {
-            """ + buildquerywhere() + """
+            """ + build_query_where() + """
         }
         
     
@@ -67,5 +71,5 @@ def query():
     results = sparql.query().convert()
     
     return results;
-    #for result in results["results"]["bindings"]:
-     #   print(result["geosc"]["value"])
+    # for result in results["results"]["bindings"]:
+    #   print(result["geosc"]["value"])
