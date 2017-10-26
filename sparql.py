@@ -11,23 +11,23 @@ def build_query_select():
     # first only selects without using them as properties for geojson
     for atype in e.findall('sparql'):
         select = atype.findall('select')
-        selectstring = '';
+        select_string = ''
         for t in select:
-            selectstring = selectstring + ' ?' + t.text
-    # here add to select the properties including geodata and date as special sets
+            select_string = select_string + ' ?' + t.text
+    # here add to select the properties including geo-data and date as special sets
     for prop in e.findall('properties'):
         for p in prop.findall('property'):
-            selectstring = selectstring + ' ?' + p.find('sparql').find('select').text
-        selectstring = selectstring + ' ?' + prop.find('date').text
-        selectstring = selectstring + ' ?' + prop.find('geo').text
+            select_string = select_string + ' ?' + p.find('sparql').find('select').text
+        select_string = select_string + ' ?' + prop.find('date').text
+        select_string = select_string + ' ?' + prop.find('geo').text
     
-    return selectstring
+    return select_string
 
 
 def build_query_where():
     for atype in e.findall('sparql'):
-        wherestring = atype.find('where').text
-    return wherestring;
+        where_string = atype.find('where').text
+    return where_string;
 
 
 def build_query_from():
@@ -38,18 +38,18 @@ def build_query_from():
 
 def build_query_endpoint():
     for atype in e.findall('sparql'):
-        endstring = atype.find('endpoint').text
-    return endstring;
+        end_string = atype.find('endpoint').text
+    return end_string;
 
 
 def build_query_prefix():
-    prestring = '';
+    pre_string = '';
     for a in e.findall('sparql'):
         for atype in a.findall('prefixes'):
             for pre in atype.findall('prefix'):
-                prestring = prestring + """PREFIX """ + pre.get('short') + """: <""" + pre.text + """>
+                pre_string = pre_string + """PREFIX """ + pre.get('short') + """: <""" + pre.text + """>
                 """
-    return prestring
+    return pre_string
 
     
 def query():
@@ -70,6 +70,6 @@ def query():
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     
-    return results;
+    return results
     # for result in results["results"]["bindings"]:
     #   print(result["geosc"]["value"])
