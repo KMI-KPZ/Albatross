@@ -23,7 +23,7 @@ prefix geo: <http://eurostat.linked-statistics.org/dic/geo#>
 prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
 prefix unit: <http://eurostat.linked-statistics.org/dic/unit#>
 
-select ?designation ?time ?value ?unit
+select distinct ?designation ?time ?value ?unit
 where {
   ?observation a qb:Observation.
   ?observation prop:geo ?designation.
@@ -42,12 +42,17 @@ with open('data/nuts_rg_60M_2013_lvl_2.geojson') as f:
 with open('data/nuts_rg_60M_2013_lvl_1.geojson') as f:
     nuts1 = json.load(f)
 
-nuts = [nuts1, nuts2, nuts3]
 nuts_files = [
     'data/nuts1_test_B.geojson',
     'data/nuts2_test_B.geojson',
     'data/nuts3_test_B.geojson'
 ]
+nuts = [nuts1, nuts2, nuts3]
+# nuts = []
+# for lvl in nuts_files:
+#     with open(lvl) as f:
+#         nuts.append(json.load(f))
+
 
 for row in results:
     geo = row[0].split('#')[1]
@@ -81,15 +86,21 @@ for row in results:
     else:
         logging.info(" found NUTS_ID in level {} at index {}".format(nuts_lvl+1, index))
         # TODO: check if entry already exists (both OBSERVATIONS and soil)
-        nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'] ={
-            'soil': [
-                {
-                    'period': time,
-                    'unit': unit,
-                    'value': value
-                }
-            ]
+        observation = {
+            'period': time,
+            'unit': unit,
+            'value': value
         }
+
+        if 'OBSERVATIONS' in nuts[nuts_lvl]['features'][index]['properties']:
+            if 'soil' in nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']:
+                nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']['soil'].append(observation)
+            else:
+                nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']['soil'] = [observation]
+        else:
+            nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'] ={
+                'soil': [observation]
+            }
 
 
 logging.info(" writing back data to geojson")
