@@ -4,7 +4,7 @@ import rdflib as rdf
 import logging
 import json
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 
 filename = 'data/aei_pr_soiler.rdf'
 
@@ -34,29 +34,70 @@ where {
 """)
 logging.info(" done querying!")
 
+logging.info(" open geojson")
+with open('data/nuts_rg_60M_2013_lvl_3.geojson') as f:
+    nuts3 = json.load(f)
+with open('data/nuts_rg_60M_2013_lvl_2.geojson') as f:
+    nuts2 = json.load(f)
+with open('data/nuts_rg_60M_2013_lvl_1.geojson') as f:
+    nuts1 = json.load(f)
+
+nuts = [nuts1, nuts2, nuts3]
+nuts_files = [
+    'data/nuts1_test_B.geojson',
+    'data/nuts2_test_B.geojson',
+    'data/nuts3_test_B.geojson'
+]
+
+nuts1_len = len(nuts1['features'])
+nuts2_len = len(nuts2['features'])
+nuts3_len = len(nuts3['features'])
+max_len = max(nuts1_len, max(nuts2_len, nuts3_len))
 
 for row in results:
     geo = row[0].split('#')[1]
     time = row[1]
     value = row[2]
     unit = row[3].split('#')[1]
-    # print("{:5}\t{}\t{:>7} {}".format(geo, time, value, unit))
 
-    print(json.dumps(
-        {
-            "properties": {
-                "NUTS_ID": geo,
-                "OBSERVATIONS": {
-                    "soil": (
-                        {
-                            "period": time,
-                            "unit": unit,
-                            "value": value
-                        }
-                    )
+    # search for the NUTS_ID (geo) in the NUTS levels 1 to 3
+    logging.info(" searching for NUTS_ID {}".format(geo))
+    index = -1
+    nuts_lvl = -1
+    found = False
+    while not found:
+        index += 1
+        done = []
+        for lvl in range(0, len(nuts)):
+            done.append(False)
+        for lvl in range(0, len(nuts)):
+            if index < len(nuts[lvl]['features']):
+                if nuts[lvl]['features'][index]['properties']['NUTS_ID'] == geo:
+                    nuts_lvl = lvl
+                    found = True
+                    break
+            else:
+                done[lvl] = True
+        if all(done):
+            break
+
+    if nuts_lvl == -1:
+        logging.warning(" unable to find NUTS_ID {}".format(geo))
+    else:
+        logging.info(" found NUTS_ID in level {} at index {}".format(nuts_lvl+1, index))
+        # TODO: check if entry already exists (both OBSERVATIONS and soil)
+        nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'] ={
+            'soil': [
+                {
+                    'period': time,
+                    'unit': unit,
+                    'value': value
                 }
-            }
-        },
-        indent=4,
-        separators=(',', ':')
-    ))
+            ]
+        }
+
+
+logging.info(" writing back data to geojson")
+for lvl in range(0, len(nuts)):
+    with open(nuts_files[lvl], 'w') as outfile:
+        json.dump(nuts[lvl], outfile)
