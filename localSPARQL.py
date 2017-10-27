@@ -6,13 +6,17 @@ import json
 
 logging.basicConfig(level=logging.WARNING)
 
+# TODO: filename and observation_name need to be a parameter
 filename = 'data/aei_pr_soiler.rdf'
+observation_name = 'soil'
 
 g = rdf.Graph()
 logging.info(" parsing file: {}".format(filename))
 g.parse(filename, format='xml')
 
 logging.info(" querying ...")
+
+# TODO: maybe use sparql.py and the config.xml
 results = g.query("""
 prefix : <.>
 prefix soiler: <http://eurostat.linked-statistics.org/data/aei_pr_soiler.#>
@@ -35,6 +39,8 @@ where {
 logging.info(" done querying!")
 
 logging.info(" open geojson")
+
+# TODO: use nuts_files to store the path to the GeoJSON
 with open('data/nuts_rg_60M_2013_lvl_3.geojson') as f:
     nuts3 = json.load(f)
 with open('data/nuts_rg_60M_2013_lvl_2.geojson') as f:
@@ -53,8 +59,8 @@ nuts = [nuts1, nuts2, nuts3]
 #     with open(lvl) as f:
 #         nuts.append(json.load(f))
 
-
 for row in results:
+    # recover uncluttered information from the sparql result
     geo = row[0].split('#')[1]
     time = row[1]
     value = row[2]
@@ -68,8 +74,11 @@ for row in results:
     while not found:
         index += 1
         done = []
+        # prepare break condition
         for lvl in range(0, len(nuts)):
             done.append(False)
+
+        # check if the ID matches in any of the NUTS levels
         for lvl in range(0, len(nuts)):
             if index < len(nuts[lvl]['features']):
                 if nuts[lvl]['features'][index]['properties']['NUTS_ID'] == geo:
@@ -85,24 +94,25 @@ for row in results:
         logging.warning(" unable to find NUTS_ID {}".format(geo))
     else:
         logging.info(" found NUTS_ID in level {} at index {}".format(nuts_lvl+1, index))
-        # TODO: check if entry already exists (both OBSERVATIONS and soil)
+
         observation = {
             'period': time,
             'unit': unit,
             'value': value
         }
 
+        # check if any of the nested elements in the JSON already exist
         if 'OBSERVATIONS' in nuts[nuts_lvl]['features'][index]['properties']:
             if 'soil' in nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']:
-                nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']['soil'].append(observation)
+                nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'][observation_name].append(observation)
             else:
-                nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']['soil'] = [observation]
+                nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'][observation_name] = [observation]
         else:
-            nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'] ={
-                'soil': [observation]
+            nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'] = {
+                observation_name: [observation]
             }
 
-
+# write back to all the GeoJSON
 logging.info(" writing back data to geojson")
 for lvl in range(0, len(nuts)):
     with open(nuts_files[lvl], 'w') as outfile:
