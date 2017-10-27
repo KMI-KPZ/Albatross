@@ -49,11 +49,6 @@ nuts_files = [
     'data/nuts3_test_B.geojson'
 ]
 
-nuts1_len = len(nuts1['features'])
-nuts2_len = len(nuts2['features'])
-nuts3_len = len(nuts3['features'])
-max_len = max(nuts1_len, max(nuts2_len, nuts3_len))
-
 for row in results:
     geo = row[0].split('#')[1]
     time = row[1]
