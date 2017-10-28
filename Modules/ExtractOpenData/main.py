@@ -31,11 +31,9 @@ def findXMLLink(r):
     if r.find('nt:children', namespaces).findall('nt:leaf', namespaces) is not None:
         for li in r.find('nt:children', namespaces).findall('nt:leaf', namespaces):
             
-            if li.find('nt:title[@language="en"]', namespaces) is not None:
+            if li.find('nt:title[@language="en"]', namespaces) is not None and li.find('nt:downloadLink[@format="tsv"]', namespaces) is not None:
                 # title
                 title.append(li.find('nt:title[@language="en"]', namespaces).text)
-                
-            if li.find('nt:downloadLink[@format="tsv"]', namespaces) is not None:
                 # link
                 link.append(li.find('nt:downloadLink[@format="tsv"]', namespaces).text)
                         
@@ -55,7 +53,11 @@ def iterateXML(xml):
             iterateXML(r)
         else:
             findXMLLink(r)
-        
+
+
+global source_download
+data_download = dict(link=[])
+source_download = ColumnDataSource(data_download)        
 
 def showTOC():
     global namespaces
@@ -83,20 +85,31 @@ def showTOC():
     source = ColumnDataSource(data)
     
     columns = [TableColumn(field="title", title="Title"), TableColumn(field="link", title="Linke")]
+    columns_d = [TableColumn(field="link", title="Link")]
     
-    data_table = DataTable(source=source, columns=columns, width=700, height=1000, selectable=True)
+    data_table = DataTable(source=source, columns=columns, width=500, height=1000, selectable=True)
+    data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=1000, selectable=True)
     source.on_change('selected', add_to_new_list)
     
     
-    
-    spq_plat.layout.children[1] = column(widgetbox(data_table))
+    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)
+    spq_plat.layout.children[2] = column(widgetbox(data_table_download), width=400)
     #print(multiarray)
     #spq_plat.layout.children[2] = widgetbox(multiarray)        
 
     print('rdy')
+
+    
     
 def add_to_new_list(attr, old, new):
-    #todo put it into Columndatasource
-    spq_plat.layout.children[2] = column(Div(text=source.data['link'][new['1d']['indices'][0]]))
+    global source_download
+    columns_d = [TableColumn(field="link", title="Link")]
+    #todo: extra function
+    if isinstance(new['1d']['indices'][0], int) and new['1d']['indices'][0] is not None:
+        ldata = source_download.data
+        ldata['link'].append(source.data['link'][new['1d']['indices'][0]])
+        source_download = ColumnDataSource(ldata)
+        data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=1000, selectable=True)
+        spq_plat.layout.children[2] = column(widgetbox(data_table_download), width=400)
     
     
