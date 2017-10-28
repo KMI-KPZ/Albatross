@@ -10,7 +10,6 @@ from bokeh.models import Button, CustomJS
 from bokeh.palettes import RdYlBu3
 from bokeh.models.widgets import Select, TextInput, Div
 from bokeh.plotting import figure, curdoc, reset_output
-from bokeh.io import set_curdoc
 import spq_plat
 
 
@@ -23,13 +22,23 @@ def define_menu():
     # create menu
     t = []
     for sub in get_sub_direct('Modules'):
-        
-        if sub != 'Menu' and sub != '__pycache__':
+        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + '/../' + sub + '/config.xml'):
             e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), '../' + sub + '/config.xml')).getroot()
             titleMenu = e.find('menu').find('title').text;
-            print(titleMenu)
-            module = importlib.import_module('Modules.' + titleMenu + '.main') 
-        
+            print('Modules.' + titleMenu + '.main')
+            name = 'Modules.' + titleMenu + '.main'
+            #module = importlib.import_module('Modules.' + titleMenu + '.main')
+            
+            spec = importlib.util.find_spec(name)
+            if spec is None:
+                print("can't find the itertools module")
+            else:
+                # If you chose to perform the actual import ...
+                print(spec)
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                # Adding the module to sys.modules is optional.
+                #sys.modules[name] = module
         
             menu_inner = '<h3>' + titleMenu + '<h3>';
             button_box = []

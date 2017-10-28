@@ -1,7 +1,5 @@
 import geopandas as gpd
-import pysal as ps
 import math
-import numpy as np
 from bokeh.models import \
     ColumnDataSource, \
     HoverTool, \
