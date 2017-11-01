@@ -9,5 +9,9 @@
             <name>makeRDF</name>
             <callback>sourceToRDF</callback>
         </point>
+        <point>
+            <name>RDF ↦ GeoJSON</name>
+            <callback>rdf_to_geojson</callback>
+        </point>
     </menu>
 </module>

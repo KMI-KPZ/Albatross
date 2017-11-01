@@ -177,10 +177,46 @@ def add_to_new_list(attr, old, new):
         button_dl = Button(label="Download", button_type="success")
         button_dl.on_click(downloadCSV)
         spq_plat.layout.children[2] = column(row(widgetbox(data_table_download), width=400), row(button_dl))
-    
 
 
 def sourceToRDF():
     subprocess.call(['sh', '../../services/eurostat/parser/Main.sh', '-i', 'sdmx-code/sdmx-code.ttl', ' -l'])
     
     print('je')
+
+
+def get_eurostats_file_list():
+    """
+    This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory.
+
+    :return: a list of dictionaries containing the id and file names of the RDFs found.
+    """
+    rdf_path_prefix = "data/rdf/eurostats/"
+    geojson_path_prefix = "data/geojson/eurostats/"
+    observation_list = []
+    for file in os.listdir(rdf_path_prefix):
+        observation = {}
+        observation_name = str(os.path.basename(file).split('.')[0])
+        observation['id'] = observation_name
+        observation['rdf'] = rdf_path_prefix + file
+        observation['geojson'] = {
+            'nuts1': geojson_path_prefix + "nuts1_" + observation_name + ".geojson",
+            'nuts2': geojson_path_prefix + "nuts2_" + observation_name + ".geojson",
+            'nuts3': geojson_path_prefix + "nuts3_" + observation_name + ".geojson"
+        }
+        observation_list.append(observation)
+    return observation_list
+
+
+def rdf_to_geojson():
+    """
+    Callback that generates the list of ready-to-transform-to-GeoJSON RDF files
+    """
+    files = get_eurostats_file_list()
+    ids = [id['id'] for id in files]
+    data = dict(id=ids)
+    source = ColumnDataSource(data)
+    columns = [TableColumn(field="id", title="ID")]
+    data_table = DataTable(source=source, columns=columns, width=500, height=800, selectable=True)
+
+    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)

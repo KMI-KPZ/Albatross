@@ -7,7 +7,7 @@ import json
 logging.basicConfig(level=logging.WARNING)
 
 # TODO: filename and observation_name need to be a parameter
-filename = 'data/aei_pr_soiler.rdf'
+filename = 'data/rdf/eurostats/aei_pr_soiler.rdf'
 observation_name = 'soil'
 
 g = rdf.Graph()
@@ -49,9 +49,9 @@ with open('data/nuts_rg_60M_2013_lvl_1.geojson') as f:
     nuts1 = json.load(f)
 
 nuts_files = [
-    'data/nuts1_test_B.geojson',
-    'data/nuts2_test_B.geojson',
-    'data/nuts3_test_B.geojson'
+    'data/geojson/eurostats/nuts1_aei_pr_soiler.geojson',
+    'data/geojson/eurostats/nuts2_aei_pr_soiler.geojson',
+    'data/geojson/eurostats/nuts3_aei_pr_soiler.geojson'
 ]
 nuts = [nuts1, nuts2, nuts3]
 # nuts = []
@@ -103,8 +103,14 @@ for row in results:
 
         # check if any of the nested elements in the JSON already exist
         if 'OBSERVATIONS' in nuts[nuts_lvl]['features'][index]['properties']:
-            if 'soil' in nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']:
-                nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'][observation_name].append(observation)
+            if observation_name in nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS']:
+                duplicate = False
+                for observations in nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'][observation_name]:
+                    if observations['period'] == observation['period']:
+                        duplicate = True
+                        break
+                if not duplicate:
+                    nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'][observation_name].append(observation)
             else:
                 nuts[nuts_lvl]['features'][index]['properties']['OBSERVATIONS'][observation_name] = [observation]
         else:

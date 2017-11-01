@@ -10,3 +10,4 @@ Prepare:
 * [Install MatPlotLib](https://matplotlib.org/): `sudo apt-get install python-matplotlib`
 * [Install Pysal](http://pysal.readthedocs.io/en/latest/index.html): `sudo pip install -U pysal`
 * Install Bokeh: `sudo pip install bokeh`
+* Install lxml: `sudo pip install lxml`
