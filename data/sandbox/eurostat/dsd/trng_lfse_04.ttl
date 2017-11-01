@@ -1,0 +1,3108 @@
+@prefix cc:      <http://creativecommons.org/ns#> .
+@prefix void:    <http://rdfs.org/ns/void#> .
+@prefix data:    <http://eurostat.linked-statistics.org/data/> .
+@prefix dss:     <http://eurostat.linked-statistics.org/dss#> .
+@prefix concept:  <http://eurostat.linked-statistics.org/concept#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix sdmx:    <http://purl.org/linked-data/sdmx#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix title:   <http://eurostat.linked-statistics.org/title#> .
+@prefix qb:      <http://purl.org/linked-data/cube#> .
+@prefix sdmx-measure:  <http://purl.org/linked-data/sdmx/2009/measure#> .
+@prefix dsd:     <http://eurostat.linked-statistics.org/dsd/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sdmx-code:  <http://purl.org/linked-data/sdmx/2009/code#> .
+@prefix sdmx-concept:  <http://purl.org/linked-data/sdmx/2009/concept#> .
+@prefix property:  <http://eurostat.linked-statistics.org/property#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix sdmx-dimension:  <http://purl.org/linked-data/sdmx/2009/dimension#> .
+@prefix dic:     <http://eurostat.linked-statistics.org/dic/> .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL1" ;
+      skos:prefLabel "Voreia Ellada (NUTS 2010)"@fr , "Voreia Ellada (NUTS 2010)"@en , "Voreia Ellada (NUTS 2010)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LV0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LV0" ;
+      skos:prefLabel "Latvija"@fr , "Latvija"@en , "Latvija"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR25>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR25" ;
+      skos:prefLabel "Basse-Normandie"@fr , "Basse-Normandie"@en , "Basse-Normandie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRB2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRB2" ;
+      skos:prefLabel "Van, Mus, Bitlis, Hakkari"@fr , "Van, Mus, Bitlis, Hakkari"@en , "Van, Mus, Bitlis, Hakkari"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEG>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEG" ;
+      skos:prefLabel "Thüringen"@fr , "Thüringen"@en , "Thüringen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE11" ;
+      skos:prefLabel "Stuttgart"@fr , "Stuttgart"@en , "Stuttgart"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES42" ;
+      skos:prefLabel "Castilla-la Mancha"@fr , "Castilla-la Mancha"@en , "Castilla-la Mancha"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FRA2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FRA2" ;
+      skos:prefLabel "Martinique"@fr , "Martinique"@en , "Martinique"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES30>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES30" ;
+      skos:prefLabel "Comunidad de Madrid"@fr , "Comunidad de Madrid"@en , "Comunidad de Madrid"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE23>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE23" ;
+      skos:prefLabel "Oberpfalz"@fr , "Oberpfalz"@en , "Oberpfalz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI20>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI20" ;
+      skos:prefLabel "Åland"@fr , "Åland"@en , "Åland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR10>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR10" ;
+      skos:prefLabel "Istanbul"@fr , "Istanbul"@en , "Istanbul"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CY0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CY0" ;
+      skos:prefLabel "Kypros"@fr , "Kypros"@en , "Kypros"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR22" ;
+      skos:prefLabel "Balikesir, Çanakkale"@fr , "Balikesir, Çanakkale"@en , "Balikesir, Çanakkale"@de .
+
+dic:geo
+      rdf:type skos:ConceptScheme ;
+      rdfs:label "Geopolitical entity (reporting)"@en , "Entité géopolitique (déclarante)"@fr , "Geopolitische Meldeeinheit"@de ;
+      skos:hasTopConcept <http://eurostat.linked-statistics.org/dic/geo#LV0> , <http://eurostat.linked-statistics.org/dic/geo#EL1> , <http://eurostat.linked-statistics.org/dic/geo#FR25> , <http://eurostat.linked-statistics.org/dic/geo#TRB2> , <http://eurostat.linked-statistics.org/dic/geo#DEG> , <http://eurostat.linked-statistics.org/dic/geo#DE11> , <http://eurostat.linked-statistics.org/dic/geo#ES42> , <http://eurostat.linked-statistics.org/dic/geo#DE23> , <http://eurostat.linked-statistics.org/dic/geo#FRA2> , <http://eurostat.linked-statistics.org/dic/geo#ES30> , <http://eurostat.linked-statistics.org/dic/geo#FI20> , <http://eurostat.linked-statistics.org/dic/geo#TR10> , <http://eurostat.linked-statistics.org/dic/geo#CY0> , <http://eurostat.linked-statistics.org/dic/geo#TR22> , <http://eurostat.linked-statistics.org/dic/geo#PL22> , <http://eurostat.linked-statistics.org/dic/geo#RO22> , <http://eurostat.linked-statistics.org/dic/geo#DEB2> , <http://eurostat.linked-statistics.org/dic/geo#UKE2> , <http://eurostat.linked-statistics.org/dic/geo#PL34> , <http://eurostat.linked-statistics.org/dic/geo#CY00> , <http://eurostat.linked-statistics.org/dic/geo#FR24> , <http://eurostat.linked-statistics.org/dic/geo#TRB1> , <http://eurostat.linked-statistics.org/dic/geo#TRC3> , <http://eurostat.linked-statistics.org/dic/geo#PT18> , <http://eurostat.linked-statistics.org/dic/geo#SE12> , <http://eurostat.linked-statistics.org/dic/geo#DEF> , <http://eurostat.linked-statistics.org/dic/geo#ES53> , <http://eurostat.linked-statistics.org/dic/geo#ES41> , <http://eurostat.linked-statistics.org/dic/geo#DE12> , <http://eurostat.linked-statistics.org/dic/geo#DE24> , <http://eurostat.linked-statistics.org/dic/geo#TR21> , <http://eurostat.linked-statistics.org/dic/geo#TR33> , <http://eurostat.linked-statistics.org/dic/geo#FRA1> , <http://eurostat.linked-statistics.org/dic/geo#PL33> , <http://eurostat.linked-statistics.org/dic/geo#PL21> , <http://eurostat.linked-statistics.org/dic/geo#RO11> , <http://eurostat.linked-statistics.org/dic/geo#UKE3> , <http://eurostat.linked-statistics.org/dic/geo#DEB3> , <http://eurostat.linked-statistics.org/dic/geo#DEA1> , <http://eurostat.linked-statistics.org/dic/geo#UKD1> , <http://eurostat.linked-statistics.org/dic/geo#EL3> , <http://eurostat.linked-statistics.org/dic/geo#FR23> , <http://eurostat.linked-statistics.org/dic/geo#TRA2> , <http://eurostat.linked-statistics.org/dic/geo#PT17> , <http://eurostat.linked-statistics.org/dic/geo#LU0> , <http://eurostat.linked-statistics.org/dic/geo#ES64> , <http://eurostat.linked-statistics.org/dic/geo#RO2> , <http://eurostat.linked-statistics.org/dic/geo#ES52> , <http://eurostat.linked-statistics.org/dic/geo#PL2> , <http://eurostat.linked-statistics.org/dic/geo#TR2> , <http://eurostat.linked-statistics.org/dic/geo#PL32> , <http://eurostat.linked-statistics.org/dic/geo#RO12> , <http://eurostat.linked-statistics.org/dic/geo#UKF2> , <http://eurostat.linked-statistics.org/dic/geo#EE00> , <http://eurostat.linked-statistics.org/dic/geo#DED4> , <http://eurostat.linked-statistics.org/dic/geo#DEB1> , <http://eurostat.linked-statistics.org/dic/geo#PT> , <http://eurostat.linked-statistics.org/dic/geo#EL2> , <http://eurostat.linked-statistics.org/dic/geo#TRA1> , <http://eurostat.linked-statistics.org/dic/geo#FR22> , <http://eurostat.linked-statistics.org/dic/geo#CH0> , <http://eurostat.linked-statistics.org/dic/geo#FR10> , <http://eurostat.linked-statistics.org/dic/geo#PT16> , <http://eurostat.linked-statistics.org/dic/geo#DE21> , <http://eurostat.linked-statistics.org/dic/geo#DE22> , <http://eurostat.linked-statistics.org/dic/geo#ES63> , <http://eurostat.linked-statistics.org/dic/geo#PL1> , <http://eurostat.linked-statistics.org/dic/geo#ES51> , <http://eurostat.linked-statistics.org/dic/geo#CZ> , <http://eurostat.linked-statistics.org/dic/geo#RO1> , <http://eurostat.linked-statistics.org/dic/geo#TR1> , <http://eurostat.linked-statistics.org/dic/geo#IE> , <http://eurostat.linked-statistics.org/dic/geo#PL43> , <http://eurostat.linked-statistics.org/dic/geo#PL31> , <http://eurostat.linked-statistics.org/dic/geo#UKE1> , <http://eurostat.linked-statistics.org/dic/geo#DED5> , <http://eurostat.linked-statistics.org/dic/geo#UKF3> , <http://eurostat.linked-statistics.org/dic/geo#BG4> , <http://eurostat.linked-statistics.org/dic/geo#EL5> , <http://eurostat.linked-statistics.org/dic/geo#PT15> , <http://eurostat.linked-statistics.org/dic/geo#UKD> , <http://eurostat.linked-statistics.org/dic/geo#LT0> , <http://eurostat.linked-statistics.org/dic/geo#PL4> , <http://eurostat.linked-statistics.org/dic/geo#TR4> , <http://eurostat.linked-statistics.org/dic/geo#RO4> , <http://eurostat.linked-statistics.org/dic/geo#DE27> , <http://eurostat.linked-statistics.org/dic/geo#ES22> , <http://eurostat.linked-statistics.org/dic/geo#UKD4> , <http://eurostat.linked-statistics.org/dic/geo#UKC2> , <http://eurostat.linked-statistics.org/dic/geo#PL42> , <http://eurostat.linked-statistics.org/dic/geo#HU21> , <http://eurostat.linked-statistics.org/dic/geo#DEA4> , <http://eurostat.linked-statistics.org/dic/geo#HU33> , <http://eurostat.linked-statistics.org/dic/geo#BG3> , <http://eurostat.linked-statistics.org/dic/geo#CZ01> , <http://eurostat.linked-statistics.org/dic/geo#MT> , <http://eurostat.linked-statistics.org/dic/geo#EL4> , <http://eurostat.linked-statistics.org/dic/geo#UKC> , <http://eurostat.linked-statistics.org/dic/geo#TR3> , <http://eurostat.linked-statistics.org/dic/geo#PL3> , <http://eurostat.linked-statistics.org/dic/geo#RO3> , <http://eurostat.linked-statistics.org/dic/geo#ES21> , <http://eurostat.linked-statistics.org/dic/geo#HU10> , <http://eurostat.linked-statistics.org/dic/geo#DEA5> , <http://eurostat.linked-statistics.org/dic/geo#PL41> , <http://eurostat.linked-statistics.org/dic/geo#HU22> , <http://eurostat.linked-statistics.org/dic/geo#BE2> , <http://eurostat.linked-statistics.org/dic/geo#UKF> , <http://eurostat.linked-statistics.org/dic/geo#BE32> , <http://eurostat.linked-statistics.org/dic/geo#DE13> , <http://eurostat.linked-statistics.org/dic/geo#DE25> , <http://eurostat.linked-statistics.org/dic/geo#FRA4> , <http://eurostat.linked-statistics.org/dic/geo#AT2> , <http://eurostat.linked-statistics.org/dic/geo#TR6> , <http://eurostat.linked-statistics.org/dic/geo#UKE4> , <http://eurostat.linked-statistics.org/dic/geo#PL52> , <http://eurostat.linked-statistics.org/dic/geo#HU23> , <http://eurostat.linked-statistics.org/dic/geo#DEA2> , <http://eurostat.linked-statistics.org/dic/geo#PL6> , <http://eurostat.linked-statistics.org/dic/geo#BE1> , <http://eurostat.linked-statistics.org/dic/geo#FR26> , <http://eurostat.linked-statistics.org/dic/geo#EL6> , <http://eurostat.linked-statistics.org/dic/geo#UKE> , <http://eurostat.linked-statistics.org/dic/geo#BE31> , <http://eurostat.linked-statistics.org/dic/geo#FRA3> , <http://eurostat.linked-statistics.org/dic/geo#AT1> , <http://eurostat.linked-statistics.org/dic/geo#TR5> , <http://eurostat.linked-statistics.org/dic/geo#DE14> , <http://eurostat.linked-statistics.org/dic/geo#DE26> , <http://eurostat.linked-statistics.org/dic/geo#PL51> , <http://eurostat.linked-statistics.org/dic/geo#ES43> , <http://eurostat.linked-statistics.org/dic/geo#NO07> , <http://eurostat.linked-statistics.org/dic/geo#UKD3> , <http://eurostat.linked-statistics.org/dic/geo#PL63> , <http://eurostat.linked-statistics.org/dic/geo#DEA3> , <http://eurostat.linked-statistics.org/dic/geo#PL5> , <http://eurostat.linked-statistics.org/dic/geo#UKC1> , <http://eurostat.linked-statistics.org/dic/geo#EA19> , <http://eurostat.linked-statistics.org/dic/geo#AT33> , <http://eurostat.linked-statistics.org/dic/geo#AT21> , <http://eurostat.linked-statistics.org/dic/geo#ES7> , <http://eurostat.linked-statistics.org/dic/geo#PT11> , <http://eurostat.linked-statistics.org/dic/geo#DEE0> , <http://eurostat.linked-statistics.org/dic/geo#FR53> , <http://eurostat.linked-statistics.org/dic/geo#FR41> , <http://eurostat.linked-statistics.org/dic/geo#DK05> , <http://eurostat.linked-statistics.org/dic/geo#HU2> , <http://eurostat.linked-statistics.org/dic/geo#FR2> , <http://eurostat.linked-statistics.org/dic/geo#DE50> , <http://eurostat.linked-statistics.org/dic/geo#PL62> , <http://eurostat.linked-statistics.org/dic/geo#NO06> , <http://eurostat.linked-statistics.org/dic/geo#SE1> , <http://eurostat.linked-statistics.org/dic/geo#ES70> , <http://eurostat.linked-statistics.org/dic/geo#AT32> , <http://eurostat.linked-statistics.org/dic/geo#FR52> , <http://eurostat.linked-statistics.org/dic/geo#HU1> , <http://eurostat.linked-statistics.org/dic/geo#LV> , <http://eurostat.linked-statistics.org/dic/geo#ES6> , <http://eurostat.linked-statistics.org/dic/geo#FR1> , <http://eurostat.linked-statistics.org/dic/geo#PL61> , <http://eurostat.linked-statistics.org/dic/geo#NO05> , <http://eurostat.linked-statistics.org/dic/geo#HR03> , <http://eurostat.linked-statistics.org/dic/geo#FI> , <http://eurostat.linked-statistics.org/dic/geo#AT11> , <http://eurostat.linked-statistics.org/dic/geo#DE> , <http://eurostat.linked-statistics.org/dic/geo#EA17> , <http://eurostat.linked-statistics.org/dic/geo#DK03> , <http://eurostat.linked-statistics.org/dic/geo#DEF0> , <http://eurostat.linked-statistics.org/dic/geo#FR63> , <http://eurostat.linked-statistics.org/dic/geo#FI1D> , <http://eurostat.linked-statistics.org/dic/geo#FR51> , <http://eurostat.linked-statistics.org/dic/geo#LU> , <http://eurostat.linked-statistics.org/dic/geo#FR4> , <http://eurostat.linked-statistics.org/dic/geo#DE72> , <http://eurostat.linked-statistics.org/dic/geo#DE60> , <http://eurostat.linked-statistics.org/dic/geo#UKD6> , <http://eurostat.linked-statistics.org/dic/geo#HU31> , <http://eurostat.linked-statistics.org/dic/geo#NO04> , <http://eurostat.linked-statistics.org/dic/geo#HR04> , <http://eurostat.linked-statistics.org/dic/geo#AT34> , <http://eurostat.linked-statistics.org/dic/geo#AT22> , <http://eurostat.linked-statistics.org/dic/geo#EA18> , <http://eurostat.linked-statistics.org/dic/geo#PT20> , <http://eurostat.linked-statistics.org/dic/geo#SE3> , <http://eurostat.linked-statistics.org/dic/geo#LT> , <http://eurostat.linked-statistics.org/dic/geo#FI1C> , <http://eurostat.linked-statistics.org/dic/geo#DK04> , <http://eurostat.linked-statistics.org/dic/geo#FR62> , <http://eurostat.linked-statistics.org/dic/geo#FR3> , <http://eurostat.linked-statistics.org/dic/geo#HU3> , <http://eurostat.linked-statistics.org/dic/geo#DE73> , <http://eurostat.linked-statistics.org/dic/geo#UKD7> , <http://eurostat.linked-statistics.org/dic/geo#MK0> , <http://eurostat.linked-statistics.org/dic/geo#SE2> , <http://eurostat.linked-statistics.org/dic/geo#IE0> , <http://eurostat.linked-statistics.org/dic/geo#HU32> , <http://eurostat.linked-statistics.org/dic/geo#EE> , <http://eurostat.linked-statistics.org/dic/geo#NO03> , <http://eurostat.linked-statistics.org/dic/geo#DED2> , <http://eurostat.linked-statistics.org/dic/geo#DEC0> , <http://eurostat.linked-statistics.org/dic/geo#FR6> , <http://eurostat.linked-statistics.org/dic/geo#DK> , <http://eurostat.linked-statistics.org/dic/geo#BG> , <http://eurostat.linked-statistics.org/dic/geo#FR21> , <http://eurostat.linked-statistics.org/dic/geo#AT13> , <http://eurostat.linked-statistics.org/dic/geo#DEC> , <http://eurostat.linked-statistics.org/dic/geo#SI01> , <http://eurostat.linked-statistics.org/dic/geo#HR0> , <http://eurostat.linked-statistics.org/dic/geo#DE30> , <http://eurostat.linked-statistics.org/dic/geo#ES62> , <http://eurostat.linked-statistics.org/dic/geo#NL2> , <http://eurostat.linked-statistics.org/dic/geo#ITC1> , <http://eurostat.linked-statistics.org/dic/geo#NO02> , <http://eurostat.linked-statistics.org/dic/geo#AT12> , <http://eurostat.linked-statistics.org/dic/geo#PT30> , <http://eurostat.linked-statistics.org/dic/geo#FR5> , <http://eurostat.linked-statistics.org/dic/geo#EL> , <http://eurostat.linked-statistics.org/dic/geo#CH> , <http://eurostat.linked-statistics.org/dic/geo#IT> , <http://eurostat.linked-statistics.org/dic/geo#IS00> , <http://eurostat.linked-statistics.org/dic/geo#UKN0> , <http://eurostat.linked-statistics.org/dic/geo#HR> , <http://eurostat.linked-statistics.org/dic/geo#DEB> , <http://eurostat.linked-statistics.org/dic/geo#ES61> , <http://eurostat.linked-statistics.org/dic/geo#DEA> , <http://eurostat.linked-statistics.org/dic/geo#NL1> , <http://eurostat.linked-statistics.org/dic/geo#UK> , <http://eurostat.linked-statistics.org/dic/geo#ITC2> , <http://eurostat.linked-statistics.org/dic/geo#NO01> , <http://eurostat.linked-statistics.org/dic/geo#BE> , <http://eurostat.linked-statistics.org/dic/geo#FR8> , <http://eurostat.linked-statistics.org/dic/geo#SI03> , <http://eurostat.linked-statistics.org/dic/geo#DK0> , <http://eurostat.linked-statistics.org/dic/geo#FR43> , <http://eurostat.linked-statistics.org/dic/geo#DEE> , <http://eurostat.linked-statistics.org/dic/geo#IS> , <http://eurostat.linked-statistics.org/dic/geo#NL4> , <http://eurostat.linked-statistics.org/dic/geo#DE40> , <http://eurostat.linked-statistics.org/dic/geo#CZ0> , <http://eurostat.linked-statistics.org/dic/geo#ITC3> , <http://eurostat.linked-statistics.org/dic/geo#FR7> , <http://eurostat.linked-statistics.org/dic/geo#FR42> , <http://eurostat.linked-statistics.org/dic/geo#FR30> , <http://eurostat.linked-statistics.org/dic/geo#DED> , <http://eurostat.linked-statistics.org/dic/geo#IS0> , <http://eurostat.linked-statistics.org/dic/geo#SI02> , <http://eurostat.linked-statistics.org/dic/geo#SE> , <http://eurostat.linked-statistics.org/dic/geo#NL3> , <http://eurostat.linked-statistics.org/dic/geo#ITC4> , <http://eurostat.linked-statistics.org/dic/geo#TRA> , <http://eurostat.linked-statistics.org/dic/geo#FR81> , <http://eurostat.linked-statistics.org/dic/geo#EU28> , <http://eurostat.linked-statistics.org/dic/geo#ITF3> , <http://eurostat.linked-statistics.org/dic/geo#CH02> , <http://eurostat.linked-statistics.org/dic/geo#TR90> , <http://eurostat.linked-statistics.org/dic/geo#LV00> , <http://eurostat.linked-statistics.org/dic/geo#DE6> , <http://eurostat.linked-statistics.org/dic/geo#SI04> , <http://eurostat.linked-statistics.org/dic/geo#UKM2> , <http://eurostat.linked-statistics.org/dic/geo#EU15> , <http://eurostat.linked-statistics.org/dic/geo#FR> , <http://eurostat.linked-statistics.org/dic/geo#EU27> , <http://eurostat.linked-statistics.org/dic/geo#SK> , <http://eurostat.linked-statistics.org/dic/geo#DE91> , <http://eurostat.linked-statistics.org/dic/geo#DE5> , <http://eurostat.linked-statistics.org/dic/geo#ITF4> , <http://eurostat.linked-statistics.org/dic/geo#CH03> , <http://eurostat.linked-statistics.org/dic/geo#SI0> , <http://eurostat.linked-statistics.org/dic/geo#TRC> , <http://eurostat.linked-statistics.org/dic/geo#SK01> , <http://eurostat.linked-statistics.org/dic/geo#ES1> , <http://eurostat.linked-statistics.org/dic/geo#PT2> , <http://eurostat.linked-statistics.org/dic/geo#HU> , <http://eurostat.linked-statistics.org/dic/geo#ITG> , <http://eurostat.linked-statistics.org/dic/geo#ITF5> , <http://eurostat.linked-statistics.org/dic/geo#DE8> , <http://eurostat.linked-statistics.org/dic/geo#TRB> , <http://eurostat.linked-statistics.org/dic/geo#PT1> , <http://eurostat.linked-statistics.org/dic/geo#ITF> , <http://eurostat.linked-statistics.org/dic/geo#SI> , <http://eurostat.linked-statistics.org/dic/geo#ITF6> , <http://eurostat.linked-statistics.org/dic/geo#CH01> , <http://eurostat.linked-statistics.org/dic/geo#DE7> , <http://eurostat.linked-statistics.org/dic/geo#UKM5> , <http://eurostat.linked-statistics.org/dic/geo#FI1B> , <http://eurostat.linked-statistics.org/dic/geo#SK03> , <http://eurostat.linked-statistics.org/dic/geo#DEG0> , <http://eurostat.linked-statistics.org/dic/geo#UKK1> , <http://eurostat.linked-statistics.org/dic/geo#NO0> , <http://eurostat.linked-statistics.org/dic/geo#DK01> , <http://eurostat.linked-statistics.org/dic/geo#FR61> , <http://eurostat.linked-statistics.org/dic/geo#ES3> , <http://eurostat.linked-statistics.org/dic/geo#MK00> , <http://eurostat.linked-statistics.org/dic/geo#DE94> , <http://eurostat.linked-statistics.org/dic/geo#ITI> , <http://eurostat.linked-statistics.org/dic/geo#CH06> , <http://eurostat.linked-statistics.org/dic/geo#ITG1> , <http://eurostat.linked-statistics.org/dic/geo#ITH3> , <http://eurostat.linked-statistics.org/dic/geo#TR> , <http://eurostat.linked-statistics.org/dic/geo#TR82> , <http://eurostat.linked-statistics.org/dic/geo#NL13> , <http://eurostat.linked-statistics.org/dic/geo#SK02> , <http://eurostat.linked-statistics.org/dic/geo#UKK2> , <http://eurostat.linked-statistics.org/dic/geo#UKM6> , <http://eurostat.linked-statistics.org/dic/geo#DK02> , <http://eurostat.linked-statistics.org/dic/geo#PT3> , <http://eurostat.linked-statistics.org/dic/geo#ES2> , <http://eurostat.linked-statistics.org/dic/geo#FR72> , <http://eurostat.linked-statistics.org/dic/geo#LU00> , <http://eurostat.linked-statistics.org/dic/geo#ITH4> , <http://eurostat.linked-statistics.org/dic/geo#DE71> , <http://eurostat.linked-statistics.org/dic/geo#ITH> , <http://eurostat.linked-statistics.org/dic/geo#IE01> , <http://eurostat.linked-statistics.org/dic/geo#ITG2> , <http://eurostat.linked-statistics.org/dic/geo#CH07> , <http://eurostat.linked-statistics.org/dic/geo#DE9> , <http://eurostat.linked-statistics.org/dic/geo#TR81> , <http://eurostat.linked-statistics.org/dic/geo#NL12> , <http://eurostat.linked-statistics.org/dic/geo#AT31> , <http://eurostat.linked-statistics.org/dic/geo#UKM3> , <http://eurostat.linked-statistics.org/dic/geo#UKL1> , <http://eurostat.linked-statistics.org/dic/geo#FR71> , <http://eurostat.linked-statistics.org/dic/geo#FR83> , <http://eurostat.linked-statistics.org/dic/geo#ES5> , <http://eurostat.linked-statistics.org/dic/geo#ES> , <http://eurostat.linked-statistics.org/dic/geo#TR72> , <http://eurostat.linked-statistics.org/dic/geo#IE02> , <http://eurostat.linked-statistics.org/dic/geo#CH04> , <http://eurostat.linked-statistics.org/dic/geo#ITH5> , <http://eurostat.linked-statistics.org/dic/geo#DE92> , <http://eurostat.linked-statistics.org/dic/geo#DE80> , <http://eurostat.linked-statistics.org/dic/geo#ITF1> , <http://eurostat.linked-statistics.org/dic/geo#LT00> , <http://eurostat.linked-statistics.org/dic/geo#NL23> , <http://eurostat.linked-statistics.org/dic/geo#NL11> , <http://eurostat.linked-statistics.org/dic/geo#SK04> , <http://eurostat.linked-statistics.org/dic/geo#UKL2> , <http://eurostat.linked-statistics.org/dic/geo#FR82> , <http://eurostat.linked-statistics.org/dic/geo#ES4> , <http://eurostat.linked-statistics.org/dic/geo#TR83> , <http://eurostat.linked-statistics.org/dic/geo#ITF2> , <http://eurostat.linked-statistics.org/dic/geo#CH05> , <http://eurostat.linked-statistics.org/dic/geo#DE93> , <http://eurostat.linked-statistics.org/dic/geo#TR71> , <http://eurostat.linked-statistics.org/dic/geo#UKI1> , <http://eurostat.linked-statistics.org/dic/geo#NL34> , <http://eurostat.linked-statistics.org/dic/geo#NL22> , <http://eurostat.linked-statistics.org/dic/geo#UKJ3> , <http://eurostat.linked-statistics.org/dic/geo#BE10> , <http://eurostat.linked-statistics.org/dic/geo#BE22> , <http://eurostat.linked-statistics.org/dic/geo#CZ04> , <http://eurostat.linked-statistics.org/dic/geo#BE34> , <http://eurostat.linked-statistics.org/dic/geo#ITI1> , <http://eurostat.linked-statistics.org/dic/geo#TR62> , <http://eurostat.linked-statistics.org/dic/geo#UKH> , <http://eurostat.linked-statistics.org/dic/geo#EL51> , <http://eurostat.linked-statistics.org/dic/geo#EL63> , <http://eurostat.linked-statistics.org/dic/geo#TR8> , <http://eurostat.linked-statistics.org/dic/geo#NL33> , <http://eurostat.linked-statistics.org/dic/geo#UKJ4> , <http://eurostat.linked-statistics.org/dic/geo#BE3> , <http://eurostat.linked-statistics.org/dic/geo#NL21> , <http://eurostat.linked-statistics.org/dic/geo#UKI2> , <http://eurostat.linked-statistics.org/dic/geo#BE21> , <http://eurostat.linked-statistics.org/dic/geo#BE33> , <http://eurostat.linked-statistics.org/dic/geo#MT0> , <http://eurostat.linked-statistics.org/dic/geo#CZ05> , <http://eurostat.linked-statistics.org/dic/geo#TR61> , <http://eurostat.linked-statistics.org/dic/geo#ITI2> , <http://eurostat.linked-statistics.org/dic/geo#AT3> , <http://eurostat.linked-statistics.org/dic/geo#ES13> , <http://eurostat.linked-statistics.org/dic/geo#UKG> , <http://eurostat.linked-statistics.org/dic/geo#TR7> , <http://eurostat.linked-statistics.org/dic/geo#EL62> , <http://eurostat.linked-statistics.org/dic/geo#FRA> , <http://eurostat.linked-statistics.org/dic/geo#UKK3> , <http://eurostat.linked-statistics.org/dic/geo#UKJ1> , <http://eurostat.linked-statistics.org/dic/geo#NL32> , <http://eurostat.linked-statistics.org/dic/geo#FI2> , <http://eurostat.linked-statistics.org/dic/geo#BE24> , <http://eurostat.linked-statistics.org/dic/geo#BG42> , <http://eurostat.linked-statistics.org/dic/geo#CZ02> , <http://eurostat.linked-statistics.org/dic/geo#MT00> , <http://eurostat.linked-statistics.org/dic/geo#ITH1> , <http://eurostat.linked-statistics.org/dic/geo#TR52> , <http://eurostat.linked-statistics.org/dic/geo#SE31> , <http://eurostat.linked-statistics.org/dic/geo#ES24> , <http://eurostat.linked-statistics.org/dic/geo#ES12> , <http://eurostat.linked-statistics.org/dic/geo#ITI3> , <http://eurostat.linked-statistics.org/dic/geo#UKJ> , <http://eurostat.linked-statistics.org/dic/geo#PL> , <http://eurostat.linked-statistics.org/dic/geo#EL61> , <http://eurostat.linked-statistics.org/dic/geo#UKJ2> , <http://eurostat.linked-statistics.org/dic/geo#UKK4> , <http://eurostat.linked-statistics.org/dic/geo#NL31> , <http://eurostat.linked-statistics.org/dic/geo#FI1> , <http://eurostat.linked-statistics.org/dic/geo#BE35> , <http://eurostat.linked-statistics.org/dic/geo#BG41> , <http://eurostat.linked-statistics.org/dic/geo#CZ03> , <http://eurostat.linked-statistics.org/dic/geo#BE23> , <http://eurostat.linked-statistics.org/dic/geo#TR51> , <http://eurostat.linked-statistics.org/dic/geo#TR63> , <http://eurostat.linked-statistics.org/dic/geo#ES23> , <http://eurostat.linked-statistics.org/dic/geo#UKI> , <http://eurostat.linked-statistics.org/dic/geo#ES11> , <http://eurostat.linked-statistics.org/dic/geo#ITH2> , <http://eurostat.linked-statistics.org/dic/geo#ITI4> , <http://eurostat.linked-statistics.org/dic/geo#TR9> , <http://eurostat.linked-statistics.org/dic/geo#RO> , <http://eurostat.linked-statistics.org/dic/geo#RO41> , <http://eurostat.linked-statistics.org/dic/geo#UKG1> , <http://eurostat.linked-statistics.org/dic/geo#NO> , <http://eurostat.linked-statistics.org/dic/geo#NL42> , <http://eurostat.linked-statistics.org/dic/geo#BG32> , <http://eurostat.linked-statistics.org/dic/geo#CZ08> , <http://eurostat.linked-statistics.org/dic/geo#SE21> , <http://eurostat.linked-statistics.org/dic/geo#SE33> , <http://eurostat.linked-statistics.org/dic/geo#UKL> , <http://eurostat.linked-statistics.org/dic/geo#TR42> , <http://eurostat.linked-statistics.org/dic/geo#CY> , <http://eurostat.linked-statistics.org/dic/geo#DE2> , <http://eurostat.linked-statistics.org/dic/geo#EL43> , <http://eurostat.linked-statistics.org/dic/geo#RO42> , <http://eurostat.linked-statistics.org/dic/geo#UKG2> , <http://eurostat.linked-statistics.org/dic/geo#UKI6> , <http://eurostat.linked-statistics.org/dic/geo#DE1> , <http://eurostat.linked-statistics.org/dic/geo#NL41> , <http://eurostat.linked-statistics.org/dic/geo#BG31> , <http://eurostat.linked-statistics.org/dic/geo#BE25> , <http://eurostat.linked-statistics.org/dic/geo#SE32> , <http://eurostat.linked-statistics.org/dic/geo#UKK> , <http://eurostat.linked-statistics.org/dic/geo#AT> , <http://eurostat.linked-statistics.org/dic/geo#TR41> , <http://eurostat.linked-statistics.org/dic/geo#SK0> , <http://eurostat.linked-statistics.org/dic/geo#FI19> , <http://eurostat.linked-statistics.org/dic/geo#EL42> , <http://eurostat.linked-statistics.org/dic/geo#EL54> , <http://eurostat.linked-statistics.org/dic/geo#RO31> , <http://eurostat.linked-statistics.org/dic/geo#UKG3> , <http://eurostat.linked-statistics.org/dic/geo#UKF1> , <http://eurostat.linked-statistics.org/dic/geo#EL30> , <http://eurostat.linked-statistics.org/dic/geo#UKI7> , <http://eurostat.linked-statistics.org/dic/geo#MK> , <http://eurostat.linked-statistics.org/dic/geo#UKI3> , <http://eurostat.linked-statistics.org/dic/geo#UKH1> , <http://eurostat.linked-statistics.org/dic/geo#TRC2> , <http://eurostat.linked-statistics.org/dic/geo#CZ06> , <http://eurostat.linked-statistics.org/dic/geo#SE11> , <http://eurostat.linked-statistics.org/dic/geo#SE23> , <http://eurostat.linked-statistics.org/dic/geo#BG34> , <http://eurostat.linked-statistics.org/dic/geo#UKN> , <http://eurostat.linked-statistics.org/dic/geo#TR32> , <http://eurostat.linked-statistics.org/dic/geo#DE4> , <http://eurostat.linked-statistics.org/dic/geo#EL53> , <http://eurostat.linked-statistics.org/dic/geo#EL65> , <http://eurostat.linked-statistics.org/dic/geo#EL41> , <http://eurostat.linked-statistics.org/dic/geo#UKI4> , <http://eurostat.linked-statistics.org/dic/geo#RO32> , <http://eurostat.linked-statistics.org/dic/geo#ITC> , <http://eurostat.linked-statistics.org/dic/geo#PL12> , <http://eurostat.linked-statistics.org/dic/geo#NL> , <http://eurostat.linked-statistics.org/dic/geo#UKH2> , <http://eurostat.linked-statistics.org/dic/geo#TRC1> , <http://eurostat.linked-statistics.org/dic/geo#EE0> , <http://eurostat.linked-statistics.org/dic/geo#CZ07> , <http://eurostat.linked-statistics.org/dic/geo#SE22> , <http://eurostat.linked-statistics.org/dic/geo#BG33> , <http://eurostat.linked-statistics.org/dic/geo#UKM> , <http://eurostat.linked-statistics.org/dic/geo#TR31> , <http://eurostat.linked-statistics.org/dic/geo#PL11> , <http://eurostat.linked-statistics.org/dic/geo#DE3> , <http://eurostat.linked-statistics.org/dic/geo#EL64> , <http://eurostat.linked-statistics.org/dic/geo#UKI5> , <http://eurostat.linked-statistics.org/dic/geo#UKH3> , <http://eurostat.linked-statistics.org/dic/geo#EL52> , <http://eurostat.linked-statistics.org/dic/geo#RO21> ;
+      skos:notation "cl_geo" .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL22" ;
+      skos:prefLabel "Slaskie"@fr , "Slaskie"@en , "Slaskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO22" ;
+      skos:prefLabel "Sud-Est"@fr , "Sud-Est"@en , "Sud-Est"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEB2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEB2" ;
+      skos:prefLabel "Trier"@fr , "Trier"@en , "Trier"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL34>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL34" ;
+      skos:prefLabel "Podlaskie"@fr , "Podlaskie"@en , "Podlaskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKE2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKE2" ;
+      skos:prefLabel "North Yorkshire"@fr , "North Yorkshire"@en , "North Yorkshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CY00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CY00" ;
+      skos:prefLabel "Kypros"@fr , "Kypros"@en , "Kypros"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR24>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR24" ;
+      skos:prefLabel "Centre (FR)"@fr , "Centre (FR)"@en , "Centre (FR)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRB1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRB1" ;
+      skos:prefLabel "Malatya, Elazig, Bingöl, Tunceli"@fr , "Malatya, Elazig, Bingöl, Tunceli"@en , "Malatya, Elazig, Bingöl, Tunceli"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRC3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRC3" ;
+      skos:prefLabel "Mardin, Batman, Sirnak, Siirt"@fr , "Mardin, Batman, Sirnak, Siirt"@en , "Mardin, Batman, Sirnak, Siirt"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT18>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT18" ;
+      skos:prefLabel "Alentejo"@fr , "Alentejo"@en , "Alentejo"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#i>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "i" ;
+      skos:prefLabel "voir métadonnées (bientôt supprimé)"@fr , "see metadata (phased out)"@en , "siehe Metadaten (in Zukunft nicht mehr verwendet)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE12>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE12" ;
+      skos:prefLabel "Östra Mellansverige"@fr , "Östra Mellansverige"@en , "Östra Mellansverige"@de .
+
+<http://eurostat.linked-statistics.org/dic/sex#F>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:sex ;
+      skos:notation "F" ;
+      skos:prefLabel "Femmes"@fr , "Females"@en , "Frauen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEF>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEF" ;
+      skos:prefLabel "Schleswig-Holstein"@fr , "Schleswig-Holstein"@en , "Schleswig-Holstein"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES53>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES53" ;
+      skos:prefLabel "Illes Balears"@fr , "Illes Balears"@en , "Illes Balears"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES41" ;
+      skos:prefLabel "Castilla y León"@fr , "Castilla y León"@en , "Castilla y León"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE12>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE12" ;
+      skos:prefLabel "Karlsruhe"@fr , "Karlsruhe"@en , "Karlsruhe"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE24>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE24" ;
+      skos:prefLabel "Oberfranken"@fr , "Oberfranken"@en , "Oberfranken"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR21" ;
+      skos:prefLabel "Tekirdag, Edirne, Kirklareli"@fr , "Tekirdag, Edirne, Kirklareli"@en , "Tekirdag, Edirne, Kirklareli"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR33" ;
+      skos:prefLabel "Manisa, Afyonkarahisar, Kütahya, Usak"@fr , "Manisa, Afyonkarahisar, Kütahya, Usak"@en , "Manisa, Afyonkarahisar, Kütahya, Usak"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FRA1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FRA1" ;
+      skos:prefLabel "Guadeloupe"@fr , "Guadeloupe"@en , "Guadeloupe"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL33" ;
+      skos:prefLabel "Swietokrzyskie"@fr , "Swietokrzyskie"@en , "Swietokrzyskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL21" ;
+      skos:prefLabel "Malopolskie"@fr , "Malopolskie"@en , "Malopolskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO11" ;
+      skos:prefLabel "Nord-Vest"@fr , "Nord-Vest"@en , "Nord-Vest"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEB3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEB3" ;
+      skos:prefLabel "Rheinhessen-Pfalz"@fr , "Rheinhessen-Pfalz"@en , "Rheinhessen-Pfalz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKE3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKE3" ;
+      skos:prefLabel "South Yorkshire"@fr , "South Yorkshire"@en , "South Yorkshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEA1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEA1" ;
+      skos:prefLabel "Düsseldorf"@fr , "Düsseldorf"@en , "Düsseldorf"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKD1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKD1" ;
+      skos:prefLabel "Cumbria"@fr , "Cumbria"@en , "Cumbria"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL3" ;
+      skos:prefLabel "Attiki"@fr , "Attiki"@en , "Attiki"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR23>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR23" ;
+      skos:prefLabel "Haute-Normandie"@fr , "Haute-Normandie"@en , "Haute-Normandie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRA2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRA2" ;
+      skos:prefLabel "Agri, Kars, Igdir, Ardahan"@fr , "Agri, Kars, Igdir, Ardahan"@en , "Agri, Kars, Igdir, Ardahan"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT17>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT17" ;
+      skos:prefLabel "Área Metropolitana de Lisboa"@fr , "Área Metropolitana de Lisboa"@en , "Área Metropolitana de Lisboa"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LU0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LU0" ;
+      skos:prefLabel "Luxemburg"@de , "Luxembourg"@fr , "Luxembourg"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES64>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES64" ;
+      skos:prefLabel "Ciudad Autónoma de Melilla (ES)"@fr , "Ciudad Autónoma de Melilla (ES)"@en , "Ciudad Autónoma de Melilla (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO2" ;
+      skos:prefLabel "Macroregiunea doi"@fr , "Macroregiunea doi"@en , "Macroregiunea doi"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES52>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES52" ;
+      skos:prefLabel "Comunidad Valenciana"@fr , "Comunidad Valenciana"@en , "Comunidad Valenciana"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL2" ;
+      skos:prefLabel "Region Poludniowy"@fr , "Region Poludniowy"@en , "Region Poludniowy"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR2" ;
+      skos:prefLabel "Bati Marmara"@fr , "Bati Marmara"@en , "Bati Marmara"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL32" ;
+      skos:prefLabel "Podkarpackie"@fr , "Podkarpackie"@en , "Podkarpackie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO12>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO12" ;
+      skos:prefLabel "Centru"@fr , "Centru"@en , "Centru"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKF2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKF2" ;
+      skos:prefLabel "Leicestershire, Rutland and Northamptonshire"@fr , "Leicestershire, Rutland and Northamptonshire"@en , "Leicestershire, Rutland and Northamptonshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EE00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EE00" ;
+      skos:prefLabel "Eesti"@fr , "Eesti"@en , "Eesti"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DED4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DED4" ;
+      skos:prefLabel "Chemnitz"@fr , "Chemnitz"@en , "Chemnitz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEB1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEB1" ;
+      skos:prefLabel "Koblenz"@fr , "Koblenz"@en , "Koblenz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL2" ;
+      skos:prefLabel "Kentriki Ellada (NUTS 2010)"@fr , "Kentriki Ellada (NUTS 2010)"@en , "Kentriki Ellada (NUTS 2010)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT" ;
+      skos:prefLabel "Portugal"@fr , "Portugal"@en , "Portugal"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRA1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRA1" ;
+      skos:prefLabel "Erzurum, Erzincan, Bayburt"@fr , "Erzurum, Erzincan, Bayburt"@en , "Erzurum, Erzincan, Bayburt"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH0" ;
+      skos:prefLabel "Schweiz/Suisse/Svizzera"@fr , "Schweiz/Suisse/Svizzera"@en , "Schweiz/Suisse/Svizzera"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR22" ;
+      skos:prefLabel "Picardie"@fr , "Picardie"@en , "Picardie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR10>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR10" ;
+      skos:prefLabel "Île de France"@fr , "Île de France"@en , "Île de France"@de .
+
+dic:age
+      rdf:type skos:ConceptScheme ;
+      rdfs:label "Age class"@en , "Classe d'âge"@fr , "Altersklasse"@de ;
+      skos:hasTopConcept <http://eurostat.linked-statistics.org/dic/age#Y25-64> ;
+      skos:notation "cl_age" .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT16>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT16" ;
+      skos:prefLabel "Centro (PT)"@fr , "Centro (PT)"@en , "Centro (PT)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE21" ;
+      skos:prefLabel "Oberbayern"@fr , "Oberbayern"@en , "Oberbayern"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE22" ;
+      skos:prefLabel "Niederbayern"@fr , "Niederbayern"@en , "Niederbayern"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES63>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES63" ;
+      skos:prefLabel "Ciudad Autónoma de Ceuta (ES)"@fr , "Ciudad Autónoma de Ceuta (ES)"@en , "Ciudad Autónoma de Ceuta (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES51>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES51" ;
+      skos:prefLabel "Cataluña"@fr , "Cataluña"@en , "Cataluña"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL1" ;
+      skos:prefLabel "Region Centralny"@fr , "Region Centralny"@en , "Region Centralny"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ" ;
+      skos:prefLabel "Czech Republic"@en , "Tschechische Republik"@de , "République tchèque"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO1" ;
+      skos:prefLabel "Macroregiunea unu"@fr , "Macroregiunea unu"@en , "Macroregiunea unu"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR1" ;
+      skos:prefLabel "Istanbul"@fr , "Istanbul"@en , "Istanbul"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#IE>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IE" ;
+      skos:prefLabel "Irland"@de , "Ireland"@en , "Irlande"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL43>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL43" ;
+      skos:prefLabel "Lubuskie"@fr , "Lubuskie"@en , "Lubuskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL31" ;
+      skos:prefLabel "Lubelskie"@fr , "Lubelskie"@en , "Lubelskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKE1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKE1" ;
+      skos:prefLabel "East Yorkshire and Northern Lincolnshire"@fr , "East Yorkshire and Northern Lincolnshire"@en , "East Yorkshire and Northern Lincolnshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DED5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DED5" ;
+      skos:prefLabel "Leipzig"@fr , "Leipzig"@en , "Leipzig"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKF3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKF3" ;
+      skos:prefLabel "Lincolnshire"@fr , "Lincolnshire"@en , "Lincolnshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG4" ;
+      skos:prefLabel "Yugozapadna i yuzhna tsentralna Bulgaria"@fr , "Yugozapadna i yuzhna tsentralna Bulgaria"@en , "Yugozapadna i yuzhna tsentralna Bulgaria"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL5" ;
+      skos:prefLabel "Voreia Ellada"@fr , "Voreia Ellada"@en , "Voreia Ellada"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT15>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT15" ;
+      skos:prefLabel "Algarve"@fr , "Algarve"@en , "Algarve"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKD>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKD" ;
+      skos:prefLabel "North West (UK)"@fr , "North West (UK)"@en , "North West (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LT0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LT0" ;
+      skos:prefLabel "Lietuva"@fr , "Lietuva"@en , "Lietuva"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL4" ;
+      skos:prefLabel "Region Pólnocno-Zachodni"@fr , "Region Pólnocno-Zachodni"@en , "Region Pólnocno-Zachodni"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR4" ;
+      skos:prefLabel "Dogu Marmara"@fr , "Dogu Marmara"@en , "Dogu Marmara"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#c>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "c" ;
+      skos:prefLabel "confidentiel"@fr , "confidential"@en , "vertraulich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO4" ;
+      skos:prefLabel "Macroregiunea patru"@fr , "Macroregiunea patru"@en , "Macroregiunea patru"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE27>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE27" ;
+      skos:prefLabel "Schwaben"@fr , "Schwaben"@en , "Schwaben"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES22" ;
+      skos:prefLabel "Comunidad Foral de Navarra"@fr , "Comunidad Foral de Navarra"@en , "Comunidad Foral de Navarra"@de .
+
+property:sex
+      rdf:type qb:DimensionProperty , qb:CodedProperty ;
+      rdfs:domain qb:Observation ;
+      rdfs:range skos:Concept ;
+      qb:codeList dic:sex ;
+      qb:concept concept:sex .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKD4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKD4" ;
+      skos:prefLabel "Lancashire"@fr , "Lancashire"@en , "Lancashire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKC2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKC2" ;
+      skos:prefLabel "Northumberland and Tyne and Wear"@fr , "Northumberland and Tyne and Wear"@en , "Northumberland and Tyne and Wear"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL42" ;
+      skos:prefLabel "Zachodniopomorskie"@fr , "Zachodniopomorskie"@en , "Zachodniopomorskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU21" ;
+      skos:prefLabel "Közép-Dunántúl"@fr , "Közép-Dunántúl"@en , "Közép-Dunántúl"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU33" ;
+      skos:prefLabel "Dél-Alföld"@fr , "Dél-Alföld"@en , "Dél-Alföld"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEA4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEA4" ;
+      skos:prefLabel "Detmold"@fr , "Detmold"@en , "Detmold"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG3" ;
+      skos:prefLabel "Severna i yugoiztochna Bulgaria"@fr , "Severna i yugoiztochna Bulgaria"@en , "Severna i yugoiztochna Bulgaria"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ01>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ01" ;
+      skos:prefLabel "Praha"@fr , "Praha"@en , "Praha"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#MT>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "MT" ;
+      skos:prefLabel "Malta"@en , "Malta"@de , "Malte"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL4" ;
+      skos:prefLabel "Nisia Aigaiou, Kriti"@fr , "Nisia Aigaiou, Kriti"@en , "Nisia Aigaiou, Kriti"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKC>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKC" ;
+      skos:prefLabel "North East (UK)"@fr , "North East (UK)"@en , "North East (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#e>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "e" ;
+      skos:prefLabel "estimé"@fr , "geschätzt"@de , "estimated"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL3" ;
+      skos:prefLabel "Region Wschodni"@fr , "Region Wschodni"@en , "Region Wschodni"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#d>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "d" ;
+      skos:prefLabel "definition differs (see metadata)"@en , "définition différente (voir métadonnées)"@fr , "abweichende Definition (siehe Metadaten)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO3" ;
+      skos:prefLabel "Macroregiunea trei"@fr , "Macroregiunea trei"@en , "Macroregiunea trei"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR3" ;
+      skos:prefLabel "Ege"@fr , "Ege"@en , "Ege"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES21" ;
+      skos:prefLabel "País Vasco"@fr , "País Vasco"@en , "País Vasco"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL41" ;
+      skos:prefLabel "Wielkopolskie"@fr , "Wielkopolskie"@en , "Wielkopolskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU10>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU10" ;
+      skos:prefLabel "Közép-Magyarország"@fr , "Közép-Magyarország"@en , "Közép-Magyarország"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEA5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEA5" ;
+      skos:prefLabel "Arnsberg"@fr , "Arnsberg"@en , "Arnsberg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU22" ;
+      skos:prefLabel "Nyugat-Dunántúl"@fr , "Nyugat-Dunántúl"@en , "Nyugat-Dunántúl"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE2" ;
+      skos:prefLabel "Vlaams Gewest"@fr , "Vlaams Gewest"@en , "Vlaams Gewest"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKF>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKF" ;
+      skos:prefLabel "East Midlands (UK)"@fr , "East Midlands (UK)"@en , "East Midlands (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE32" ;
+      skos:prefLabel "Prov. Hainaut"@fr , "Prov. Hainaut"@en , "Prov. Hainaut"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#f>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "f" ;
+      skos:prefLabel "forecast"@en , "Prognose"@de , "prévision"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE13>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE13" ;
+      skos:prefLabel "Freiburg"@fr , "Freiburg"@en , "Freiburg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT2" ;
+      skos:prefLabel "Südösterreich"@fr , "Südösterreich"@en , "Südösterreich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FRA4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FRA4" ;
+      skos:prefLabel "La Réunion"@fr , "La Réunion"@en , "La Réunion"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR6" ;
+      skos:prefLabel "Akdeniz"@fr , "Akdeniz"@en , "Akdeniz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE25>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE25" ;
+      skos:prefLabel "Mittelfranken"@fr , "Mittelfranken"@en , "Mittelfranken"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKE4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKE4" ;
+      skos:prefLabel "West Yorkshire"@fr , "West Yorkshire"@en , "West Yorkshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL52>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL52" ;
+      skos:prefLabel "Opolskie"@fr , "Opolskie"@en , "Opolskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU23>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU23" ;
+      skos:prefLabel "Dél-Dunántúl"@fr , "Dél-Dunántúl"@en , "Dél-Dunántúl"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEA2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEA2" ;
+      skos:prefLabel "Köln"@fr , "Köln"@en , "Köln"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL6" ;
+      skos:prefLabel "Region Pólnocny"@fr , "Region Pólnocny"@en , "Region Pólnocny"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE1" ;
+      skos:prefLabel "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest"@fr , "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest"@en , "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR26>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR26" ;
+      skos:prefLabel "Bourgogne"@fr , "Bourgogne"@en , "Bourgogne"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL6" ;
+      skos:prefLabel "Kentriki Ellada"@fr , "Kentriki Ellada"@en , "Kentriki Ellada"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKE>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKE" ;
+      skos:prefLabel "Yorkshire and The Humber"@fr , "Yorkshire and The Humber"@en , "Yorkshire and The Humber"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE31" ;
+      skos:prefLabel "Prov. Brabant Wallon"@fr , "Prov. Brabant Wallon"@en , "Prov. Brabant Wallon"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT1" ;
+      skos:prefLabel "Ostösterreich"@fr , "Ostösterreich"@en , "Ostösterreich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FRA3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FRA3" ;
+      skos:prefLabel "Guyane"@fr , "Guyane"@en , "Guyane"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR5" ;
+      skos:prefLabel "Bati Anadolu"@fr , "Bati Anadolu"@en , "Bati Anadolu"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE14>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE14" ;
+      skos:prefLabel "Tübingen"@fr , "Tübingen"@en , "Tübingen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL51>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL51" ;
+      skos:prefLabel "Dolnoslaskie"@fr , "Dolnoslaskie"@en , "Dolnoslaskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE26>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE26" ;
+      skos:prefLabel "Unterfranken"@fr , "Unterfranken"@en , "Unterfranken"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES43>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES43" ;
+      skos:prefLabel "Extremadura"@fr , "Extremadura"@en , "Extremadura"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKD3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKD3" ;
+      skos:prefLabel "Greater Manchester"@fr , "Greater Manchester"@en , "Greater Manchester"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO07>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO07" ;
+      skos:prefLabel "Nord-Norge"@fr , "Nord-Norge"@en , "Nord-Norge"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL63>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL63" ;
+      skos:prefLabel "Pomorskie"@fr , "Pomorskie"@en , "Pomorskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEA3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEA3" ;
+      skos:prefLabel "Münster"@fr , "Münster"@en , "Münster"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKC1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKC1" ;
+      skos:prefLabel "Tees Valley and Durham"@fr , "Tees Valley and Durham"@en , "Tees Valley and Durham"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL5" ;
+      skos:prefLabel "Region Poludniowo-Zachodni"@fr , "Region Poludniowo-Zachodni"@en , "Region Poludniowo-Zachodni"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EA19>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EA19" ;
+      skos:prefLabel "Euroraum (19 Länder)"@de , "Zone euro (19 pays)"@fr , "Euro area (19 countries)"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT33" ;
+      skos:prefLabel "Tirol"@fr , "Tirol"@en , "Tirol"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT21" ;
+      skos:prefLabel "Kärnten"@fr , "Kärnten"@en , "Kärnten"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT11" ;
+      skos:prefLabel "Norte"@fr , "Norte"@en , "Norte"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES7>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES7" ;
+      skos:prefLabel "Canarias (ES)"@fr , "Canarias (ES)"@en , "Canarias (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#p>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "p" ;
+      skos:prefLabel "provisoire"@fr , "provisional"@en , "vorläufig"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEE0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEE0" ;
+      skos:prefLabel "Sachsen-Anhalt"@fr , "Sachsen-Anhalt"@en , "Sachsen-Anhalt"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR53>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR53" ;
+      skos:prefLabel "Poitou-Charentes"@fr , "Poitou-Charentes"@en , "Poitou-Charentes"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR41" ;
+      skos:prefLabel "Lorraine"@fr , "Lorraine"@en , "Lorraine"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DK05>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DK05" ;
+      skos:prefLabel "Nordjylland"@fr , "Nordjylland"@en , "Nordjylland"@de .
+
+property:age
+      rdf:type qb:DimensionProperty , qb:CodedProperty ;
+      rdfs:domain qb:Observation ;
+      rdfs:range skos:Concept ;
+      qb:codeList dic:age ;
+      qb:concept concept:age .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU2" ;
+      skos:prefLabel "Dunántúl"@fr , "Dunántúl"@en , "Dunántúl"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR2" ;
+      skos:prefLabel "Bassin Parisien"@fr , "Bassin Parisien"@en , "Bassin Parisien"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE50>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE50" ;
+      skos:prefLabel "Bremen"@fr , "Bremen"@en , "Bremen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL62>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL62" ;
+      skos:prefLabel "Warminsko-Mazurskie"@fr , "Warminsko-Mazurskie"@en , "Warminsko-Mazurskie"@de .
+
+property:geo
+      rdf:type qb:DimensionProperty , qb:CodedProperty ;
+      rdfs:domain qb:Observation ;
+      rdfs:range skos:Concept ;
+      qb:codeList dic:geo ;
+      qb:concept concept:geo .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO06>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO06" ;
+      skos:prefLabel "Trøndelag"@fr , "Trøndelag"@en , "Trøndelag"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE1" ;
+      skos:prefLabel "Östra Sverige"@fr , "Östra Sverige"@en , "Östra Sverige"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES70>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES70" ;
+      skos:prefLabel "Canarias (ES)"@fr , "Canarias (ES)"@en , "Canarias (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT32" ;
+      skos:prefLabel "Salzburg"@fr , "Salzburg"@en , "Salzburg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR52>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR52" ;
+      skos:prefLabel "Bretagne"@fr , "Bretagne"@en , "Bretagne"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU1" ;
+      skos:prefLabel "Közép-Magyarország"@fr , "Közép-Magyarország"@en , "Közép-Magyarország"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LV>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LV" ;
+      skos:prefLabel "Lettonie"@fr , "Lettland"@de , "Latvia"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES6" ;
+      skos:prefLabel "Sur (ES)"@fr , "Sur (ES)"@en , "Sur (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR1" ;
+      skos:prefLabel "Île de France"@fr , "Île de France"@en , "Île de France"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL61>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL61" ;
+      skos:prefLabel "Kujawsko-Pomorskie"@fr , "Kujawsko-Pomorskie"@en , "Kujawsko-Pomorskie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO05>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO05" ;
+      skos:prefLabel "Vestlandet"@fr , "Vestlandet"@en , "Vestlandet"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HR03>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HR03" ;
+      skos:prefLabel "Jadranska Hrvatska"@fr , "Jadranska Hrvatska"@en , "Jadranska Hrvatska"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI" ;
+      skos:prefLabel "Finnland"@de , "Finlande"@fr , "Finland"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT11" ;
+      skos:prefLabel "Burgenland (AT)"@fr , "Burgenland (AT)"@en , "Burgenland (AT)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE" ;
+      skos:prefLabel "Allemagne (jusqu'en 1990, ancien territoire de la RFA)"@fr , "Germany (until 1990 former territory of the FRG)"@en , "Deutschland (bis 1990 früheres Gebiet der BRD)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EA17>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EA17" ;
+      skos:prefLabel "Zone euro (17 pays)"@fr , "Euro area (17 countries)"@en , "Euroraum (17 Länder)"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#r>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "r" ;
+      skos:prefLabel "revised"@en , "revidiert"@de , "révisé"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#DK03>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DK03" ;
+      skos:prefLabel "Syddanmark"@fr , "Syddanmark"@en , "Syddanmark"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEF0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEF0" ;
+      skos:prefLabel "Schleswig-Holstein"@fr , "Schleswig-Holstein"@en , "Schleswig-Holstein"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR63>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR63" ;
+      skos:prefLabel "Limousin"@fr , "Limousin"@en , "Limousin"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI1D>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI1D" ;
+      skos:prefLabel "Pohjois- ja Itä-Suomi"@fr , "Pohjois- ja Itä-Suomi"@en , "Pohjois- ja Itä-Suomi"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR51>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR51" ;
+      skos:prefLabel "Pays de la Loire"@fr , "Pays de la Loire"@en , "Pays de la Loire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LU>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LU" ;
+      skos:prefLabel "Luxemburg"@de , "Luxembourg"@fr , "Luxembourg"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR4" ;
+      skos:prefLabel "Est (FR)"@fr , "Est (FR)"@en , "Est (FR)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE72>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE72" ;
+      skos:prefLabel "Gießen"@fr , "Gießen"@en , "Gießen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE60>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE60" ;
+      skos:prefLabel "Hamburg"@fr , "Hamburg"@en , "Hamburg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU31" ;
+      skos:prefLabel "Észak-Magyarország"@fr , "Észak-Magyarország"@en , "Észak-Magyarország"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO04>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO04" ;
+      skos:prefLabel "Agder og Rogaland"@fr , "Agder og Rogaland"@en , "Agder og Rogaland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKD6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKD6" ;
+      skos:prefLabel "Cheshire"@fr , "Cheshire"@en , "Cheshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HR04>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HR04" ;
+      skos:prefLabel "Kontinentalna Hrvatska"@fr , "Kontinentalna Hrvatska"@en , "Kontinentalna Hrvatska"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT34>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT34" ;
+      skos:prefLabel "Vorarlberg"@fr , "Vorarlberg"@en , "Vorarlberg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT22" ;
+      skos:prefLabel "Steiermark"@fr , "Steiermark"@en , "Steiermark"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EA18>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EA18" ;
+      skos:prefLabel "Zone euro (18 pays)"@fr , "Euro area (18 countries)"@en , "Euroraum (18 Länder)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT20>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT20" ;
+      skos:prefLabel "Região Autónoma dos Açores (PT)"@fr , "Região Autónoma dos Açores (PT)"@en , "Região Autónoma dos Açores (PT)"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#s>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "s" ;
+      skos:prefLabel "Eurostat estimate (phased out)"@en , "Eurostat Schätzung (in Zukunft nicht mehr verwendet)"@de , "estimation Eurostat (cet attribut sera bientôt supprimé)"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE3" ;
+      skos:prefLabel "Norra Sverige"@fr , "Norra Sverige"@en , "Norra Sverige"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LT>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LT" ;
+      skos:prefLabel "Lithuania"@en , "Lituanie"@fr , "Litauen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI1C>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI1C" ;
+      skos:prefLabel "Etelä-Suomi"@fr , "Etelä-Suomi"@en , "Etelä-Suomi"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DK04>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DK04" ;
+      skos:prefLabel "Midtjylland"@fr , "Midtjylland"@en , "Midtjylland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR62>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR62" ;
+      skos:prefLabel "Midi-Pyrénées"@fr , "Midi-Pyrénées"@en , "Midi-Pyrénées"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR3" ;
+      skos:prefLabel "Nord - Pas-de-Calais"@fr , "Nord - Pas-de-Calais"@en , "Nord - Pas-de-Calais"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU3" ;
+      skos:prefLabel "Alföld és Észak"@fr , "Alföld és Észak"@en , "Alföld és Észak"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE73>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE73" ;
+      skos:prefLabel "Kassel"@fr , "Kassel"@en , "Kassel"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKD7>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKD7" ;
+      skos:prefLabel "Merseyside"@fr , "Merseyside"@en , "Merseyside"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#MK0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "MK0" ;
+      skos:prefLabel "Poranesna jugoslovenska Republika Makedonija"@fr , "Poranesna jugoslovenska Republika Makedonija"@en , "Poranesna jugoslovenska Republika Makedonija"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#IE0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IE0" ;
+      skos:prefLabel "Éire/Ireland"@fr , "Éire/Ireland"@en , "Éire/Ireland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE2" ;
+      skos:prefLabel "Södra Sverige"@fr , "Södra Sverige"@en , "Södra Sverige"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU32" ;
+      skos:prefLabel "Észak-Alföld"@fr , "Észak-Alföld"@en , "Észak-Alföld"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO03>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO03" ;
+      skos:prefLabel "Sør-Østlandet"@fr , "Sør-Østlandet"@en , "Sør-Østlandet"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EE>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EE" ;
+      skos:prefLabel "Estonie"@fr , "Estland"@de , "Estonia"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#DED2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DED2" ;
+      skos:prefLabel "Dresden"@fr , "Dresden"@en , "Dresden"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEC0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEC0" ;
+      skos:prefLabel "Saarland"@fr , "Saarland"@en , "Saarland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR6" ;
+      skos:prefLabel "Sud-Ouest (FR)"@fr , "Sud-Ouest (FR)"@en , "Sud-Ouest (FR)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DK>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DK" ;
+      skos:prefLabel "Dänemark"@de , "Danemark"@fr , "Denmark"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG" ;
+      skos:prefLabel "Bulgaria"@en , "Bulgarien"@de , "Bulgarie"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR21" ;
+      skos:prefLabel "Champagne-Ardenne"@fr , "Champagne-Ardenne"@en , "Champagne-Ardenne"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT13>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT13" ;
+      skos:prefLabel "Wien"@fr , "Wien"@en , "Wien"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEC>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEC" ;
+      skos:prefLabel "Saarland"@fr , "Saarland"@en , "Saarland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SI01>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SI01" ;
+      skos:prefLabel "Vzhodna Slovenija (NUTS 2010)"@fr , "Vzhodna Slovenija (NUTS 2010)"@en , "Vzhodna Slovenija (NUTS 2010)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HR0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HR0" ;
+      skos:prefLabel "Hrvatska"@fr , "Hrvatska"@en , "Hrvatska"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE30>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE30" ;
+      skos:prefLabel "Berlin"@fr , "Berlin"@en , "Berlin"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES62>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES62" ;
+      skos:prefLabel "Región de Murcia"@fr , "Región de Murcia"@en , "Región de Murcia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL2" ;
+      skos:prefLabel "Oost-Nederland"@fr , "Oost-Nederland"@en , "Oost-Nederland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITC1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITC1" ;
+      skos:prefLabel "Piemonte"@fr , "Piemonte"@en , "Piemonte"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO02>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO02" ;
+      skos:prefLabel "Hedmark og Oppland"@fr , "Hedmark og Oppland"@en , "Hedmark og Oppland"@de .
+
+concept:time_format
+      rdf:type sdmx:Concept ;
+      skos:inScheme concept: ;
+      skos:notation "time_format" ;
+      skos:prefLabel "Time Format"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT30>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT30" ;
+      skos:prefLabel "Região Autónoma da Madeira (PT)"@fr , "Região Autónoma da Madeira (PT)"@en , "Região Autónoma da Madeira (PT)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT12>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT12" ;
+      skos:prefLabel "Niederösterreich"@fr , "Niederösterreich"@en , "Niederösterreich"@de .
+
+property:unit
+      rdf:type qb:DimensionProperty , qb:CodedProperty ;
+      rdfs:domain qb:Observation ;
+      rdfs:range skos:Concept ;
+      qb:codeList dic:unit ;
+      qb:concept concept:unit .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR5" ;
+      skos:prefLabel "Ouest (FR)"@fr , "Ouest (FR)"@en , "Ouest (FR)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL" ;
+      skos:prefLabel "Greece"@en , "Griechenland"@de , "Grèce"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH" ;
+      skos:prefLabel "Schweiz"@de , "Suisse"@fr , "Switzerland"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#IT>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IT" ;
+      skos:prefLabel "Italien"@de , "Italie"@fr , "Italy"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKN0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKN0" ;
+      skos:prefLabel "Northern Ireland (UK)"@fr , "Northern Ireland (UK)"@en , "Northern Ireland (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#IS00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IS00" ;
+      skos:prefLabel "Ísland"@fr , "Ísland"@en , "Ísland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HR>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HR" ;
+      skos:prefLabel "Croatia"@en , "Kroatien"@de , "Croatie"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEB>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEB" ;
+      skos:prefLabel "Rheinland-Pfalz"@fr , "Rheinland-Pfalz"@en , "Rheinland-Pfalz"@de .
+
+concept:obs_status
+      rdf:type sdmx:Concept ;
+      skos:inScheme concept: ;
+      skos:notation "obs_status" ;
+      skos:prefLabel "Observation Status"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES61>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES61" ;
+      skos:prefLabel "Andalucía"@fr , "Andalucía"@en , "Andalucía"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEA>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEA" ;
+      skos:prefLabel "Nordrhein-Westfalen"@fr , "Nordrhein-Westfalen"@en , "Nordrhein-Westfalen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL1" ;
+      skos:prefLabel "Noord-Nederland"@fr , "Noord-Nederland"@en , "Noord-Nederland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UK>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UK" ;
+      skos:prefLabel "United Kingdom"@en , "Royaume-Uni"@fr , "Vereinigtes Königreich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITC2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITC2" ;
+      skos:prefLabel "Valle d'Aosta/Vallée d'Aoste"@fr , "Valle d'Aosta/Vallée d'Aoste"@en , "Valle d'Aosta/Vallée d'Aoste"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO01>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO01" ;
+      skos:prefLabel "Oslo og Akershus"@fr , "Oslo og Akershus"@en , "Oslo og Akershus"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE" ;
+      skos:prefLabel "Belgique"@fr , "Belgium"@en , "Belgien"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR8>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR8" ;
+      skos:prefLabel "Méditerranée"@fr , "Méditerranée"@en , "Méditerranée"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SI03>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SI03" ;
+      skos:prefLabel "Vzhodna Slovenija"@fr , "Vzhodna Slovenija"@en , "Vzhodna Slovenija"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DK0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DK0" ;
+      skos:prefLabel "Danmark"@fr , "Danmark"@en , "Danmark"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#n>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "n" ;
+      skos:prefLabel "non significatif"@fr , "unbedeutend"@de , "not significant"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR43>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR43" ;
+      skos:prefLabel "Franche-Comté"@fr , "Franche-Comté"@en , "Franche-Comté"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEE>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEE" ;
+      skos:prefLabel "Sachsen-Anhalt"@fr , "Sachsen-Anhalt"@en , "Sachsen-Anhalt"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#IS>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IS" ;
+      skos:prefLabel "Islande"@fr , "Island"@de , "Iceland"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL4" ;
+      skos:prefLabel "Zuid-Nederland"@fr , "Zuid-Nederland"@en , "Zuid-Nederland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE40>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE40" ;
+      skos:prefLabel "Brandenburg"@fr , "Brandenburg"@en , "Brandenburg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ0" ;
+      skos:prefLabel "Ceská republika"@fr , "Ceská republika"@en , "Ceská republika"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITC3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITC3" ;
+      skos:prefLabel "Liguria"@fr , "Liguria"@en , "Liguria"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR7>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR7" ;
+      skos:prefLabel "Centre-Est (FR)"@fr , "Centre-Est (FR)"@en , "Centre-Est (FR)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR42" ;
+      skos:prefLabel "Alsace"@fr , "Alsace"@en , "Alsace"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR30>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR30" ;
+      skos:prefLabel "Nord - Pas-de-Calais"@fr , "Nord - Pas-de-Calais"@en , "Nord - Pas-de-Calais"@de .
+
+dic:sex
+      rdf:type skos:ConceptScheme ;
+      rdfs:label "Sexe"@fr , "Sex"@en , "Geschlecht"@de ;
+      skos:hasTopConcept <http://eurostat.linked-statistics.org/dic/sex#M> , <http://eurostat.linked-statistics.org/dic/sex#T> , <http://eurostat.linked-statistics.org/dic/sex#F> ;
+      skos:notation "cl_sex" .
+
+<http://eurostat.linked-statistics.org/dic/geo#DED>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DED" ;
+      skos:prefLabel "Sachsen"@fr , "Sachsen"@en , "Sachsen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#IS0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IS0" ;
+      skos:prefLabel "Ísland"@fr , "Ísland"@en , "Ísland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SI02>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SI02" ;
+      skos:prefLabel "Zahodna Slovenija (NUTS 2010)"@fr , "Zahodna Slovenija (NUTS 2010)"@en , "Zahodna Slovenija (NUTS 2010)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE" ;
+      skos:prefLabel "Sweden"@en , "Schweden"@de , "Suède"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL3" ;
+      skos:prefLabel "West-Nederland"@fr , "West-Nederland"@en , "West-Nederland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITC4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITC4" ;
+      skos:prefLabel "Lombardia"@fr , "Lombardia"@en , "Lombardia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRA>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRA" ;
+      skos:prefLabel "Kuzeydogu Anadolu"@fr , "Kuzeydogu Anadolu"@en , "Kuzeydogu Anadolu"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR81>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR81" ;
+      skos:prefLabel "Languedoc-Roussillon"@fr , "Languedoc-Roussillon"@en , "Languedoc-Roussillon"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EU28>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EU28" ;
+      skos:prefLabel "European Union (28 countries)"@en , "Union européenne (28 pays)"@fr , "Europäische Union (28 Länder)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITF3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITF3" ;
+      skos:prefLabel "Campania"@fr , "Campania"@en , "Campania"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH02>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH02" ;
+      skos:prefLabel "Espace Mittelland"@fr , "Espace Mittelland"@en , "Espace Mittelland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR90>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR90" ;
+      skos:prefLabel "Trabzon, Ordu, Giresun, Rize, Artvin, Gümüshane"@fr , "Trabzon, Ordu, Giresun, Rize, Artvin, Gümüshane"@en , "Trabzon, Ordu, Giresun, Rize, Artvin, Gümüshane"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LV00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LV00" ;
+      skos:prefLabel "Latvija"@fr , "Latvija"@en , "Latvija"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE6" ;
+      skos:prefLabel "Hamburg"@fr , "Hamburg"@en , "Hamburg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SI04>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SI04" ;
+      skos:prefLabel "Zahodna Slovenija"@fr , "Zahodna Slovenija"@en , "Zahodna Slovenija"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKM2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKM2" ;
+      skos:prefLabel "Eastern Scotland"@fr , "Eastern Scotland"@en , "Eastern Scotland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EU15>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EU15" ;
+      skos:prefLabel "Europäische Union (15 Länder)"@de , "European Union (15 countries)"@en , "Union européenne (15 pays)"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR" ;
+      skos:prefLabel "France"@fr , "France"@en , "Frankreich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EU27>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EU27" ;
+      skos:prefLabel "European Union (27 countries)"@en , "Union européenne (27 pays)"@fr , "Europäische Union (27 Länder)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SK>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SK" ;
+      skos:prefLabel "Slovakia"@en , "Slovaquie"@fr , "Slowakei"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE91>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE91" ;
+      skos:prefLabel "Braunschweig"@fr , "Braunschweig"@en , "Braunschweig"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE5" ;
+      skos:prefLabel "Bremen"@fr , "Bremen"@en , "Bremen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITF4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITF4" ;
+      skos:prefLabel "Puglia"@fr , "Puglia"@en , "Puglia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH03>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH03" ;
+      skos:prefLabel "Nordwestschweiz"@fr , "Nordwestschweiz"@en , "Nordwestschweiz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SI0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SI0" ;
+      skos:prefLabel "Slovenija"@fr , "Slovenija"@en , "Slovenija"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRC>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRC" ;
+      skos:prefLabel "Güneydogu Anadolu"@fr , "Güneydogu Anadolu"@en , "Güneydogu Anadolu"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SK01>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SK01" ;
+      skos:prefLabel "Bratislavský kraj"@fr , "Bratislavský kraj"@en , "Bratislavský kraj"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES1" ;
+      skos:prefLabel "Noroeste (ES)"@fr , "Noroeste (ES)"@en , "Noroeste (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT2" ;
+      skos:prefLabel "Região Autónoma dos Açores (PT)"@fr , "Região Autónoma dos Açores (PT)"@en , "Região Autónoma dos Açores (PT)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#HU>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "HU" ;
+      skos:prefLabel "Ungarn"@de , "Hungary"@en , "Hongrie"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITG>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITG" ;
+      skos:prefLabel "Isole"@fr , "Isole"@en , "Isole"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#z>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "z" ;
+      skos:prefLabel "non applicable"@fr , "not applicable"@en , "nicht zutreffend"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITF5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITF5" ;
+      skos:prefLabel "Basilicata"@fr , "Basilicata"@en , "Basilicata"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE8>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE8" ;
+      skos:prefLabel "Mecklenburg-Vorpommern"@fr , "Mecklenburg-Vorpommern"@en , "Mecklenburg-Vorpommern"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRB>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRB" ;
+      skos:prefLabel "Ortadogu Anadolu"@fr , "Ortadogu Anadolu"@en , "Ortadogu Anadolu"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT1" ;
+      skos:prefLabel "Continente"@fr , "Continente"@en , "Continente"@de .
+
+dic:obs_status
+      rdf:type skos:ConceptScheme ;
+      rdfs:label "Observation status code list"@en ;
+      skos:hasTopConcept <http://eurostat.linked-statistics.org/dic/obs_status#d> , <http://eurostat.linked-statistics.org/dic/obs_status#s> , <http://eurostat.linked-statistics.org/dic/obs_status#c> , <http://eurostat.linked-statistics.org/dic/obs_status#b> , <http://eurostat.linked-statistics.org/dic/obs_status#r> , <http://eurostat.linked-statistics.org/dic/obs_status#p> , <http://eurostat.linked-statistics.org/dic/obs_status#n> , <http://eurostat.linked-statistics.org/dic/obs_status#z> , <http://eurostat.linked-statistics.org/dic/obs_status#i> , <http://eurostat.linked-statistics.org/dic/obs_status#f> , <http://eurostat.linked-statistics.org/dic/obs_status#e> , <http://eurostat.linked-statistics.org/dic/obs_status#u> ;
+      skos:notation "cl_obs_status" .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITF>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITF" ;
+      skos:prefLabel "Sud"@fr , "Sud"@en , "Sud"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SI>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SI" ;
+      skos:prefLabel "Slowenien"@de , "Slovénie"@fr , "Slovenia"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITF6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITF6" ;
+      skos:prefLabel "Calabria"@fr , "Calabria"@en , "Calabria"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH01>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH01" ;
+      skos:prefLabel "Région lémanique"@fr , "Région lémanique"@en , "Région lémanique"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE7>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE7" ;
+      skos:prefLabel "Hessen"@fr , "Hessen"@en , "Hessen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKM5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKM5" ;
+      skos:prefLabel "North Eastern Scotland"@fr , "North Eastern Scotland"@en , "North Eastern Scotland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI1B>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI1B" ;
+      skos:prefLabel "Helsinki-Uusimaa"@fr , "Helsinki-Uusimaa"@en , "Helsinki-Uusimaa"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SK03>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SK03" ;
+      skos:prefLabel "Stredné Slovensko"@fr , "Stredné Slovensko"@en , "Stredné Slovensko"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKK1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKK1" ;
+      skos:prefLabel "Gloucestershire, Wiltshire and Bristol/Bath area"@fr , "Gloucestershire, Wiltshire and Bristol/Bath area"@en , "Gloucestershire, Wiltshire and Bristol/Bath area"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DEG0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DEG0" ;
+      skos:prefLabel "Thüringen"@fr , "Thüringen"@en , "Thüringen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO0" ;
+      skos:prefLabel "Norge"@fr , "Norge"@en , "Norge"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DK01>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DK01" ;
+      skos:prefLabel "Hovedstaden"@fr , "Hovedstaden"@en , "Hovedstaden"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR61>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR61" ;
+      skos:prefLabel "Aquitaine"@fr , "Aquitaine"@en , "Aquitaine"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES3" ;
+      skos:prefLabel "Comunidad de Madrid"@fr , "Comunidad de Madrid"@en , "Comunidad de Madrid"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#MK00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "MK00" ;
+      skos:prefLabel "Poranesna jugoslovenska Republika Makedonija"@fr , "Poranesna jugoslovenska Republika Makedonija"@en , "Poranesna jugoslovenska Republika Makedonija"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITI>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITI" ;
+      skos:prefLabel "Centro (IT)"@fr , "Centro (IT)"@en , "Centro (IT)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE94>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE94" ;
+      skos:prefLabel "Weser-Ems"@fr , "Weser-Ems"@en , "Weser-Ems"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH06>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH06" ;
+      skos:prefLabel "Zentralschweiz"@fr , "Zentralschweiz"@en , "Zentralschweiz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITG1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITG1" ;
+      skos:prefLabel "Sicilia"@fr , "Sicilia"@en , "Sicilia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITH3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITH3" ;
+      skos:prefLabel "Veneto"@fr , "Veneto"@en , "Veneto"@de .
+
+<http://eurostat.linked-statistics.org/dic/unit#PC>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:unit ;
+      skos:notation "PC" ;
+      skos:prefLabel "Pourcentage"@fr , "Prozent"@de , "Percentage"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR" ;
+      skos:prefLabel "Türkei"@de , "Turkey"@en , "Turquie"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR82>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR82" ;
+      skos:prefLabel "Kastamonu, Çankiri, Sinop"@fr , "Kastamonu, Çankiri, Sinop"@en , "Kastamonu, Çankiri, Sinop"@de .
+
+concept:geo
+      rdf:type sdmx:Concept ;
+      skos:inScheme concept: ;
+      skos:notation "geo" ;
+      skos:prefLabel "Geopolitical entity (reporting)"@en , "Entité géopolitique (déclarante)"@fr , "Geopolitische Meldeeinheit"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL13>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL13" ;
+      skos:prefLabel "Drenthe"@fr , "Drenthe"@en , "Drenthe"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SK02>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SK02" ;
+      skos:prefLabel "Západné Slovensko"@fr , "Západné Slovensko"@en , "Západné Slovensko"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKK2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKK2" ;
+      skos:prefLabel "Dorset and Somerset"@fr , "Dorset and Somerset"@en , "Dorset and Somerset"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKM6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKM6" ;
+      skos:prefLabel "Highlands and Islands"@fr , "Highlands and Islands"@en , "Highlands and Islands"@de .
+
+dic:unit
+      rdf:type skos:ConceptScheme ;
+      rdfs:label "Maßeinheit"@de , "Unité de mesure"@fr , "Unit of measure"@en ;
+      skos:hasTopConcept <http://eurostat.linked-statistics.org/dic/unit#PC> ;
+      skos:notation "cl_unit" .
+
+<http://eurostat.linked-statistics.org/dic/geo#DK02>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DK02" ;
+      skos:prefLabel "Sjælland"@fr , "Sjælland"@en , "Sjælland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES2" ;
+      skos:prefLabel "Noreste (ES)"@fr , "Noreste (ES)"@en , "Noreste (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PT3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PT3" ;
+      skos:prefLabel "Região Autónoma da Madeira (PT)"@fr , "Região Autónoma da Madeira (PT)"@en , "Região Autónoma da Madeira (PT)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR72>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR72" ;
+      skos:prefLabel "Auvergne"@fr , "Auvergne"@en , "Auvergne"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#LU00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LU00" ;
+      skos:prefLabel "Luxemburg"@de , "Luxembourg"@fr , "Luxembourg"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITH4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITH4" ;
+      skos:prefLabel "Friuli-Venezia Giulia"@fr , "Friuli-Venezia Giulia"@en , "Friuli-Venezia Giulia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITH>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITH" ;
+      skos:prefLabel "Nord-Est"@fr , "Nord-Est"@en , "Nord-Est"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE71>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE71" ;
+      skos:prefLabel "Darmstadt"@fr , "Darmstadt"@en , "Darmstadt"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#IE01>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IE01" ;
+      skos:prefLabel "Border, Midland and Western"@fr , "Border, Midland and Western"@en , "Border, Midland and Western"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITG2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITG2" ;
+      skos:prefLabel "Sardegna"@fr , "Sardegna"@en , "Sardegna"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH07>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH07" ;
+      skos:prefLabel "Ticino"@fr , "Ticino"@en , "Ticino"@de .
+
+concept:age
+      rdf:type sdmx:Concept ;
+      skos:inScheme concept: ;
+      skos:notation "age" ;
+      skos:prefLabel "Age class"@en , "Classe d'âge"@fr , "Altersklasse"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE9>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE9" ;
+      skos:prefLabel "Niedersachsen"@fr , "Niedersachsen"@en , "Niedersachsen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR81>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR81" ;
+      skos:prefLabel "Zonguldak, Karabük, Bartin"@fr , "Zonguldak, Karabük, Bartin"@en , "Zonguldak, Karabük, Bartin"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#u>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "u" ;
+      skos:prefLabel "peu fiable"@fr , "geringe Zuverlässigkeit"@de , "low reliability"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL12>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL12" ;
+      skos:prefLabel "Friesland (NL)"@fr , "Friesland (NL)"@en , "Friesland (NL)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT31" ;
+      skos:prefLabel "Oberösterreich"@fr , "Oberösterreich"@en , "Oberösterreich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKM3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKM3" ;
+      skos:prefLabel "South Western Scotland"@fr , "South Western Scotland"@en , "South Western Scotland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKL1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKL1" ;
+      skos:prefLabel "West Wales and The Valleys"@fr , "West Wales and The Valleys"@en , "West Wales and The Valleys"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR71>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR71" ;
+      skos:prefLabel "Rhône-Alpes"@fr , "Rhône-Alpes"@en , "Rhône-Alpes"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR83>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR83" ;
+      skos:prefLabel "Corse"@fr , "Corse"@en , "Corse"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES5" ;
+      skos:prefLabel "Este (ES)"@fr , "Este (ES)"@en , "Este (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES" ;
+      skos:prefLabel "Espagne"@fr , "Spanien"@de , "Spain"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR72>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR72" ;
+      skos:prefLabel "Kayseri, Sivas, Yozgat"@fr , "Kayseri, Sivas, Yozgat"@en , "Kayseri, Sivas, Yozgat"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#IE02>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "IE02" ;
+      skos:prefLabel "Southern and Eastern"@fr , "Southern and Eastern"@en , "Southern and Eastern"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH04>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH04" ;
+      skos:prefLabel "Zürich"@fr , "Zürich"@en , "Zürich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITH5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITH5" ;
+      skos:prefLabel "Emilia-Romagna"@fr , "Emilia-Romagna"@en , "Emilia-Romagna"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE92>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE92" ;
+      skos:prefLabel "Hannover"@fr , "Hannover"@en , "Hannover"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE80>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE80" ;
+      skos:prefLabel "Mecklenburg-Vorpommern"@fr , "Mecklenburg-Vorpommern"@en , "Mecklenburg-Vorpommern"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITF1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITF1" ;
+      skos:prefLabel "Abruzzo"@fr , "Abruzzo"@en , "Abruzzo"@de .
+
+<http://eurostat.linked-statistics.org/dic/sex#T>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:sex ;
+      skos:notation "T" ;
+      skos:prefLabel "Insgesamt"@de , "Total"@fr , "Total"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#LT00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "LT00" ;
+      skos:prefLabel "Lietuva"@fr , "Lietuva"@en , "Lietuva"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL23>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL23" ;
+      skos:prefLabel "Flevoland"@fr , "Flevoland"@en , "Flevoland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SK04>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SK04" ;
+      skos:prefLabel "Východné Slovensko"@fr , "Východné Slovensko"@en , "Východné Slovensko"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL11" ;
+      skos:prefLabel "Groningen"@fr , "Groningen"@en , "Groningen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKL2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKL2" ;
+      skos:prefLabel "East Wales"@fr , "East Wales"@en , "East Wales"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FR82>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FR82" ;
+      skos:prefLabel "Provence-Alpes-Côte d'Azur"@fr , "Provence-Alpes-Côte d'Azur"@en , "Provence-Alpes-Côte d'Azur"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES4" ;
+      skos:prefLabel "Centro (ES)"@fr , "Centro (ES)"@en , "Centro (ES)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR83>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR83" ;
+      skos:prefLabel "Samsun, Tokat, Çorum, Amasya"@fr , "Samsun, Tokat, Çorum, Amasya"@en , "Samsun, Tokat, Çorum, Amasya"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITF2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITF2" ;
+      skos:prefLabel "Molise"@fr , "Molise"@en , "Molise"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE93>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE93" ;
+      skos:prefLabel "Lüneburg"@fr , "Lüneburg"@en , "Lüneburg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CH05>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CH05" ;
+      skos:prefLabel "Ostschweiz"@fr , "Ostschweiz"@en , "Ostschweiz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR71>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR71" ;
+      skos:prefLabel "Kirikkale, Aksaray, Nigde, Nevsehir, Kirsehir"@fr , "Kirikkale, Aksaray, Nigde, Nevsehir, Kirsehir"@en , "Kirikkale, Aksaray, Nigde, Nevsehir, Kirsehir"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI1" ;
+      skos:prefLabel "Inner London (NUTS 2010)"@fr , "Inner London (NUTS 2010)"@en , "Inner London (NUTS 2010)"@de .
+
+property:obs_status
+      rdf:type qb:AttributeProperty , qb:CodedProperty ;
+      rdfs:domain qb:Observation ;
+      rdfs:range skos:Concept ;
+      qb:codeList dic:obs_status ;
+      qb:concept concept:obs_status .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL34>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL34" ;
+      skos:prefLabel "Zeeland"@fr , "Zeeland"@en , "Zeeland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL22" ;
+      skos:prefLabel "Gelderland"@fr , "Gelderland"@en , "Gelderland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKJ3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKJ3" ;
+      skos:prefLabel "Hampshire and Isle of Wight"@fr , "Hampshire and Isle of Wight"@en , "Hampshire and Isle of Wight"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE10>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE10" ;
+      skos:prefLabel "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest"@fr , "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest"@en , "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE22" ;
+      skos:prefLabel "Prov. Limburg (BE)"@fr , "Prov. Limburg (BE)"@en , "Prov. Limburg (BE)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ04>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ04" ;
+      skos:prefLabel "Severozápad"@fr , "Severozápad"@en , "Severozápad"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE34>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE34" ;
+      skos:prefLabel "Prov. Luxembourg (BE)"@fr , "Prov. Luxembourg (BE)"@en , "Prov. Luxembourg (BE)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITI1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITI1" ;
+      skos:prefLabel "Toscana"@fr , "Toscana"@en , "Toscana"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR62>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR62" ;
+      skos:prefLabel "Adana, Mersin"@fr , "Adana, Mersin"@en , "Adana, Mersin"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKH>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKH" ;
+      skos:prefLabel "East of England"@fr , "East of England"@en , "East of England"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL51>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL51" ;
+      skos:prefLabel "Anatoliki Makedonia, Thraki"@fr , "Anatoliki Makedonia, Thraki"@en , "Anatoliki Makedonia, Thraki"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL63>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL63" ;
+      skos:prefLabel "Dytiki Ellada"@fr , "Dytiki Ellada"@en , "Dytiki Ellada"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR8>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR8" ;
+      skos:prefLabel "Bati Karadeniz"@fr , "Bati Karadeniz"@en , "Bati Karadeniz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKJ4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKJ4" ;
+      skos:prefLabel "Kent"@fr , "Kent"@en , "Kent"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL33" ;
+      skos:prefLabel "Zuid-Holland"@fr , "Zuid-Holland"@en , "Zuid-Holland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI2" ;
+      skos:prefLabel "Outer London (NUTS 2010)"@fr , "Outer London (NUTS 2010)"@en , "Outer London (NUTS 2010)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE3" ;
+      skos:prefLabel "Région wallonne"@fr , "Région wallonne"@en , "Région wallonne"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL21" ;
+      skos:prefLabel "Overijssel"@fr , "Overijssel"@en , "Overijssel"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE21" ;
+      skos:prefLabel "Prov. Antwerpen"@fr , "Prov. Antwerpen"@en , "Prov. Antwerpen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE33" ;
+      skos:prefLabel "Prov. Liège"@fr , "Prov. Liège"@en , "Prov. Liège"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#MT0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "MT0" ;
+      skos:prefLabel "Malta"@fr , "Malta"@en , "Malta"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ05>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ05" ;
+      skos:prefLabel "Severovýchod"@fr , "Severovýchod"@en , "Severovýchod"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR61>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR61" ;
+      skos:prefLabel "Antalya, Isparta, Burdur"@fr , "Antalya, Isparta, Burdur"@en , "Antalya, Isparta, Burdur"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITI2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITI2" ;
+      skos:prefLabel "Umbria"@fr , "Umbria"@en , "Umbria"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT3" ;
+      skos:prefLabel "Westösterreich"@fr , "Westösterreich"@en , "Westösterreich"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES13>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES13" ;
+      skos:prefLabel "Cantabria"@fr , "Cantabria"@en , "Cantabria"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKG>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKG" ;
+      skos:prefLabel "West Midlands (UK)"@fr , "West Midlands (UK)"@en , "West Midlands (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/age#Y25-64>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:age ;
+      skos:notation "Y25-64" ;
+      skos:prefLabel "From 25 to 64 years"@en , "De 25 à 64 ans"@fr , "25 bis 64 Jahre"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR7>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR7" ;
+      skos:prefLabel "Orta Anadolu"@fr , "Orta Anadolu"@en , "Orta Anadolu"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL62>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL62" ;
+      skos:prefLabel "Ionia Nisia"@fr , "Ionia Nisia"@en , "Ionia Nisia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FRA>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FRA" ;
+      skos:prefLabel "Départements d'outre-mer"@fr , "Départements d'outre-mer"@en , "Départements d'outre-mer"@de .
+
+concept:sex
+      rdf:type sdmx:Concept ;
+      skos:inScheme concept: ;
+      skos:notation "sex" ;
+      skos:prefLabel "Sexe"@fr , "Sex"@en , "Geschlecht"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKK3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKK3" ;
+      skos:prefLabel "Cornwall and Isles of Scilly"@fr , "Cornwall and Isles of Scilly"@en , "Cornwall and Isles of Scilly"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKJ1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKJ1" ;
+      skos:prefLabel "Berkshire, Buckinghamshire and Oxfordshire"@fr , "Berkshire, Buckinghamshire and Oxfordshire"@en , "Berkshire, Buckinghamshire and Oxfordshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL32" ;
+      skos:prefLabel "Noord-Holland"@fr , "Noord-Holland"@en , "Noord-Holland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI2" ;
+      skos:prefLabel "Åland"@fr , "Åland"@en , "Åland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE24>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE24" ;
+      skos:prefLabel "Prov. Vlaams-Brabant"@fr , "Prov. Vlaams-Brabant"@en , "Prov. Vlaams-Brabant"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG42" ;
+      skos:prefLabel "Yuzhen tsentralen"@fr , "Yuzhen tsentralen"@en , "Yuzhen tsentralen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ02>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ02" ;
+      skos:prefLabel "Strední Cechy"@fr , "Strední Cechy"@en , "Strední Cechy"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#MT00>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "MT00" ;
+      skos:prefLabel "Malta"@fr , "Malta"@en , "Malta"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITH1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITH1" ;
+      skos:prefLabel "Provincia Autonoma di Bolzano/Bozen"@fr , "Provincia Autonoma di Bolzano/Bozen"@en , "Provincia Autonoma di Bolzano/Bozen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR52>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR52" ;
+      skos:prefLabel "Konya, Karaman"@fr , "Konya, Karaman"@en , "Konya, Karaman"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE31" ;
+      skos:prefLabel "Norra Mellansverige"@fr , "Norra Mellansverige"@en , "Norra Mellansverige"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES24>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES24" ;
+      skos:prefLabel "Aragón"@fr , "Aragón"@en , "Aragón"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES12>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES12" ;
+      skos:prefLabel "Principado de Asturias"@fr , "Principado de Asturias"@en , "Principado de Asturias"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITI3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITI3" ;
+      skos:prefLabel "Marche"@fr , "Marche"@en , "Marche"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKJ>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKJ" ;
+      skos:prefLabel "South East (UK)"@fr , "South East (UK)"@en , "South East (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL" ;
+      skos:prefLabel "Polen"@de , "Poland"@en , "Pologne"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL61>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL61" ;
+      skos:prefLabel "Thessalia"@fr , "Thessalia"@en , "Thessalia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKJ2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKJ2" ;
+      skos:prefLabel "Surrey, East and West Sussex"@fr , "Surrey, East and West Sussex"@en , "Surrey, East and West Sussex"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKK4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKK4" ;
+      skos:prefLabel "Devon"@fr , "Devon"@en , "Devon"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL31" ;
+      skos:prefLabel "Utrecht"@fr , "Utrecht"@en , "Utrecht"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI1" ;
+      skos:prefLabel "Manner-Suomi"@fr , "Manner-Suomi"@en , "Manner-Suomi"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE35>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE35" ;
+      skos:prefLabel "Prov. Namur"@fr , "Prov. Namur"@en , "Prov. Namur"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG41" ;
+      skos:prefLabel "Yugozapaden"@fr , "Yugozapaden"@en , "Yugozapaden"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ03>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ03" ;
+      skos:prefLabel "Jihozápad"@fr , "Jihozápad"@en , "Jihozápad"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE23>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE23" ;
+      skos:prefLabel "Prov. Oost-Vlaanderen"@fr , "Prov. Oost-Vlaanderen"@en , "Prov. Oost-Vlaanderen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR51>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR51" ;
+      skos:prefLabel "Ankara"@fr , "Ankara"@en , "Ankara"@de .
+
+<http://eurostat.linked-statistics.org/dic/obs_status#b>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:obs_status ;
+      skos:notation "b" ;
+      skos:prefLabel "Zeitreihenbruch"@de , "rupture de série"@fr , "break in time series"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR63>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR63" ;
+      skos:prefLabel "Hatay, Kahramanmaras, Osmaniye"@fr , "Hatay, Kahramanmaras, Osmaniye"@en , "Hatay, Kahramanmaras, Osmaniye"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES23>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES23" ;
+      skos:prefLabel "La Rioja"@fr , "La Rioja"@en , "La Rioja"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI" ;
+      skos:prefLabel "London"@fr , "London"@en , "London"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ES11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ES11" ;
+      skos:prefLabel "Galicia"@fr , "Galicia"@en , "Galicia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITH2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITH2" ;
+      skos:prefLabel "Provincia Autonoma di Trento"@fr , "Provincia Autonoma di Trento"@en , "Provincia Autonoma di Trento"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITI4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITI4" ;
+      skos:prefLabel "Lazio"@fr , "Lazio"@en , "Lazio"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO" ;
+      skos:prefLabel "Roumanie"@fr , "Romania"@en , "Rumänien"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR9>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR9" ;
+      skos:prefLabel "Dogu Karadeniz"@fr , "Dogu Karadeniz"@en , "Dogu Karadeniz"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO41" ;
+      skos:prefLabel "Sud-Vest Oltenia"@fr , "Sud-Vest Oltenia"@en , "Sud-Vest Oltenia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NO>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NO" ;
+      skos:prefLabel "Norway"@en , "Norwegen"@de , "Norvège"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKG1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKG1" ;
+      skos:prefLabel "Herefordshire, Worcestershire and Warwickshire"@fr , "Herefordshire, Worcestershire and Warwickshire"@en , "Herefordshire, Worcestershire and Warwickshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL42" ;
+      skos:prefLabel "Limburg (NL)"@fr , "Limburg (NL)"@en , "Limburg (NL)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG32" ;
+      skos:prefLabel "Severen tsentralen"@fr , "Severen tsentralen"@en , "Severen tsentralen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ08>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ08" ;
+      skos:prefLabel "Moravskoslezsko"@fr , "Moravskoslezsko"@en , "Moravskoslezsko"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE21" ;
+      skos:prefLabel "Småland med öarna"@fr , "Småland med öarna"@en , "Småland med öarna"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE33" ;
+      skos:prefLabel "Övre Norrland"@fr , "Övre Norrland"@en , "Övre Norrland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKL>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKL" ;
+      skos:prefLabel "Wales"@fr , "Wales"@en , "Wales"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR42" ;
+      skos:prefLabel "Kocaeli, Sakarya, Düzce, Bolu, Yalova"@fr , "Kocaeli, Sakarya, Düzce, Bolu, Yalova"@en , "Kocaeli, Sakarya, Düzce, Bolu, Yalova"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CY>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CY" ;
+      skos:prefLabel "Cyprus"@en , "Zypern"@de , "Chypre"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE2" ;
+      skos:prefLabel "Bayern"@fr , "Bayern"@en , "Bayern"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL43>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL43" ;
+      skos:prefLabel "Kriti"@fr , "Kriti"@en , "Kriti"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO42" ;
+      skos:prefLabel "Vest"@fr , "Vest"@en , "Vest"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKG2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKG2" ;
+      skos:prefLabel "Shropshire and Staffordshire"@fr , "Shropshire and Staffordshire"@en , "Shropshire and Staffordshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI6>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI6" ;
+      skos:prefLabel "Outer London - South"@fr , "Outer London - South"@en , "Outer London - South"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE1" ;
+      skos:prefLabel "Baden-Württemberg"@fr , "Baden-Württemberg"@en , "Baden-Württemberg"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL41" ;
+      skos:prefLabel "Noord-Brabant"@fr , "Noord-Brabant"@en , "Noord-Brabant"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BE25>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BE25" ;
+      skos:prefLabel "Prov. West-Vlaanderen"@fr , "Prov. West-Vlaanderen"@en , "Prov. West-Vlaanderen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG31" ;
+      skos:prefLabel "Severozapaden"@fr , "Severozapaden"@en , "Severozapaden"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE32" ;
+      skos:prefLabel "Mellersta Norrland"@fr , "Mellersta Norrland"@en , "Mellersta Norrland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKK>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKK" ;
+      skos:prefLabel "South West (UK)"@fr , "South West (UK)"@en , "South West (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#AT>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "AT" ;
+      skos:prefLabel "Austria"@en , "Österreich"@de , "Autriche"@fr .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR41" ;
+      skos:prefLabel "Bursa, Eskisehir, Bilecik"@fr , "Bursa, Eskisehir, Bilecik"@en , "Bursa, Eskisehir, Bilecik"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SK0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SK0" ;
+      skos:prefLabel "Slovensko"@fr , "Slovensko"@en , "Slovensko"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#FI19>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "FI19" ;
+      skos:prefLabel "Länsi-Suomi"@fr , "Länsi-Suomi"@en , "Länsi-Suomi"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL42>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL42" ;
+      skos:prefLabel "Notio Aigaio"@fr , "Notio Aigaio"@en , "Notio Aigaio"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL54>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL54" ;
+      skos:prefLabel "Ipeiros"@fr , "Ipeiros"@en , "Ipeiros"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO31" ;
+      skos:prefLabel "Sud - Muntenia"@fr , "Sud - Muntenia"@en , "Sud - Muntenia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKG3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKG3" ;
+      skos:prefLabel "West Midlands"@fr , "West Midlands"@en , "West Midlands"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKF1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKF1" ;
+      skos:prefLabel "Derbyshire and Nottinghamshire"@fr , "Derbyshire and Nottinghamshire"@en , "Derbyshire and Nottinghamshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL30>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL30" ;
+      skos:prefLabel "Attiki"@fr , "Attiki"@en , "Attiki"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI7>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI7" ;
+      skos:prefLabel "Outer London - West and North West"@fr , "Outer London - West and North West"@en , "Outer London - West and North West"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#MK>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "MK" ;
+      skos:prefLabel "Former Yugoslav Republic of Macedonia, the"@en , "Die ehemalige jugoslawische Republik Mazedonien"@de , "Ancienne République yougoslave de Macédoine"@fr .
+
+dsd:trng_lfse_04
+      rdf:type qb:DataStructureDefinition ;
+      qb:component
+              [ qb:dimension property:unit
+              ] ;
+      qb:component
+              [ qb:dimension property:geo
+              ] ;
+      qb:component
+              [ qb:dimension property:age
+              ] ;
+      qb:component
+              [ qb:dimension property:sex
+              ] ;
+      qb:component
+              [ qb:dimension dcterms:date
+              ] ;
+      qb:component
+              [ qb:dimension sdmx-dimension:freq
+              ] ;
+      qb:component
+              [ qb:dimension sdmx-measure:obsValue
+              ] ;
+      qb:component
+              [ qb:attribute property:obs_status
+              ] ;
+      skos:notation "trng_lfse_04_DSD" .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI3" ;
+      skos:prefLabel "Inner London - West"@fr , "Inner London - West"@en , "Inner London - West"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKH1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKH1" ;
+      skos:prefLabel "East Anglia"@fr , "East Anglia"@en , "East Anglia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRC2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRC2" ;
+      skos:prefLabel "Sanliurfa, Diyarbakir"@fr , "Sanliurfa, Diyarbakir"@en , "Sanliurfa, Diyarbakir"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ06>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ06" ;
+      skos:prefLabel "Jihovýchod"@fr , "Jihovýchod"@en , "Jihovýchod"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE11" ;
+      skos:prefLabel "Stockholm"@fr , "Stockholm"@en , "Stockholm"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG34>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG34" ;
+      skos:prefLabel "Yugoiztochen"@fr , "Yugoiztochen"@en , "Yugoiztochen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE23>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE23" ;
+      skos:prefLabel "Västsverige"@fr , "Västsverige"@en , "Västsverige"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKN>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKN" ;
+      skos:prefLabel "Northern Ireland (UK)"@fr , "Northern Ireland (UK)"@en , "Northern Ireland (UK)"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR32" ;
+      skos:prefLabel "Aydin, Denizli, Mugla"@fr , "Aydin, Denizli, Mugla"@en , "Aydin, Denizli, Mugla"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE4" ;
+      skos:prefLabel "Brandenburg"@fr , "Brandenburg"@en , "Brandenburg"@de .
+
+concept:unit
+      rdf:type sdmx:Concept ;
+      skos:inScheme concept: ;
+      skos:notation "unit" ;
+      skos:prefLabel "Maßeinheit"@de , "Unité de mesure"@fr , "Unit of measure"@en .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL53>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL53" ;
+      skos:prefLabel "Dytiki Makedonia"@fr , "Dytiki Makedonia"@en , "Dytiki Makedonia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL65>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL65" ;
+      skos:prefLabel "Peloponnisos"@fr , "Peloponnisos"@en , "Peloponnisos"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO32>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO32" ;
+      skos:prefLabel "Bucuresti - Ilfov"@fr , "Bucuresti - Ilfov"@en , "Bucuresti - Ilfov"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL41>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL41" ;
+      skos:prefLabel "Voreio Aigaio"@fr , "Voreio Aigaio"@en , "Voreio Aigaio"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI4>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI4" ;
+      skos:prefLabel "Inner London - East"@fr , "Inner London - East"@en , "Inner London - East"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#ITC>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "ITC" ;
+      skos:prefLabel "Nord-Ovest"@fr , "Nord-Ovest"@en , "Nord-Ovest"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#NL>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "NL" ;
+      skos:prefLabel "Netherlands"@en , "Pays-Bas"@fr , "Niederlande"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL12>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL12" ;
+      skos:prefLabel "Mazowieckie"@fr , "Mazowieckie"@en , "Mazowieckie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKH2>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKH2" ;
+      skos:prefLabel "Bedfordshire and Hertfordshire"@fr , "Bedfordshire and Hertfordshire"@en , "Bedfordshire and Hertfordshire"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TRC1>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TRC1" ;
+      skos:prefLabel "Gaziantep, Adiyaman, Kilis"@fr , "Gaziantep, Adiyaman, Kilis"@en , "Gaziantep, Adiyaman, Kilis"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EE0>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EE0" ;
+      skos:prefLabel "Eesti"@fr , "Eesti"@en , "Eesti"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#CZ07>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "CZ07" ;
+      skos:prefLabel "Strední Morava"@fr , "Strední Morava"@en , "Strední Morava"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#SE22>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "SE22" ;
+      skos:prefLabel "Sydsverige"@fr , "Sydsverige"@en , "Sydsverige"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#BG33>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "BG33" ;
+      skos:prefLabel "Severoiztochen"@fr , "Severoiztochen"@en , "Severoiztochen"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKM>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKM" ;
+      skos:prefLabel "Scotland"@fr , "Scotland"@en , "Scotland"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#TR31>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "TR31" ;
+      skos:prefLabel "Izmir"@fr , "Izmir"@en , "Izmir"@de .
+
+<http://eurostat.linked-statistics.org/dic/sex#M>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:sex ;
+      skos:notation "M" ;
+      skos:prefLabel "Males"@en , "Hommes"@fr , "Männer"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#PL11>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "PL11" ;
+      skos:prefLabel "Lódzkie"@fr , "Lódzkie"@en , "Lódzkie"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL64>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL64" ;
+      skos:prefLabel "Sterea Ellada"@fr , "Sterea Ellada"@en , "Sterea Ellada"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#DE3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "DE3" ;
+      skos:prefLabel "Berlin"@fr , "Berlin"@en , "Berlin"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKI5>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKI5" ;
+      skos:prefLabel "Outer London - East and North East"@fr , "Outer London - East and North East"@en , "Outer London - East and North East"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#EL52>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "EL52" ;
+      skos:prefLabel "Kentriki Makedonia"@fr , "Kentriki Makedonia"@en , "Kentriki Makedonia"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#RO21>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "RO21" ;
+      skos:prefLabel "Nord-Est"@fr , "Nord-Est"@en , "Nord-Est"@de .
+
+<http://eurostat.linked-statistics.org/dic/geo#UKH3>
+      rdf:type skos:Concept ;
+      skos:inScheme dic:geo ;
+      skos:notation "UKH3" ;
+      skos:prefLabel "Essex"@fr , "Essex"@en , "Essex"@de .

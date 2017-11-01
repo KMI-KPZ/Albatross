@@ -127,11 +127,11 @@ def findLinkandDL(r):
                             if not os.path.isfile("data/sandbox/eurostat/original-data/" + filename):
                                 testfile = urllib.request.urlretrieve(link, "data/sandbox/eurostat/original-data/" + filename)
                                 testfile = urllib.request.urlretrieve(link, "data/sandbox/eurostat/tsv/" + filename)
-                            inF = gzip.open("data/sandbox/eurostat/original-data/" + filename, 'rb')
-                            outF = open("data/sandbox/eurostat/raw-data/" + filename[:-3], 'wb')
-                            outF.write( inF.read() )
-                            inF.close()
-                            outF.close() 
+                            #inF = gzip.open("data/sandbox/eurostat/original-data/" + filename, 'rb')
+                           # outF = open("data/sandbox/eurostat/raw-data/" + filename[:-3], 'wb')
+                           # outF.write( inF.read() )
+                           # inF.close()
+                           # outF.close() 
                             #only for testing
                             sdmxLink = li.find('nt:downloadLink[@format="sdmx"]', namespaces).text
                             filename = sdmxLink.split('/')[-1]
@@ -180,43 +180,6 @@ def add_to_new_list(attr, old, new):
 
 
 def sourceToRDF():
-    subprocess.call(['sh', '../../services/eurostat/parser/Main.sh', '-i', 'sdmx-code/sdmx-code.ttl', ' -l'])
+    subprocess.call(['sh', 'Main.sh', '-i', 'sdmx-code/sdmx-code.ttl'], cwd='services/eurostat/parser/')
     
     print('je')
-
-
-def get_eurostats_file_list():
-    """
-    This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory.
-
-    :return: a list of dictionaries containing the id and file names of the RDFs found.
-    """
-    rdf_path_prefix = "data/rdf/eurostats/"
-    geojson_path_prefix = "data/geojson/eurostats/"
-    observation_list = []
-    for file in os.listdir(rdf_path_prefix):
-        observation = {}
-        observation_name = str(os.path.basename(file).split('.')[0])
-        observation['id'] = observation_name
-        observation['rdf'] = rdf_path_prefix + file
-        observation['geojson'] = {
-            'nuts1': geojson_path_prefix + "nuts1_" + observation_name + ".geojson",
-            'nuts2': geojson_path_prefix + "nuts2_" + observation_name + ".geojson",
-            'nuts3': geojson_path_prefix + "nuts3_" + observation_name + ".geojson"
-        }
-        observation_list.append(observation)
-    return observation_list
-
-
-def rdf_to_geojson():
-    """
-    Callback that generates the list of ready-to-transform-to-GeoJSON RDF files
-    """
-    files = get_eurostats_file_list()
-    ids = [id['id'] for id in files]
-    data = dict(id=ids)
-    source = ColumnDataSource(data)
-    columns = [TableColumn(field="id", title="ID")]
-    data_table = DataTable(source=source, columns=columns, width=500, height=800, selectable=True)
-
-    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)
