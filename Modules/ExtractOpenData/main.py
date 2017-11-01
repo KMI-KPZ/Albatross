@@ -18,6 +18,7 @@ from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets.tables import TableColumn, DataTable
 from bokeh.models.widgets.groups import CheckboxGroup
 from bokeh.core.enums import enumeration
+from bokeh.plotting import curdoc
 
 global div_block
 div_block = []
@@ -64,6 +65,7 @@ data_download = dict(link=[])
 source_download = ColumnDataSource(data_download)        
 
 def showTOC():
+    curdoc().template_variables.update(load="1")
     global namespaces
     global div_block
     global multiarray
@@ -122,7 +124,7 @@ def findLinkandDL(r):
                     #download
                     for check in ldataI:
                         if(check == link):
-                            print(link)
+                            
                             filename = link.split('/')[-1]
                             if not os.path.isfile("data/sandbox/eurostat/original-data/" + filename):
                                 testfile = urllib.request.urlretrieve(link, "data/sandbox/eurostat/original-data/" + filename)
@@ -148,21 +150,14 @@ def iterateAndDL(xmld):
             if r.find('nt:children', namespaces) is not None:
                 findLinkandDL(r)
                 iterateAndDL(r)
- 
-def IandD():
     
+def downloadCSV():
     ET = xml.etree.ElementTree
     e = ET.parse('data/toc.xml').getroot()
     ET.register_namespace('nt', 'urn:eu.europa.ec.eurostat.navtree')
     
     for b in e.findall('nt:branch', namespaces):
         iterateAndDL(b)
-    
-    
-def downloadCSV():
-    IandD()
-    
-    print('rdy Download')
     
     
 def add_to_new_list(attr, old, new):
@@ -178,8 +173,95 @@ def add_to_new_list(attr, old, new):
         button_dl.on_click(downloadCSV)
         spq_plat.layout.children[2] = column(row(widgetbox(data_table_download), width=400), row(button_dl))
 
-
-def sourceToRDF():
+def callback_generate_RDF():
+    """
+        Callback on button generates RDF from exsiting Source
+    """
+    # call java
     subprocess.call(['sh', 'Main.sh', '-i', 'sdmx-code/sdmx-code.ttl'], cwd='services/eurostat/parser/')
+    # move rdf
+    directory = 'data/sandbox/eurostat/data/'
+    for filename in os.listdir(directory):
+        print(filename)
+        if filename.endswith(".rdf"): 
+            print(os.path.join(directory, filename))
+            #filename = filename.split('/')[-1]
+            os.rename(os.path.join(directory, filename), os.path.join("data/rdf/eurostats/", filename))
     
-    print('je')
+def sourceToRDF():
+    """
+        Callback generates view on RDF and Eurostats Source Files
+    """
+    data_table = show_rdf_files()
+    spq_plat.layout.children[2] = column(widgetbox(data_table), width=500)
+    
+    files = get_eurostats_source_file_list() 
+    data_table = generateColumnDataSource(files)
+    button_dl = Button(label="Convert CSV to RDF", button_type="success")
+    button_dl.on_click(callback_generate_RDF)
+    spq_plat.layout.children[1] = column([widgetbox(data_table), widgetbox(button_dl)], width=500)
+
+def get_eurostats_source_file_list(): 
+    """ 
+    This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory. 
+ 
+    :return: a list of dictionaries containing the id and file names of the RDFs found. 
+    """ 
+    rdf_path_prefix = "data/sandbox/eurostat/tsv" 
+    observation_list = [] 
+    for file in os.listdir(rdf_path_prefix): 
+        observation = {} 
+        observation_name = str(os.path.basename(file).split('.')[0]) 
+        observation['id'] = observation_name 
+        observation['source'] = rdf_path_prefix + file 
+        observation_list.append(observation) 
+    return observation_list 
+
+            
+def get_eurostats_file_list(): 
+    """ 
+    This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory. 
+ 
+    :return: a list of dictionaries containing the id and file names of the RDFs found. 
+    """ 
+    rdf_path_prefix = "data/rdf/eurostats/" 
+    geojson_path_prefix = "data/geojson/eurostats/" 
+    observation_list = [] 
+    for file in os.listdir(rdf_path_prefix): 
+        observation = {} 
+        observation_name = str(os.path.basename(file).split('.')[0]) 
+        observation['id'] = observation_name 
+        observation['rdf'] = rdf_path_prefix + file 
+        observation['geojson'] = { 
+            'nuts1': geojson_path_prefix + "nuts1_" + observation_name + ".geojson", 
+            'nuts2': geojson_path_prefix + "nuts2_" + observation_name + ".geojson", 
+            'nuts3': geojson_path_prefix + "nuts3_" + observation_name + ".geojson" 
+        } 
+        observation_list.append(observation) 
+    return observation_list 
+
+def generateColumnDataSource(files):
+    """
+        Generate data table based on files list with id
+    """
+    ids = [id['id'] for id in files] 
+    data = dict(id=ids) 
+    source = ColumnDataSource(data) 
+    columns = [TableColumn(field="id", title="ID")]
+    data_table = DataTable(source=source, columns=columns, width=500, height=800, selectable=True)
+    return data_table
+ 
+def show_rdf_files():
+    """ 
+    Generate dataTable of existing RDF Files 
+    """ 
+    files = get_eurostats_file_list() 
+    data_table = generateColumnDataSource(files)
+    return data_table 
+ 
+def rdf_to_geojson(): 
+    """ 
+    Callback that generates the list of ready-to-transform-to-GeoJSON RDF files 
+    """ 
+    data_table = show_rdf_files()
+    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

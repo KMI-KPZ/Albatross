@@ -2872,7 +2872,10 @@ concept:sex
 dsd:trng_lfse_04
       rdf:type qb:DataStructureDefinition ;
       qb:component
-              [ qb:dimension property:unit
+              [ qb:dimension sdmx-dimension:freq
+              ] ;
+      qb:component
+              [ qb:dimension sdmx-measure:obsValue
               ] ;
       qb:component
               [ qb:dimension property:geo
@@ -2884,16 +2887,13 @@ dsd:trng_lfse_04
               [ qb:dimension property:sex
               ] ;
       qb:component
-              [ qb:dimension dcterms:date
-              ] ;
-      qb:component
-              [ qb:dimension sdmx-dimension:freq
-              ] ;
-      qb:component
-              [ qb:dimension sdmx-measure:obsValue
+              [ qb:dimension property:unit
               ] ;
       qb:component
               [ qb:attribute property:obs_status
+              ] ;
+      qb:component
+              [ qb:dimension dcterms:date
               ] ;
       skos:notation "trng_lfse_04_DSD" .
 
