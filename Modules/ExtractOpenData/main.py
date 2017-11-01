@@ -1,7 +1,11 @@
 import urllib
 import json
 import os
+import subprocess
 import xml.etree.ElementTree
+import lxml.etree as le
+import gzip
+from lxml import etree
 from bokeh.application.handlers import FunctionHandler
 from functools import partial
 from html5lib.constants import namespaces
@@ -69,7 +73,7 @@ def showTOC():
     
     #load TOC - TODO: load if updated...
     if not os.path.isfile("data/toc.xml"):
-        testfile = urllib.URLopener()
+        testfile = urllib.request.urlopen()
         testfile.retrieve(EULink, "data/toc.xml")
     ET = xml.etree.ElementTree
     e = ET.parse('data/toc.xml').getroot()
@@ -98,7 +102,67 @@ def showTOC():
     #spq_plat.layout.children[2] = widgetbox(multiarray)        
 
     print('rdy')
+    
+def findLinkandDL(r):
+    global source_download
+    global namespaces
+    
+    if r.find('nt:children', namespaces):
+        child = r.find('nt:children', namespaces)
+        linking = child.findall('nt:leaf', namespaces)
+        if linking and len(linking) > 0:
+            for li in linking:
+                #check exists
+                realLink = li.find('nt:downloadLink[@format="tsv"]', namespaces)
+                if realLink is not None:
+                    #check if it is in new List
+                    link = li.find('nt:downloadLink[@format="tsv"]', namespaces).text
+                    ldata = source_download.data
+                    ldataI = ldata['link']
+                    #download
+                    for check in ldataI:
+                        if(check == link):
+                            print(link)
+                            filename = link.split('/')[-1]
+                            if not os.path.isfile("data/sandbox/eurostat/original-data/" + filename):
+                                testfile = urllib.request.urlretrieve(link, "data/sandbox/eurostat/original-data/" + filename)
+                                testfile = urllib.request.urlretrieve(link, "data/sandbox/eurostat/tsv/" + filename)
+                            inF = gzip.open("data/sandbox/eurostat/original-data/" + filename, 'rb')
+                            outF = open("data/sandbox/eurostat/raw-data/" + filename[:-3], 'wb')
+                            outF.write( inF.read() )
+                            inF.close()
+                            outF.close() 
+                            #only for testing
+                            sdmxLink = li.find('nt:downloadLink[@format="sdmx"]', namespaces).text
+                            filename = sdmxLink.split('/')[-1]
+                            if not os.path.isfile("data/sandbox/eurostat/original-data/" + filename):
+                                testfile = urllib.request.urlretrieve(sdmxLink, "data/sandbox/eurostat/original-data/" + filename) 
+                            
+                      
 
+def iterateAndDL(xmld):
+    root = xmld.find('nt:children', namespaces).findall('nt:branch', namespaces)
+    
+    if root:
+        for r in root:
+            if r.find('nt:children', namespaces) is not None:
+                findLinkandDL(r)
+                iterateAndDL(r)
+ 
+def IandD():
+    
+    ET = xml.etree.ElementTree
+    e = ET.parse('data/toc.xml').getroot()
+    ET.register_namespace('nt', 'urn:eu.europa.ec.eurostat.navtree')
+    
+    for b in e.findall('nt:branch', namespaces):
+        iterateAndDL(b)
+    
+    
+def downloadCSV():
+    IandD()
+    
+    print('rdy Download')
     
     
 def add_to_new_list(attr, old, new):
@@ -110,6 +174,13 @@ def add_to_new_list(attr, old, new):
         ldata['link'].append(source.data['link'][new['1d']['indices'][0]])
         source_download = ColumnDataSource(ldata)
         data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=1000, selectable=True)
-        spq_plat.layout.children[2] = column(widgetbox(data_table_download), width=400)
+        button_dl = Button(label="Download", button_type="success")
+        button_dl.on_click(downloadCSV)
+        spq_plat.layout.children[2] = column(row(widgetbox(data_table_download), width=400), row(button_dl))
     
+
+
+def sourceToRDF():
+    subprocess.call(['sh', '../../services/eurostat/parser/Main.sh', '-i', 'sdmx-code/sdmx-code.ttl', ' -l'])
     
+    print('je')

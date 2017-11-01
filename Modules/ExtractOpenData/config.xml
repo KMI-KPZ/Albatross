@@ -5,5 +5,9 @@
             <name>getTOC</name>
             <callback>showTOC</callback>
         </point>
+        <point>
+            <name>makeRDF</name>
+            <callback>sourceToRDF</callback>
+        </point>
     </menu>
 </module>
