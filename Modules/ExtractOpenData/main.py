@@ -65,7 +65,6 @@ data_download = dict(link=[])
 source_download = ColumnDataSource(data_download)        
 
 def showTOC():
-    curdoc().template_variables.update(load="1")
     global namespaces
     global div_block
     global multiarray

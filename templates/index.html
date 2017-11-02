@@ -3,6 +3,12 @@
     <head>
         <meta charset="utf-8">
         <title>{{ title|e if title else "Bokeh Plot" }}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            $( document ).ajaxStart(function() {
+            alert('je')
+            });
+        </script>
         {{ bokeh_css }}
         {{ bokeh_js }}
         <style>
@@ -20,14 +26,13 @@
               font-family: 'Noto Sans', sans-serif;
               -webkit-font-smoothing: antialiased;
               text-rendering: optimizeLegibility;
-              color: #fff;
+              color: gray;
               background: #2F2F2F;
              }
         </style>
     </head>
     <body>
     <h2>TemplateUsageTest</h2>
-        <div>Loading: {{ load }}</div>
         {{ plot_div|indent(8) }}
         {{ plot_script|indent(8) }}
     </body>
