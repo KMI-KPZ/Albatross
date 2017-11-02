@@ -6,10 +6,11 @@ def get_eurostats_file_list():
     """
     This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory.
 
-    :return: a list of dictionaries containing the id and file names of the RDFs found.
+    Returns:
+        a list of dictionaries containing the id and file names of the RDFs found.
     """
-    rdf_path_prefix = "data/rdf/eurostats/"
-    geojson_path_prefix = "data/geojson/eurostats/"
+    rdf_path_prefix = "../../data/rdf/eurostats/"
+    geojson_path_prefix = "../../data/geojson/eurostats/"
     observation_list = []
     for file in os.listdir(rdf_path_prefix):
         observation = {}
@@ -26,7 +27,12 @@ def get_eurostats_file_list():
 
 
 def main():
+    """
+    Program Entry Point
+    """
     ids = [id['id'] for id in get_eurostats_file_list()]
+    with open('test.json', 'w') as handle:
+        json.dump(get_eurostats_file_list()[0], indent=4, fp=handle)
     print(ids)
 
 
