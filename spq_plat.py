@@ -13,14 +13,10 @@ div_menu = Div()
 p = figure()
 layout = row([column(div_menu), column(p), column()])
 curdoc().title = "Albatross"
-#print(curdoc().template)
+# print(curdoc().template)
 curdoc().add_root(layout)
 html = open("templates/index.html", 'r').read()
 temp = Template(html)
 curdoc().template = temp
 theme = Theme(filename="theme.yaml")
 curdoc().theme = theme
-
-
-    
-
