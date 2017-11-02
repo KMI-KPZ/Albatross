@@ -92,8 +92,8 @@ def showTOC():
     columns = [TableColumn(field="title", title="Title"), TableColumn(field="link", title="Linke")]
     columns_d = [TableColumn(field="link", title="Link")]
     
-    data_table = DataTable(source=source, columns=columns, width=500, height=1000, selectable=True)
-    data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=1000, selectable=True)
+    data_table = DataTable(source=source, columns=columns, width=500, height=800, selectable=True)
+    data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=800, selectable=True)
     source.on_change('selected', add_to_new_list)
     
     
@@ -167,7 +167,7 @@ def add_to_new_list(attr, old, new):
         ldata = source_download.data
         ldata['link'].append(source.data['link'][new['1d']['indices'][0]])
         source_download = ColumnDataSource(ldata)
-        data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=1000, selectable=True)
+        data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=800, selectable=True)
         button_dl = Button(label="Download", button_type="success")
         button_dl.on_click(downloadCSV)
         spq_plat.layout.children[2] = column(row(widgetbox(data_table_download), width=400), row(button_dl))
@@ -195,7 +195,7 @@ def sourceToRDF():
     spq_plat.layout.children[2] = column(widgetbox(data_table), width=500)
     
     files = get_eurostats_source_file_list() 
-    data_table = generateColumnDataSource(files)
+    data_table = generate_column_data_source(files)
     button_dl = Button(label="Convert CSV to RDF", button_type="success")
     button_dl.on_click(callback_generate_RDF)
     spq_plat.layout.children[1] = column([widgetbox(data_table), widgetbox(button_dl)], width=500)
@@ -239,28 +239,38 @@ def get_eurostats_file_list():
         observation_list.append(observation) 
     return observation_list 
 
-def generateColumnDataSource(files):
+
+def generate_column_data_source(files, column_title="ID"):
     """
-        Generate data table based on files list with id
+    Generate data table based on files list with ``id``.
+
+    :param List files: List of Dictionaries that contain the key ``id``.
+    :param string column_title: Title of the data table column.
+    :return: Data table containing the file IDs.
     """
-    ids = [id['id'] for id in files] 
+    ids = [tmp_id['id'] for tmp_id in files]
     data = dict(id=ids) 
-    source = ColumnDataSource(data) 
-    columns = [TableColumn(field="id", title="ID")]
-    data_table = DataTable(source=source, columns=columns, width=500, height=800, selectable=True)
+    table_source = ColumnDataSource(data)
+    columns = [TableColumn(field="id", title=column_title)]
+    data_table = DataTable(source=table_source, columns=columns, width=500, height=800, selectable=True)
     return data_table
- 
-def show_rdf_files():
+
+
+def show_rdf_files(column_title="ID"):
     """ 
-    Generate dataTable of existing RDF Files 
+    Generate data table of existing RDF Files.
+
+    :param string column_title: Title of the data table column.
+    :return: Data table containing the file IDs.
     """ 
     files = get_eurostats_file_list() 
-    data_table = generateColumnDataSource(files)
+    data_table = generate_column_data_source(files, column_title=column_title)
     return data_table 
- 
+
+
 def rdf_to_geojson(): 
     """ 
     Callback that generates the list of ready-to-transform-to-GeoJSON RDF files 
     """ 
-    data_table = show_rdf_files()
-    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    data_table = show_rdf_files(column_title="RDF ID")
+    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)
