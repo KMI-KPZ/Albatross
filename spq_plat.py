@@ -21,6 +21,5 @@ curdoc().template = temp
 theme = Theme(filename="theme.yaml")
 curdoc().theme = theme
 
-
     
 

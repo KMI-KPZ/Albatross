@@ -1,9 +1,0 @@
-<module>
-    <menu>
-        <title>Nuts</title>
-        <point>
-            <name>showme</name>
-            <callback>show_data</callback>
-        </point>
-    </menu>
-</module>
