@@ -29,6 +29,9 @@ title = []
     
 EULink = 'http://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?sort=1&file=table_of_contents.xml'
 
+layout = column([column(), column()])
+
+
 def findXMLLink(r):
     global link
     global title
@@ -97,8 +100,9 @@ def showTOC():
     source.on_change('selected', add_to_new_list)
     
     
-    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)
-    spq_plat.layout.children[2] = column(widgetbox(data_table_download), width=400)
+    layout.children[0] = column(widgetbox(data_table), width=500)
+    layout.children[1] = column(widgetbox(data_table_download), width=400)
+    curdoc().add_root(layout)
     #print(multiarray)
     #spq_plat.layout.children[2] = widgetbox(multiarray)        
 
@@ -174,7 +178,8 @@ def add_to_new_list(attr, old, new):
         data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=800, selectable=True)
         button_dl = Button(label="Download", button_type="success")
         button_dl.on_click(downloadCSV)
-        spq_plat.layout.children[2] = column(row(widgetbox(data_table_download), width=400), row(button_dl))
+        layout.children[1] = column(row(widgetbox(data_table_download), width=400), row(button_dl))
+        curdoc().add_root(layout)
 
 def callback_generate_RDF():
     """
@@ -196,13 +201,14 @@ def sourceToRDF():
         Callback generates view on RDF and Eurostats Source Files
     """
     data_table = show_rdf_files()
-    spq_plat.layout.children[2] = column(widgetbox(data_table), width=500)
+    layout.children[1] = column(widgetbox(data_table), width=500)
     
     files = get_eurostats_source_file_list() 
     data_table = generate_column_data_source(files)
     button_dl = Button(label="Convert CSV to RDF", button_type="success")
     button_dl.on_click(callback_generate_RDF)
-    spq_plat.layout.children[1] = column([widgetbox(data_table), widgetbox(button_dl)], width=500)
+    layout.children[0] = column([widgetbox(data_table), widgetbox(button_dl)], width=500)
+    curdoc().add_root(layout)
 
 def get_eurostats_source_file_list(): 
     """ 
@@ -277,4 +283,5 @@ def rdf_to_geojson():
     Callback that generates the list of ready-to-transform-to-GeoJSON RDF files 
     """ 
     data_table = show_rdf_files(column_title="RDF ID")
-    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)
+    layout.children[0] = column(widgetbox(data_table), width=500)
+    curdoc().add_root(layout)

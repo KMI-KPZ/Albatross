@@ -4,13 +4,15 @@ import bokeh
 import importlib
 from functools import partial
 from random import random
-from bokeh import events
+from bokeh import events, document
 from bokeh.layouts import column, widgetbox, row
 from bokeh.models import Button, CustomJS
 from bokeh.palettes import RdYlBu3
 from bokeh.models.widgets import Select, TextInput, Div
 from bokeh.plotting import figure, curdoc, reset_output
-import spq_plat
+import index
+
+layout = column([column(), column()])
 
 
 def call_vis():
@@ -35,9 +37,11 @@ def call_vis():
     i = 0
     
     ds = r.data_source
-
-    spq_plat.layout.children[1] = p1
-    spq_plat.layout.children[2] = button 
+    user_id = curdoc().session_context.id
+    layout.children[0] = p1
+    layout.children[1] = button
+    curdoc().add_root(layout)
+    
     
 # create a callback that will add a number in a random location
 def callback():
@@ -58,4 +62,5 @@ def callback():
 i = 0    
 
 def call():
+    layout.children[0] = widgetbox(Div());
     return 1

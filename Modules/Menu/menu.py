@@ -10,7 +10,7 @@ from bokeh.models import Button, CustomJS
 from bokeh.palettes import RdYlBu3
 from bokeh.models.widgets import Select, TextInput, Div
 from bokeh.plotting import figure, curdoc, reset_output
-import spq_plat
+import index
 
 
 def get_sub_direct(a_dir):
@@ -58,4 +58,4 @@ def define_menu():
             
             t.append(row(column([Div(text=menu_inner, height=15), widgetbox(button_box, height=55)])))
     
-    spq_plat.layout.children[0] = column(t);
+    index.change_layout(0, column(t));
