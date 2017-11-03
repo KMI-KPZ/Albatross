@@ -3,4 +3,6 @@
 .pydevproject
 __pycache__/
 
+
+data/geojson
 *.pyc

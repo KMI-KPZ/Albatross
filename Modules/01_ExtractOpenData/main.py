@@ -201,7 +201,7 @@ def sourceToRDF():
     spq_plat.layout.children[2] = column(widgetbox(data_table), width=500)
     
     files = get_eurostats_source_file_list() 
-    data_table = generate_column_data_source(files)
+    data_table = generate_rdf_column_data_source(files)
     button_dl = Button(label="Convert CSV to RDF", button_type="success")
     button_dl.on_click(callback_generate_RDF)
     spq_plat.layout.children[1] = column([widgetbox(data_table), widgetbox(button_dl)], width=500)
@@ -230,24 +230,35 @@ def get_eurostats_file_list():
  
     :return: a list of dictionaries containing the id and file names of the RDFs found. 
     """ 
-    rdf_path_prefix = "data/rdf/eurostats/" 
-    geojson_path_prefix = "data/geojson/eurostats/" 
+    rdf_path_prefix = "data/rdf/eurostats/"
     observation_list = []
     for file in os.listdir(rdf_path_prefix):
         observation = {}
         observation_name = str(os.path.basename(file).split('.')[0])
         observation['id'] = observation_name
-        observation['rdf'] = rdf_path_prefix + file
-        observation['geojson'] = {
-            'nuts1': geojson_path_prefix + "nuts1_" + observation_name + ".geojson",
-            'nuts2': geojson_path_prefix + "nuts2_" + observation_name + ".geojson",
-            'nuts3': geojson_path_prefix + "nuts3_" + observation_name + ".geojson"
-        }
         observation_list.append(observation)
     return observation_list
 
 
-def generate_column_data_source(files, column_title="ID"):
+def get_eurostats_geojson_list():
+    """
+    Generates dictionary of the eurostats geojson files and their NUTS level
+
+    :return: Dirctionary of eurostats ID's and NUTS level that where found in data/geojson/eurostats/nuts_*
+    """
+    geojson_path_prefix = "data/geojson/eurostats/nuts_"
+    file_list = {}
+    for i in range(1, 4):
+        for file in os.listdir(geojson_path_prefix + str(i)):
+            geojson_name = str(os.path.basename(file).split('.')[0])
+            if geojson_name in file_list:
+                file_list[geojson_name].append(i)
+            else:
+                file_list[geojson_name]= [i]
+    return file_list
+
+
+def generate_rdf_column_data_source(files, column_title="ID"):
     """
     Generate data table based on files list with ``id``.
 
@@ -271,13 +282,27 @@ def show_rdf_files(column_title="ID"):
     :return: Data table containing the file IDs.
     """ 
     files = get_eurostats_file_list()
-    data_table = generate_column_data_source(files, column_title=column_title)
-    return data_table 
+    data_table = generate_rdf_column_data_source(files, column_title=column_title)
+    return data_table
 
 
 def rdf_to_geojson(): 
     """ 
     Callback that generates the list of ready-to-transform-to-GeoJSON RDF files 
     """
-    data_table = show_rdf_files(column_title="RDF ID")
-    spq_plat.layout.children[1] = column(widgetbox(data_table), width=500)
+    rdf_data_table = show_rdf_files(column_title="RDF ID")
+    spq_plat.layout.children[1] = column(widgetbox(rdf_data_table), width=500)
+
+    data = {'id': [], 'lvl': []}
+    file_list = get_eurostats_geojson_list()
+    for key, value in file_list.items():
+        for i in value:
+            data['id'].append(key)
+            data['lvl'].append(i)
+
+    geojson_table_source = ColumnDataSource(data)
+    columns = [TableColumn(field='lvl', title="NUTS Level"),
+               TableColumn(field='id', title="ID")]
+    geojson_data_table = DataTable(source=geojson_table_source, columns=columns, width=500, height=800, selectable=True)
+    spq_plat.layout.children[2] = column(widgetbox(geojson_data_table), width=500)
+
