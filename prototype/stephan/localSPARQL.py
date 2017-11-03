@@ -7,7 +7,7 @@ import json
 logging.basicConfig(level=logging.WARNING)
 
 # TODO: filename and observation_name need to be a parameter
-filename = 'data/rdf/eurostats/aei_pr_soiler.rdf'
+filename = '../../data/rdf/eurostats/aei_pr_soiler.rdf'
 observation_name = 'soil'
 
 g = rdf.Graph()
@@ -41,17 +41,17 @@ logging.info(" done querying!")
 logging.info(" open geojson")
 
 # TODO: use nuts_files to store the path to the GeoJSON
-with open('data/nuts_rg_60M_2013_lvl_3.geojson') as f:
+with open('../../data/nuts_rg_60M_2013_lvl_3.geojson') as f:
     nuts3 = json.load(f)
-with open('data/nuts_rg_60M_2013_lvl_2.geojson') as f:
+with open('../../data/nuts_rg_60M_2013_lvl_2.geojson') as f:
     nuts2 = json.load(f)
-with open('data/nuts_rg_60M_2013_lvl_1.geojson') as f:
+with open('../../data/nuts_rg_60M_2013_lvl_1.geojson') as f:
     nuts1 = json.load(f)
 
 nuts_files = [
-    'data/geojson/eurostats/nuts1_aei_pr_soiler.geojson',
-    'data/geojson/eurostats/nuts2_aei_pr_soiler.geojson',
-    'data/geojson/eurostats/nuts3_aei_pr_soiler.geojson'
+    '../../data/geojson/eurostats/nuts1_aei_pr_soiler.geojson',
+    '../../data/geojson/eurostats/nuts2_aei_pr_soiler.geojson',
+    '../../data/geojson/eurostats/nuts3_aei_pr_soiler.geojson'
 ]
 nuts = [nuts1, nuts2, nuts3]
 # nuts = []
@@ -122,4 +122,4 @@ for row in results:
 logging.info(" writing back data to geojson")
 for lvl in range(0, len(nuts)):
     with open(nuts_files[lvl], 'w') as outfile:
-        json.dump(nuts[lvl], outfile)
+        json.dump(nuts[lvl], fp=outfile, indent=4)
