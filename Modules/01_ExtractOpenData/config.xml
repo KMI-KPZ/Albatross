@@ -1,0 +1,21 @@
+<module>
+    <menu>
+        <title>Data Sources and Data Processing</title>
+        <point>
+            <name>Eurostats Database Download Center</name>
+            <callback>showTOC</callback>
+        </point>
+        <point>
+            <name>Linked Data Creation</name>
+            <callback>sourceToRDF</callback>
+        </point>
+        <point>
+            <name>Endpoint Manager</name>
+            <callback>listEndpoints</callback>
+        </point>
+        <point>
+            <name>RDF ↦ GeoJSON</name>
+            <callback>rdf_to_geojson</callback>
+        </point>
+    </menu>
+</module>

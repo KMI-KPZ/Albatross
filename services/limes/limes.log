@@ -1,0 +1,16 @@
+09:19:49.973 [main] INFO  org.aksw.limes.core.io.cache.HybridCache:111 - Checking for file /home/sbdigital/Arbeit/Databio/databio_viz/services/limes/cache/1444239310.ser
+09:19:49.977 [main] INFO  org.aksw.limes.core.io.cache.HybridCache:127 - No cached data found for spoi
+09:19:49.979 [main] INFO  org.aksw.limes.core.io.query.QueryModuleFactory:18 - Generating <sparql> reader
+09:19:49.982 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:231 - Query issued is 
+PREFIX geos: <http://www.opengis.net/ont/geosparql#>
+PREFIX spoi: <http://www.openvoc.eu/poi#>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sponto: <http://gis.zcu.cz/SPOI/Ontology#>
+SELECT DISTINCT ?x ?v0
+WHERE {
+?x spoi:class sponto:apartment .
+?x geos:asWKT ?v0 .
+}
+09:19:49.983 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:58 - Querying the endpoint.
+09:19:49.984 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:64 - Getting statements 0 to 10000

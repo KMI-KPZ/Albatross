@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE LIMES SYSTEM "limes.dtd">
+<LIMES>
+    <PREFIX>
+        <NAMESPACE>http://www.opengis.net/ont/geosparql#</NAMESPACE>
+        <LABEL>geos</LABEL>
+    </PREFIX>
+    <PREFIX>
+        <NAMESPACE>http://www.w3.org/1999/02/22-rdf-syntax-ns#</NAMESPACE>
+        <LABEL>rdf</LABEL>
+    </PREFIX>
+    <PREFIX>
+        <NAMESPACE>http://linkedgeodata.org/ontology/</NAMESPACE>
+        <LABEL>lgdo</LABEL>
+    </PREFIX>
+    <PREFIX>
+        <NAMESPACE>http://www.openvoc.eu/poi#</NAMESPACE>
+        <LABEL>spoi</LABEL>
+    </PREFIX>
+    <PREFIX>
+        <NAMESPACE>http://gis.zcu.cz/SPOI/Ontology#</NAMESPACE>
+        <LABEL>sponto</LABEL>
+    </PREFIX>
+    <SOURCE>
+        <ID>spoi</ID>
+        <ENDPOINT>http://data.plan4all.eu/sparql</ENDPOINT>
+        <VAR>?x</VAR>
+        <PAGESIZE>10000</PAGESIZE>
+        <RESTRICTION>?x spoi:class sponto:apartment</RESTRICTION>
+        <PROPERTY>geos:asWKT RENAME point</PROPERTY>
+        <TYPE>sparql</TYPE>
+    </SOURCE>
+    <TARGET>
+        <ID>olu</ID>
+        <ENDPOINT>https://www.foodie-cloud.org/sparql</ENDPOINT>
+        <VAR>?y</VAR>
+        <PAGESIZE>-1</PAGESIZE>
+        <RESTRICTION>?s geos:hasGeometry ?y</RESTRICTION>
+        <PROPERTY>geos:asWKT RENAME polygon</PROPERTY>
+        <TYPE>sparql</TYPE>
+    </TARGET>
+    <METRIC>Top_Covered_By(x.point, y.polygon)</METRIC>
+    <ACCEPTANCE>
+        <THRESHOLD>0.9</THRESHOLD>
+        <FILE>results/apartment.nt</FILE>
+        <RELATION>lgdo:near</RELATION>
+    </ACCEPTANCE>
+    <REVIEW>
+        <THRESHOLD>0.1</THRESHOLD>
+        <FILE>results/apartment_review.nt</FILE>
+        <RELATION>lgdo:near</RELATION>
+    </REVIEW>
+
+    <EXECUTION>
+        <REWRITER>default</REWRITER>
+        <PLANNER>default</PLANNER>
+        <ENGINE>default</ENGINE>
+    </EXECUTION>
+
+    <OUTPUT>TAB</OUTPUT>
+</LIMES>
