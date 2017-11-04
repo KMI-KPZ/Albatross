@@ -2,6 +2,7 @@ import os
 import xml.etree.ElementTree
 import importlib
 import bokeh
+import sys, inspect
 from bokeh import events
 from bokeh.layouts import column, widgetbox, row, layout
 from bokeh.models import Button, CustomJS
@@ -24,7 +25,7 @@ from collections import defaultdict
 from tornado.options import define, options
 
 
-
+global layout
 
 data_by_user = defaultdict(lambda: dict(file_names=[], dates=[], downloads=[]))
 doc_by_user_str = dict()
@@ -33,14 +34,14 @@ source_by_user_str = dict()
 def get_sub_direct(a_dir):
     return [name for name in os.listdir(a_dir)
             if os.path.isdir(os.path.join(a_dir, name))]
-
+                
 """
     Defines Menu based on the Modules directory.
     Each module needs an config.xml and and main.py module.
     The xml configure the sidemenu of the page and the callbacks
     sidemenu is the fist layout child of spq_plat.layout
 """
-def define_menu():
+def define_menu(layout):
     # create menu
     t = []
     modulelist = get_sub_direct('Modules');
@@ -69,13 +70,24 @@ def define_menu():
                 #set button
                 button_inner = Button(label=point.find('name').text, button_type="success")
                 function = point.find('callback').text
-                f = getattr(module, function);
-                button_inner.on_click(f)
+                mclass = sub[3:]
+                if(function in dir(module)):
+                    f = getattr(module, function);
+                    button_inner.on_click(f)
+                clsmembers = inspect.getmembers(module, inspect.isclass)
+                for m in clsmembers:
+                    if m[0] == mclass:
+                        re_class =  getattr(module, mclass)
+                        class_instance = re_class(layout)
+                        f = getattr(class_instance, function);
+                        button_inner.on_click(f)
+                
+                #print(clsmembers)
                 button_box.append(button_inner)
-            
+                
             t.append(row(column([Div(text=menu_inner, height=15), widgetbox(button_box, height=55)])))
-    print(t)
-    return column(t);
+    
+    layout.children[0] = column(t);
 
 
 class IndexHandler(RequestHandler):
@@ -90,6 +102,7 @@ class IndexHandler(RequestHandler):
 class MainHandler(tornado.web.RequestHandler):
     @staticmethod
     def def_platform(doc):
+        global layout
         
         user_str = doc.session_context.id
         
@@ -97,11 +110,12 @@ class MainHandler(tornado.web.RequestHandler):
         #print(curdoc().template)
         theme = Theme(filename="theme.yaml")
         doc.theme = theme
-        first_column = define_menu()
+        layout = row([Div(), Div(), Div()])
+        define_menu(layout)
         
         doc_by_user_str[user_str] = doc
         
-        doc.add_root(first_column)
+        doc.add_root(layout)
         
         
         
