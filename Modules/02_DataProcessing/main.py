@@ -152,7 +152,7 @@ class DataProcessing():
         convert_button.on_click(converter.transform)
 
         s.layout.children[1] = column(widgetbox(converter.rdf_table), convert_button)
-        s.layout.children[2] = column(widgetbox(converter.geojson_table))
+        s.layout.children[2] = column(converter.geojson_table)
     
 
 class RDFToGeoJSON:
@@ -209,6 +209,23 @@ class RDFToGeoJSON:
         print("writing")
         self._write_geojson(self._selected)
         print("done converting")
+
+        # ToDo: The code below should update the geojson_table, it doen't work, tho ...
+        self._file_list = self._get_eurostats()
+        geojson_data = {'id': [], 'lvl': []}
+        for file in self._file_list:
+            if file['geojson']['nuts1']['exists']:
+                geojson_data['id'].append(file['id'])
+                geojson_data['lvl'].append(1)
+
+            if file['geojson']['nuts2']['exists']:
+                geojson_data['id'].append(file['id'])
+                geojson_data['lvl'].append(2)
+
+            if file['geojson']['nuts3']['exists']:
+                geojson_data['id'].append(file['id'])
+                geojson_data['lvl'].append(3)
+        self.geojson_table.source.data.update(geojson_data)
 
 
     def _get_eurostats(self):
