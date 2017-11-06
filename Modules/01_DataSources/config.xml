@@ -1,6 +1,6 @@
 <module>
     <menu>
-        <title>Data Sources and Data Processing</title>
+        <title>Data Sources</title>
         <point>
             <name>Eurostats Database Download Center</name>
             <callback>showTOC</callback>
