@@ -157,15 +157,15 @@ class DataProcessing():
 
 class RDFToGeoJSON:
     def __init__(self, layout):
-        self._layout = layout
-        self._selected = []
-        self._file_list = self._get_eurostats()
+        self.__layout = layout
+        self.__selected = []
+        self.__file_list = self.__get_eurostats()
 
-        self._rdf_table_source = ColumnDataSource(dict(id=[f['id'] for f in self._file_list]))
-        self._rdf_table_source.on_change('selected', self._on_select)
+        self.__rdf_table_source = ColumnDataSource(dict(id=[f['id'] for f in self.__file_list]))
+        self.__rdf_table_source.on_change('selected', self.__on_select)
         rdf_table_columns = [TableColumn(field='id', title='RDF ID')]
         self.rdf_table = DataTable(
-            source=self._rdf_table_source,
+            source=self.__rdf_table_source,
             columns=rdf_table_columns,
             width=300,
             height=500,
@@ -173,7 +173,7 @@ class RDFToGeoJSON:
         )
 
         geojson_data = {'id': [], 'lvl': []}
-        for file in self._file_list:
+        for file in self.__file_list:
             if file['geojson']['nuts1']['exists']:
                 geojson_data['id'].append(file['id'])
                 geojson_data['lvl'].append(1)
@@ -185,13 +185,13 @@ class RDFToGeoJSON:
             if file['geojson']['nuts3']['exists']:
                 geojson_data['id'].append(file['id'])
                 geojson_data['lvl'].append(3)
-        self._geojson_table_source = ColumnDataSource(geojson_data)
+        self.__geojson_table_source = ColumnDataSource(geojson_data)
         geojson_table_columns = [
             TableColumn(field='lvl', title='NUTS Level'),
             TableColumn(field='id',  title='ID')
         ]
         self.geojson_table = DataTable(
-            source=self._geojson_table_source,
+            source=self.__geojson_table_source,
             columns=geojson_table_columns,
             width=300,
             height=500,
@@ -199,25 +199,25 @@ class RDFToGeoJSON:
         )
         convert_button = Button(label="Convert to GeoJSON", button_type="success")
         convert_button.on_click(self.transform)
-        self._layout.children[1] = column(widgetbox(self.rdf_table), convert_button)
-        self._layout.children[2] = column(self.geojson_table)
+        self.__layout.children[1] = column(widgetbox(self.rdf_table), convert_button)
+        self.__layout.children[2] = column(self.geojson_table)
 
-    def _on_select(self, attr, old, new):
-        self._selected = [self._file_list[index] for index in new['1d']['indices']]
+    def __on_select(self, attr, old, new):
+        self.__selected = [self.__file_list[index] for index in new['1d']['indices']]
 
     def transform(self):
         print("converting")
-        for f in self._selected:
+        for f in self.__selected:
             print(".")
-            f['results'] = self._extract_observations(f['rdf'])
+            f['results'] = self.__extract_observations(f['rdf'])
 
         print("writing")
-        self._write_geojson(self._selected)
+        self.__write_geojson(self.__selected)
         print("done converting")
 
-        self._file_list = self._get_eurostats()
+        self.__file_list = self.__get_eurostats()
         geojson_data = {'id': [], 'lvl': []}
-        for file in self._file_list:
+        for file in self.__file_list:
             if file['geojson']['nuts1']['exists']:
                 geojson_data['id'].append(file['id'])
                 geojson_data['lvl'].append(1)
@@ -229,21 +229,21 @@ class RDFToGeoJSON:
             if file['geojson']['nuts3']['exists']:
                 geojson_data['id'].append(file['id'])
                 geojson_data['lvl'].append(3)
-        self._geojson_table_source = ColumnDataSource(geojson_data)
+        self.__geojson_table_source = ColumnDataSource(geojson_data)
         geojson_table_columns = [
             TableColumn(field='lvl', title='NUTS Level'),
             TableColumn(field='id', title='ID')
         ]
         self.geojson_table = DataTable(
-            source=self._geojson_table_source,
+            source=self.__geojson_table_source,
             columns=geojson_table_columns,
             width=300,
             height=500,
             selectable=True
         )
-        self._layout.children[2] = column(self.geojson_table)
+        self.__layout.children[2] = column(self.geojson_table)
 
-    def _get_eurostats(self):
+    def __get_eurostats(self):
         """
         This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory.
 
@@ -275,7 +275,7 @@ class RDFToGeoJSON:
             observation_list.append(observation)
         return observation_list
 
-    def _extract_observations(self, file):
+    def __extract_observations(self, file):
         g = rdf.Graph()
         g.parse(file, format="xml")
 
@@ -295,7 +295,7 @@ class RDFToGeoJSON:
             }
         """)
 
-    def _write_geojson(self, file_list):
+    def __write_geojson(self, file_list):
 
         with open('data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson') as f:
             nuts3 = json.load(f)
@@ -308,13 +308,13 @@ class RDFToGeoJSON:
 
         for file in file_list:
             geojson = copy.deepcopy(nuts)
-            self._process_file(file, geojson)
+            self.__process_file(file, geojson)
 
             for lvl in range(0, len(geojson)):
                 with open(file['geojson']['nuts{}'.format(lvl + 1)]['path'], 'w') as outfile:
                     json.dump(geojson[lvl], fp=outfile, indent=4)
 
-    def _process_file(self, file, nuts):
+    def __process_file(self, file, nuts):
         for row in file['results']:
             # recover uncluttered information from the sparql result
             geo = row[0].split('#')[1]

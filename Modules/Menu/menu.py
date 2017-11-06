@@ -19,7 +19,7 @@ def get_sub_direct(a_dir):
 
 """
     Defines Menu based on the Modules directory.
-    Each module needs an config.xml and and main.py module.
+    Each module needs an config.xml and and old_main.py module.
     The xml configure the sidemenu of the page and the callbacks
     sidemenu is the fist layout child of spq_plat.layout
 """
