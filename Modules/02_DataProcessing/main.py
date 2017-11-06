@@ -146,17 +146,18 @@ class DataProcessing():
         """ 
         Callback that generates the list of ready-to-transform-to-GeoJSON RDF files 
         """
-        converter = RDFToGeoJSON()
+        converter = RDFToGeoJSON(s.layout)
 
         convert_button = Button(label="Convert to GeoJSON", button_type="success")
         convert_button.on_click(converter.transform)
 
         s.layout.children[1] = column(widgetbox(converter.rdf_table), convert_button)
-        s.layout.children[2] = column(converter.geojson_table)
+        # s.layout.children[2] = column(converter.geojson_table)
     
 
 class RDFToGeoJSON:
-    def __init__(self):
+    def __init__(self, layout):
+        self._layout = layout
         self._selected = []
         self._file_list = self._get_eurostats()
 
@@ -196,6 +197,10 @@ class RDFToGeoJSON:
             height=500,
             selectable=True
         )
+        convert_button = Button(label="Convert to GeoJSON", button_type="success")
+        convert_button.on_click(self.transform)
+        self._layout.children[1] = column(widgetbox(self.rdf_table), convert_button)
+        self._layout.children[2] = column(self.geojson_table)
 
     def _on_select(self, attr, old, new):
         self._selected = [self._file_list[index] for index in new['1d']['indices']]
@@ -210,7 +215,6 @@ class RDFToGeoJSON:
         self._write_geojson(self._selected)
         print("done converting")
 
-        # ToDo: The code below should update the geojson_table, it doen't work, tho ...
         self._file_list = self._get_eurostats()
         geojson_data = {'id': [], 'lvl': []}
         for file in self._file_list:
@@ -225,8 +229,19 @@ class RDFToGeoJSON:
             if file['geojson']['nuts3']['exists']:
                 geojson_data['id'].append(file['id'])
                 geojson_data['lvl'].append(3)
-        self.geojson_table.source.data.update(geojson_data)
-
+        self._geojson_table_source = ColumnDataSource(geojson_data)
+        geojson_table_columns = [
+            TableColumn(field='lvl', title='NUTS Level'),
+            TableColumn(field='id', title='ID')
+        ]
+        self.geojson_table = DataTable(
+            source=self._geojson_table_source,
+            columns=geojson_table_columns,
+            width=300,
+            height=500,
+            selectable=True
+        )
+        self._layout.children[2] = column(self.geojson_table)
 
     def _get_eurostats(self):
         """
