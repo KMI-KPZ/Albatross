@@ -1,0 +1,13 @@
+<module>
+    <menu>
+        <title>Data Sources</title>
+        <point>
+            <name>Eurostats Database Download Center</name>
+            <callback>showTOC</callback>
+        </point>
+        <point>
+            <name>Endpoint Manager</name>
+            <callback>listEndpoints</callback>
+        </point>
+    </menu>
+ </module>

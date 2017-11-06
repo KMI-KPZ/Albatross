@@ -1,0 +1,13 @@
+<module>
+    <menu>
+        <title>Data Processing</title>
+        <point>
+            <name>Linked Data Creation</name>
+            <callback>sourceToRDF</callback>
+        </point>
+        <point>
+            <name>RDF ↦ GeoJSON</name>
+            <callback>rdf_to_geojson</callback>
+        </point>
+    </menu>
+</module>
