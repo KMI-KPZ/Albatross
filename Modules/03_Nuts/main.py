@@ -1,6 +1,8 @@
 from bokeh.plotting import figure
 from bokeh.models import WMTSTileSource, ColumnDataSource
 import os
+import math
+import numpy as np
 import geopandas as gpd
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
@@ -97,4 +99,18 @@ class Nuts:
 
         self.get_eurostats_geojson_list()
 
+        ################################################################
+        # random plot
+        rand_y_offset = np.random.rand(200)
+        rand_x_offset = np.random.rand(1) * math.pi / 2
+        x = np.linspace(0, 4 * math.pi, 200)
+        curve = np.sin(x + rand_x_offset) * 3 + rand_y_offset
+        xs = x.tolist()
+        ys = curve.tolist()
+        random_source = ColumnDataSource({'x': xs, 'y': ys})
+        p3 = figure(width=800, height=200, title='random data')
+        p3.line(x='x', y='y', source=random_source)
+        ################################################################
+
         self.layout.children[1] = p
+        self.layout.children[2] = p3
