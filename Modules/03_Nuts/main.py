@@ -1,9 +1,12 @@
 from bokeh.plotting import figure
 from bokeh.models import WMTSTileSource, ColumnDataSource
+from bokeh.models.widgets import Select
+from bokeh.layouts import column, row
 import os
 import math
 import numpy as np
 import geopandas as gpd
+import json
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 
@@ -89,6 +92,7 @@ class Nuts:
         )
         p.title.text_font_size = "25px"
         p.title.align = "center"
+        p.toolbar.logo = None
 
         # Set Tiles
         tile_source = WMTSTileSource(
@@ -97,8 +101,29 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-        self.get_eurostats_geojson_list()
 
+        eurostats = self.get_eurostats_geojson_list()
+        print(json.dumps(eurostats))
+
+
+        self.lvl_select_options = ["Level 1", "Level 2", "Level 3"]
+
+        # collect ID by level
+        a = {
+            "Level 1": [k for k, v in eurostats.items() if 1 in v],
+            "Level 2": [k for k, v in eurostats.items() if 2 in v],
+            "Level 3": [k for k, v in eurostats.items() if 3 in v]
+        }
+        print("{}\n{}\n{}".format(
+            json.dumps(a['Level 1']),
+            json.dumps(a['Level 2']),
+            json.dumps(a['Level 3'])
+        ))
+
+        self.lvl_select = Select(title="Nuts Level:", value="Level 1", options=self.lvl_select_options)
+        self.id_select = Select(title="ID Select:", value=a["Level 1"][0], options=a["Level 1"])
+
+        # ToDo remove this crap
         ################################################################
         # random plot
         rand_y_offset = np.random.rand(200)
@@ -108,9 +133,23 @@ class Nuts:
         xs = x.tolist()
         ys = curve.tolist()
         random_source = ColumnDataSource({'x': xs, 'y': ys})
-        p3 = figure(width=800, height=200, title='random data')
+        p2 = figure(width=600, height=200, title='random data 1')
+        p2.line(x='x', y='y', source=random_source)
+        ################################################################
+
+        # ToDo remove this crap, aswell
+        ################################################################
+        # random plot
+        rand_y_offset = np.random.rand(200)
+        rand_x_offset = np.random.rand(1) * math.pi / 2
+        x = np.linspace(0, 4 * math.pi, 200)
+        curve = np.sin(x + rand_x_offset) * 3 + rand_y_offset
+        xs = x.tolist()
+        ys = curve.tolist()
+        random_source = ColumnDataSource({'x': xs, 'y': ys})
+        p3 = figure(width=600, height=200, title='random data 2')
         p3.line(x='x', y='y', source=random_source)
         ################################################################
 
-        self.layout.children[1] = p
-        self.layout.children[2] = p3
+        self.layout.children[1] = column(p, row(self.lvl_select, self.id_select))
+        self.layout.children[2] = column(p2, p3)
