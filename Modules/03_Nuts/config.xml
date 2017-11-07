@@ -2,7 +2,7 @@
     <menu>
         <title>Nuts</title>
         <point>
-            <name>showme</name>
+            <name>Visualiser</name>
             <callback>show_data</callback>
         </point>
     </menu>

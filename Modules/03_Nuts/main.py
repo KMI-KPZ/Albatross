@@ -28,6 +28,13 @@ class Nuts:
         self.lvl_select.on_change("value", self.on_lvl_select)
         self.layout = layout
 
+        # Note: this takes a while; maybe it makes sense to load it concurrent
+        self.lvl_geodata = {
+            "Level 1": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_1.geojson"),
+            "Level 2": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_2.geojson"),
+            "Level 3": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson")
+        }
+
     def on_lvl_select(self, attr, old, new):
         """
         Callback for ``self.lvl_select``. The method re-searches the available geojson's and sets
@@ -107,7 +114,6 @@ class Nuts:
                     file_list[geojson_name] = [i]
         return file_list
 
-    @staticmethod
     def produce_column_data(self, input_data):
         raw_data = self.explode(input_data)
 
@@ -145,7 +151,15 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-
+        patch_source = ColumnDataSource(self.lvl_geodata['Level 1'].data)
+        print("starting paint")
+        # FixMe: Adding patches this way seems to break the whole page without throwing an error
+        p.patches(
+            'x', 'y', source=patch_source,
+            line_color="black",
+            line_width=0.3
+        )
+        print("done painting")
 
         # ToDo remove this crap
         ################################################################
