@@ -123,7 +123,7 @@ class Nuts:
 
         # Get coordinates
         raw_data['x'] = raw_data.apply(self.get_poly_coordinates, geom='geometry', coord_type='x', axis=1)
-        raw_data['x'] = raw_data.apply(self.get_poly_coordinates, geom='geometry', coord_type='y', axis=1)
+        raw_data['y'] = raw_data.apply(self.get_poly_coordinates, geom='geometry', coord_type='y', axis=1)
 
         dataframe = raw_data.drop('geometry', axis=1).copy()
         return ColumnDataSource(dataframe)
@@ -152,14 +152,12 @@ class Nuts:
         p.axis.visible = False
 
         patch_source = ColumnDataSource(self.lvl_geodata['Level 1'].data)
-        print("starting paint")
         # FixMe: Adding patches this way seems to break the whole page without throwing an error
         p.patches(
             'x', 'y', source=patch_source,
-            line_color="black",
-            line_width=0.3
+            line_color="red",
+            line_width=1
         )
-        print("done painting")
 
         # ToDo remove this crap
         ################################################################
