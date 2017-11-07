@@ -5,4 +5,6 @@ __pycache__/
 
 
 data/geojson
+data/rdf
+data/sandbox
 *.pyc

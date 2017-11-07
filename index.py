@@ -41,7 +41,7 @@ def get_sub_direct(a_dir):
                 
 """
     Defines Menu based on the Modules directory.
-    Each module needs an config.xml and and main.py module.
+    Each module needs an config.xml and and old_main.py module.
     The xml configure the sidemenu of the page and the callbacks
     sidemenu is the fist layout child of spq_plat.layout
 """
@@ -51,8 +51,7 @@ def define_menu(layout):
     modulelist = get_sub_direct('Modules');
     modulelist.sort()
     for sub in modulelist:
-        
-        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + 'Modules/' + sub + '/config.xml'):
+        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + '/Modules/' + sub + '/config.xml'):
             e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), 'Modules/' + sub + '/config.xml')).getroot()
             titleMenu = e.find('menu').find('title').text;
             
