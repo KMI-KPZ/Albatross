@@ -28,7 +28,7 @@ class DataProcessing():
     
    
     
-    def sourceToRDF(s):
+    def sourceToRDF(self):
         """
         Callback generates view on RDF and Eurostats Source Files
         """
@@ -47,15 +47,15 @@ class DataProcessing():
                     #filename = filename.split('/')[-1]
                     os.rename(os.path.join(directory, filename), os.path.join("data/rdf/eurostats/", filename))
         
-        data_table = s.show_rdf_files('ID')
+        data_table = self.show_rdf_files('ID')
         
-        files = s.get_eurostats_source_file_list() 
-        rdf_data_table = s.generate_rdf_column_data_source(files)
+        files = self.get_eurostats_source_file_list() 
+        rdf_data_table = self.generate_rdf_column_data_source(files)
         button_dl = Button(label="Convert CSV to RDF", button_type="success")
         button_dl.on_click(callback_generate_RDF)
         #layout
-        s.layout.children[1] = column([widgetbox(data_table), widgetbox(button_dl)], width=500)
-        s.layout.children[2] = column(widgetbox(rdf_data_table), width=500)
+        self.layout.children[1] = column([Paragraph(text="Downloaded Sources"),widgetbox(data_table), widgetbox(button_dl)], width=400)
+        self.layout.children[2] = column([Paragraph(text="Existing RDF"), widgetbox(rdf_data_table)], width=400)
         
         
     
@@ -110,7 +110,7 @@ class DataProcessing():
         return file_list
     
     
-    def generate_rdf_column_data_source(s, files, column_title="ID"):
+    def generate_rdf_column_data_source(self, files, column_title="ID"):
         """
         Generate data table based on files list with ``id``.
     
@@ -123,20 +123,20 @@ class DataProcessing():
         table_source = ColumnDataSource(data)
         
         columns = [TableColumn(field="id", title=column_title)]
-        data_table = DataTable(source=table_source, columns=columns, width=500, height=800, selectable=True)
+        data_table = DataTable(source=table_source, columns=columns, width=500, height=400, selectable=True)
         return data_table
     
     
-    def show_rdf_files(s, column_title="ID"):
+    def show_rdf_files(self, column_title="ID"):
         """ 
         Generate data table of existing RDF Files.
     
         :param string column_title: Title of the data table column.
         :return: Data table containing the file IDs.
         """ 
-        files = s.get_eurostats_file_list()
+        files = self.get_eurostats_file_list()
         
-        data_table = s.generate_rdf_column_data_source(files, column_title=column_title)
+        data_table = self.generate_rdf_column_data_source(files, column_title=column_title)
         return data_table
     
     
@@ -156,7 +156,7 @@ class DataProcessing():
         geojson_table_source = ColumnDataSource(data)
         columns = [TableColumn(field='lvl', title="NUTS Level"),
                    TableColumn(field='id', title="ID")]
-        geojson_data_table = DataTable(source=geojson_table_source, columns=columns, width=500, height=800, selectable=True)
+        geojson_data_table = DataTable(source=geojson_table_source, columns=columns, width=500, height=400, selectable=True)
         #layout
         s.layout.children[1] = column(widgetbox(data_table), width=500)
         s.layout.children[2] = column(widgetbox(geojson_data_table), width=500)

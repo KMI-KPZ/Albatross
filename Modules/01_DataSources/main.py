@@ -16,24 +16,34 @@ from bokeh.models.widgets.tables import TableColumn, DataTable
 
 class DataSources():
     
+    _source_to_download = ColumnDataSource(dict(link=[], title=[]))
+    _source_download = ColumnDataSource(dict(link=[], title=[]))
+    _p_new = Paragraph(text="Online Available Data")
+    _p_to_dl = Paragraph(text="Selected for Download")
+    _p_dl = Paragraph(text="Downloaded Datasets")
+    _general_columns = [TableColumn(field="title", title="Title"), TableColumn(field="link", title="Link")]
+    
     def __init__(self, layout):
         self.layout = layout
+        
+        # layout texts
+        
+        
         
     """
     TODO: List of Endpoint which may used for GeoJSON creation
     """
-    def listEndpoints(s):
+    def listEndpoints(self):
         print('something takes a part of me')
 
             
-    def showTOC(s):
-        global namespaces, title, link, source, source_download
+    def showTOC(self):
+        global namespaces, title, link, source
         title = []
         link = []
-
+        
         EULink = 'http://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?sort=1&file=table_of_contents.xml'
-        data_download = dict(link=[])
-        source_download = ColumnDataSource(data_download)
+        
         
         def findXMLLink(r):
             global link
@@ -69,13 +79,13 @@ class DataSources():
             """
                 Callback to add a new item to download list
             """
-            global source_download, namespaces, title
+            global namespaces, title
             
             def findLinkandDL(r):
                 """
                 :param element r: eurostats xml element
                 """
-                global source_download, namespaces
+                global namespaces
                 
                 if r.find('nt:children', namespaces):
                     
@@ -89,12 +99,13 @@ class DataSources():
                                 
                                 #check if it is in new List
                                 link = li.find('nt:downloadLink[@format="tsv"]', namespaces).text
-                                ldata = source_download.data
+                                ldata = self._source_to_download.data
                                 ldataI = ldata['link']
                                 #download
                                 for check in ldataI:
+                                    
                                     if(check == link):
-                                        
+                                    
                                         filename = link.split('/')[-1]
                                         if not os.path.isfile("data/sandbox/eurostat/original-data/" + filename):
                                             testfile = urllib.request.urlretrieve(link, "data/sandbox/eurostat/original-data/" + filename)
@@ -104,15 +115,15 @@ class DataSources():
                                         filename = sdmxLink.split('/')[-1]
                                         if not os.path.isfile("data/sandbox/eurostat/original-data/" + filename):
                                             testfile = urllib.request.urlretrieve(sdmxLink, "data/sandbox/eurostat/original-data/" + filename) 
-
+                                        
+                                        print('Sucessfull Download')
             
             def iterateAndDL(xmld):
                 
                 """
                     loop xml to find and download links
-                :param element xmld: Eurostats TOC XML Element
+                    :param element xmld: Eurostats TOC XML Element
                 """
-                    
                 root = xmld.find('nt:children', namespaces).findall('nt:branch', namespaces)
                     
                 if root:
@@ -124,31 +135,60 @@ class DataSources():
             
             def downloadCSV():
                 """
-                    Callback function to iterate selection to Download
+                    Callback function to iterate selection to Download and set new view
                 """
                 
                 ET = xml.etree.ElementTree
                 e = ET.parse('data/toc.xml').getroot()
-                ET.register_namespace('nt', 'urn:eu.europa.ec.eurostat.navtree')
-                    
                 for b in e.findall('nt:branch', namespaces):
                     iterateAndDL(b)
+                #reset tables
+                #self._source_download = ColumnDataSource(get_eurostats_source_file_list(self))
+                self._source_to_download = ColumnDataSource(dict(link=[], title=[]))
+        
+                #data_table_download = DataTable(source=self._source_download, columns=self._general_columns, width=400, height=400, selectable=True)
+                data_table_to_download = DataTable(source=self._source_to_download, columns=self._general_columns, width=400, height=400)
+                #layout
+                self.layout.children[2] = column(row(self._p_to_dl), widgetbox(data_table_to_download))
 
-            columns_d = [TableColumn(field="link", title="Link")]
-            
+
             #todo: extra function
             if isinstance(new['1d']['indices'][0], int) and new['1d']['indices'][0] is not None:
-                ldata = source_download.data
+                ldata = self._source_to_download.data
                 ldata['link'].append(source.data['link'][new['1d']['indices'][0]])
-                source_download = ColumnDataSource(ldata)
-                data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=800, selectable=True)
+                ldata['title'].append(source.data['title'][new['1d']['indices'][0]])
+                
+                self._source_to_download = ColumnDataSource(ldata)
+                #data_table_download = DataTable(source=self._source_download, columns=self._general_columns, width=400, height=400, selectable=True)
+                data_table_to_download = DataTable(source=self._source_to_download, columns=self._general_columns, width=400, height=400)
+        
                 button_dl = Button(label="Download", button_type="success")
                 button_dl.on_click(downloadCSV)
-                #layout
-                s.layout.children[1] = column(row(widgetbox(data_table_download), width=400), row(button_dl))
                 
-
+                #layout
+                lyr = column(self._p_to_dl, widgetbox(data_table_to_download), button_dl)
+                
+                self.layout.children[2] = lyr
+            
+                
+        def get_eurostats_source_file_list(self): 
+            """ 
+            This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory. 
+         
+            :return: a list of dictionaries containing the id and file names of the RDFs found. 
+            """ 
+            rdf_path_prefix = "data/sandbox/eurostat/tsv" 
+            observation_list = [] 
+            titles = []
+            
+            for file in os.listdir(rdf_path_prefix): 
+                observation_name = str(os.path.basename(file).split('.')[0]) 
+                observation_list.append(observation_name)
+                titles.append(self.match_file_to_name(observation_name))
+                                
+            return dict(link=observation_list, title=titles) 
         
+            
         #load TOC - TODO: load if updated...
         if not os.path.isfile("data/toc.xml"):
             testfile = urllib.request.urlopen()
@@ -163,14 +203,35 @@ class DataSources():
         
         data=dict(title=title, link=link)
         source = ColumnDataSource(data)
+        #self._source_download = ColumnDataSource(get_eurostats_source_file_list(self))
+        self._source_to_download = ColumnDataSource(dict(link=[], title=[]))
         
-        columns = [TableColumn(field="title", title="Title"), TableColumn(field="link", title="Linke")]
-        columns_d = [TableColumn(field="link", title="Link")]
-        
-        data_table = DataTable(source=source, columns=columns, width=500, height=800, selectable=True)
-        data_table_download = DataTable(source=source_download, columns=columns_d, width=400, height=800, selectable=True)
+        data_table = DataTable(source=source, columns=self._general_columns, width=500, height=600, selectable=True)
+        #data_table_download = DataTable(source=self._source_download, columns=self._general_columns, width=400, height=400, selectable=True)
+        data_table_to_download = DataTable(source=self._source_to_download, columns=self._general_columns, width=400, height=400)
         source.on_change('selected', add_to_new_list)
-        #layout
-        s.layout.children[1] = column(widgetbox(data_table), width=500)
-        s.layout.children[2] = column(widgetbox(data_table_download), width=400)
         
+        #layout
+        
+        second_layer = [row(self._p_to_dl), row(widgetbox(data_table_to_download))]
+        
+        self.layout.children[1] = column(row(self._p_new), row(widgetbox(data_table), width=500))
+        self.layout.children[2] = column(second_layer, width=400)
+        
+    def match_file_to_name(self, name):
+        '''
+        
+        '''
+        global namespaces
+        
+        ET = xml.etree.ElementTree
+        e = le.parse('data/toc.xml')
+        ET.register_namespace('nt', 'urn:eu.europa.ec.eurostat.navtree')
+        
+        
+        for node in e.findall('.//nt:downloadLink[@format="tsv"]', namespaces):
+            if name in node.text:
+                parent = node.find('..', namespaces)
+                title = parent.find('nt:title[@language="en"]', namespaces);
+        
+        return title.text

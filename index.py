@@ -124,7 +124,7 @@ class MainHandler(tornado.web.RequestHandler):
         #print(curdoc().template)
         theme = Theme(filename="theme.yaml")
         doc.theme = theme
-        layout = row([Div(), Div(), Div()])
+        layout = row([Div(), Div(), Div()], width=1200)
         define_menu(layout)
         
         doc_by_user_str[user_str] = doc
