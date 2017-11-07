@@ -17,14 +17,47 @@ class Nuts:
         eurostats = self.get_eurostats_geojson_list()
 
         # collect ID by level
-        a = {
+        available_ids = {
             "Level 1": [k for k, v in eurostats.items() if 1 in v],
             "Level 2": [k for k, v in eurostats.items() if 2 in v],
             "Level 3": [k for k, v in eurostats.items() if 3 in v]
         }
-        self.id_select = Select(title="ID Select:", value=a["Level 1"][0], options=a["Level 1"])
+        self.id_select = Select(title="ID Select:", value=available_ids["Level 1"][0], options=available_ids["Level 1"])
+        self.id_select.on_change("value", self.on_dataset_select)
         self.lvl_select = Select(title="Nuts Level:", value="Level 1", options=self.lvl_select_options)
+        self.lvl_select.on_change("value", self.on_lvl_select)
         self.layout = layout
+
+    def on_lvl_select(self, attr, old, new):
+        """
+        Callback for ``self.lvl_select``. The method re-searches the available geojson's and sets
+        the options of ``self.id_select`` to the newly selected level, while trying to remain in the
+        same dataset. If the dataset is not in the selected NUTS level, the selected and displayed
+        dataset is changed.
+
+        This method triggers a redraw of the map and the observation plot.
+
+        :param attr: attribute that triggered this callback
+        :param old: the old value of the attribute
+        :param new: the new value of the attribute
+        """
+        # ToDo: trigger redraw
+        eurostats = self.get_eurostats_geojson_list()
+
+        # collect ID by level
+        available_ids = {
+            "Level 1": [k for k, v in eurostats.items() if 1 in v],
+            "Level 2": [k for k, v in eurostats.items() if 2 in v],
+            "Level 3": [k for k, v in eurostats.items() if 3 in v]
+        }
+        old_selection = self.id_select.value
+        self.id_select.options = available_ids[new]
+        if old_selection in available_ids[new]:
+            self.id_select.value=old_selection
+
+    def on_dataset_select(self, attr, old, new):
+        # ToDo: implement
+        print(new)
 
     @staticmethod
     def get_poly_coordinates(row, geom, coord_type):
