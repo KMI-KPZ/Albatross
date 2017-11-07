@@ -13,9 +13,17 @@ from shapely.geometry.multipolygon import MultiPolygon
 
 class Nuts:
     def __init__(self, layout):
+        self.lvl_select_options = ["Level 1", "Level 2", "Level 3"]
+        eurostats = self.get_eurostats_geojson_list()
+
+        # collect ID by level
+        a = {
+            "Level 1": [k for k, v in eurostats.items() if 1 in v],
+            "Level 2": [k for k, v in eurostats.items() if 2 in v],
+            "Level 3": [k for k, v in eurostats.items() if 3 in v]
+        }
         self.id_select = Select(title="ID Select:", value=a["Level 1"][0], options=a["Level 1"])
         self.lvl_select = Select(title="Nuts Level:", value="Level 1", options=self.lvl_select_options)
-        self.lvl_select_options = ["Level 1", "Level 2", "Level 3"]
         self.layout = layout
 
     @staticmethod
@@ -104,14 +112,7 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-        eurostats = self.get_eurostats_geojson_list()
 
-        # collect ID by level
-        a = {
-            "Level 1": [k for k, v in eurostats.items() if 1 in v],
-            "Level 2": [k for k, v in eurostats.items() if 2 in v],
-            "Level 3": [k for k, v in eurostats.items() if 3 in v]
-        }
 
         # ToDo remove this crap
         ################################################################
