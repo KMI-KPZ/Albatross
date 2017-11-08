@@ -35,6 +35,27 @@ class Nuts:
             "Level 3": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson")
         }
 
+        # ToDo: leave self.lvl_geodata unchanged
+        # Todo: move the stuff below into a function that is called on changes of the Selects
+        # Example of deleting NaN Areas from the Plot
+        self.current_dataset = gpd.GeoDataFrame.from_file(r"/home/stephan/PycharmProjects/databio_viz/data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
+
+        nan_indices = []
+        for index, nuts_id in enumerate(self.lvl_geodata['Level 3'].data['NUTS_ID']):
+            raw_indices = self.current_dataset.loc[:, 'NUTS_ID'][self.current_dataset.loc[:, 'NUTS_ID'] == nuts_id]
+            raw_index = raw_indices.index[0]
+            observations = self.current_dataset.loc[raw_index, :]['OBSERVATIONS']
+            if observations is None:
+                nan_indices.append(index)
+            else:
+                dataset = observations['aei_pr_soiler']
+
+        nan_indices.sort(reverse=True)
+        for key in self.lvl_geodata['Level 3'].data.keys():
+            print(type(self.lvl_geodata['Level 3'].data[key]))
+            self.lvl_geodata['Level 3'].data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
+
+
     def on_lvl_select(self, attr, old, new):
         """
         Callback for ``self.lvl_select``. The method re-searches the available geojson's and sets
@@ -151,7 +172,7 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-        patch_source = ColumnDataSource(self.lvl_geodata['Level 1'].data)
+        patch_source = ColumnDataSource(self.lvl_geodata['Level 3'].data)
         # FixMe: Adding patches this way seems to break the whole page without throwing an error
         p.patches(
             'x', 'y', source=patch_source,
@@ -173,7 +194,7 @@ class Nuts:
         p2.line(x='x', y='y', source=random_source)
         ################################################################
 
-        # ToDo remove this crap, aswell
+        # ToDo remove this crap, as well
         ################################################################
         # random plot
         rand_y_offset = np.random.rand(200)
