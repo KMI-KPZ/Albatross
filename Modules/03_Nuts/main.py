@@ -1,12 +1,16 @@
 from bokeh.plotting import figure
-from bokeh.models import WMTSTileSource, ColumnDataSource
+from bokeh.models import WMTSTileSource,\
+    ColumnDataSource, \
+    LogColorMapper, \
+    HoverTool
 from bokeh.models.widgets import Select
 from bokeh.layouts import column, row
+from bokeh.palettes import Greys256 as palette
+from bokeh.models.glyphs import Patches
 import os
 import math
 import numpy as np
 import geopandas as gpd
-import json
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 
@@ -41,6 +45,7 @@ class Nuts:
         self.current_dataset = gpd.GeoDataFrame.from_file(r"/home/stephan/PycharmProjects/databio_viz/data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
 
         nan_indices = []
+        values = []
         for index, nuts_id in enumerate(self.lvl_geodata['Level 3'].data['NUTS_ID']):
             raw_indices = self.current_dataset.loc[:, 'NUTS_ID'][self.current_dataset.loc[:, 'NUTS_ID'] == nuts_id]
             raw_index = raw_indices.index[0]
@@ -48,12 +53,34 @@ class Nuts:
             if observations is None:
                 nan_indices.append(index)
             else:
-                dataset = observations['aei_pr_soiler']
+                values.append(observations['aei_pr_soiler'][0]['value'])
 
         nan_indices.sort(reverse=True)
+        # FixMe: Throws warnings
         for key in self.lvl_geodata['Level 3'].data.keys():
             print(type(self.lvl_geodata['Level 3'].data[key]))
             self.lvl_geodata['Level 3'].data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
+
+        self.lvl_geodata['Level 3'].data['value'] = values
+        colors = self.classifier(values, 20)
+        self.lvl_geodata['Level 3'].data['classified'] = colors
+
+
+    def classifier(self, data, num_level):
+        _data = [float(i) for i in data]
+        step_size = round((max(_data) - min(_data)) / num_level)
+        breaks = [x for x in range(int(min(_data)), int(max(_data)), int(step_size))]
+
+        ud = []
+        for d in _data:
+            lvl = 0
+            for i, b in enumerate(breaks):
+                if b <= d:
+                    lvl = i
+                else:
+                    break
+            ud.append(lvl)
+        return ud
 
 
     def on_lvl_select(self, attr, old, new):
@@ -173,12 +200,32 @@ class Nuts:
         p.axis.visible = False
 
         patch_source = ColumnDataSource(self.lvl_geodata['Level 3'].data)
-        # FixMe: Adding patches this way seems to break the whole page without throwing an error
-        p.patches(
+
+        color_mapper = LogColorMapper(palette=palette)
+        glyphs = p.patches(
             'x', 'y', source=patch_source,
-            line_color="red",
-            line_width=1
+            fill_color={'field': 'classified', 'transform': color_mapper},
+            fill_alpha=0.5,
+            line_color="black",
+            line_width=0.3
         )
+        glyphs.nonselection_glyph = Patches(
+            fill_alpha=0.2,
+            line_width=0.3,
+            fill_color={'field': 'classified', 'transform': color_mapper}
+        )
+        glyphs.selection_glyph = Patches(
+            fill_alpha=0.8,
+            line_width=0.8,
+            fill_color={'field': 'classified', 'transform': color_mapper}
+        )
+        glyphs.hover_glyph = Patches(
+            line_width=1,
+            fill_color={'field': 'classified', 'transform': color_mapper}
+        )
+        hover = HoverTool()
+        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@value')]
+        p.add_tools(hover)
 
         # ToDo remove this crap
         ################################################################
