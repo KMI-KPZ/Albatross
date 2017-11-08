@@ -56,15 +56,13 @@ class Nuts:
                 values.append(observations['aei_pr_soiler'][0]['value'])
 
         nan_indices.sort(reverse=True)
-        # FixMe: Throws warnings
+        tmp_data = {}
         for key in self.lvl_geodata['Level 3'].data.keys():
-            print(type(self.lvl_geodata['Level 3'].data[key]))
-            self.lvl_geodata['Level 3'].data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
+            tmp_data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
 
-        self.lvl_geodata['Level 3'].data['value'] = values
-        colors = self.classifier(values, 20)
-        self.lvl_geodata['Level 3'].data['classified'] = colors
-
+        tmp_data['value'] = values
+        tmp_data['classified'] = self.classifier(values, 20)
+        self.lvl_geodata['Level 3'] = ColumnDataSource(tmp_data)
 
     def classifier(self, data, num_level):
         _data = [float(i) for i in data]
