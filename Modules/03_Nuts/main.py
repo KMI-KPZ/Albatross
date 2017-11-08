@@ -177,14 +177,13 @@ class Nuts:
     def show_data(self):
         # Plot map
         tools = "pan,wheel_zoom,box_zoom,reset,tap"
-        bound = 20000000
         p = figure(
             width=800,
             height=600,
             title="NUTS Areas",
             tools=tools,
-            x_range=(-bound, bound),
-            y_range=(-bound, bound)
+            x_range=(-2.45*10**6, 5.12*10**6),
+            y_range=( 3.73*10**6, 1.13*10**7)
         )
         p.title.text_font_size = "25px"
         p.title.align = "center"
