@@ -42,7 +42,7 @@ class Nuts:
         # ToDo: leave self.lvl_geodata unchanged
         # Todo: move the stuff below into a function that is called on changes of the Selects
         # Example of deleting NaN Areas from the Plot
-        self.current_dataset = gpd.GeoDataFrame.from_file(r"/home/stephan/PycharmProjects/databio_viz/data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
+        self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
 
         nan_indices = []
         values = []
