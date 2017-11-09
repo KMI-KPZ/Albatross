@@ -16,6 +16,7 @@ from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 import scipy.special
 from bokeh.layouts import gridplot
+from bokeh.models.widgets.markups import Paragraph
 
 
 class Nuts:
@@ -187,15 +188,16 @@ class Nuts:
         new_data['value'] = [0]
         new_data['NUTS_ID']  = ['0']
         old_data = self.lvl_geodata['Level 3'].data
-        new_data['value'].append(old_data['value'][new["1d"]["indices"][0]])
-        new_data['NUTS_ID'].append(old_data['NUTS_ID'][new["1d"]["indices"][0]])
-        print(new_data)
+        for indices in new["1d"]["indices"]:
+            new_data['value'].append(old_data['value'][indices])
+            new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
+        
         testdata_source = ColumnDataSource(new_data)
         # dont work with to large datasets
-        x_label = "test"
-        y_label = "moretest"
-        title = "Visme"
-        p2 = figure(plot_width=600, plot_height=300, tools="save",
+        x_label = "Region"
+        y_label = "Selected Indicator"
+        title = "Visualisation"
+        p2 = figure(plot_width=500, plot_height=300, tools="save",
         x_axis_label = x_label,
         y_axis_label = y_label,
         title=title,
@@ -266,27 +268,7 @@ class Nuts:
         # ToDo remove this crap
         ################################################################
         
-        tmp_data = {}
-        tmp_data['value'] = [1, 2, 4, 5]
-        tmp_data['NUTS_ID'] = ['De', 'AU', 'DS', 'ää']
-        testdata_source = ColumnDataSource(tmp_data)
-        # dont work with to large datasets
-        x_label = "test"
-        y_label = "moretest"
-        title = "Visme"
-        p2 = figure(plot_width=600, plot_height=300, tools="save",
-        x_axis_label = x_label,
-        y_axis_label = y_label,
-        title=title,
-        x_minor_ticks=2,
-        x_range = testdata_source.data["NUTS_ID"],
-        y_range= ranges.Range1d(start=min(testdata_source.data['value']),end=max(testdata_source.data['value'])))
-        
-        
-        labels = LabelSet(x='NUTS_ID', y='value', text='value', level='glyph',
-        x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
-        p2.vbar(source=testdata_source,x='NUTS_ID',top='value',bottom=0,width=0.3,color=PuBu[7][2])
-        
+        p2 = Paragraph(text="No data selected. Please select region.")
         ################################################################
 
         self.layout.children[1] = column(p, row(self.lvl_select, self.id_select))
