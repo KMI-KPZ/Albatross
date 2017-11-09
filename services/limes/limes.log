@@ -1,16 +1,25 @@
-09:19:49.973 [main] INFO  org.aksw.limes.core.io.cache.HybridCache:111 - Checking for file /home/sbdigital/Arbeit/Databio/databio_viz/services/limes/cache/1444239310.ser
-09:19:49.977 [main] INFO  org.aksw.limes.core.io.cache.HybridCache:127 - No cached data found for spoi
-09:19:49.979 [main] INFO  org.aksw.limes.core.io.query.QueryModuleFactory:18 - Generating <sparql> reader
-09:19:49.982 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:231 - Query issued is 
-PREFIX geos: <http://www.opengis.net/ont/geosparql#>
-PREFIX spoi: <http://www.openvoc.eu/poi#>
+06:11:37.636 [main] INFO  org.aksw.limes.core.io.cache.HybridCache:111 - Checking for file /home/sbdigital/Arbeit/Databio/databio_viz/services/limes/cache/1516372676.ser
+06:11:37.639 [main] INFO  org.aksw.limes.core.io.cache.HybridCache:127 - No cached data found for aei_pr_soiler
+06:11:37.669 [main] INFO  org.aksw.limes.core.io.query.QueryModuleFactory:18 - Generating <TURTLE> reader
+06:11:39.132 [main] WARN  org.apache.jena.riot:77 - [line: 20, col: 15] Bad IRI: <http://eurostat.linked-statistics.org/dsd/aei_pr_soiler> Code: 8/NON_INITIAL_DOT_SEGMENT in PATH: The path contains a segment /../ not at the beginning of a relative reference, or it contains a /./ These should be removed.
+06:11:40.343 [main] INFO  org.aksw.limes.core.io.query.FileQueryModule:52 - here
+06:11:40.344 [main] INFO  org.aksw.limes.core.io.query.FileQueryModule:53 - RDF model read from aei_pr_soiler.ttl is of size 23837
+06:11:40.346 [main] INFO  LIMES:32 - Registry = [aei_pr_soiler.ttl]
+06:11:40.349 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:231 - Query issued is 
+PREFIX obs: <http://purl.org/linked-data/sdmx/2009/measure#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX nuts: <http://nuts.geovocab.org/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sponto: <http://gis.zcu.cz/SPOI/Ontology#>
-SELECT DISTINCT ?x ?v0
+PREFIX prop: <http://eurostat.linked-statistics.org/property#>
+PREFIX ramon: <http://rdfdata.eionet.europa.eu/ramon/ontology/>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+SELECT DISTINCT ?y ?v0
 WHERE {
-?x spoi:class sponto:apartment .
-?x geos:asWKT ?v0 .
+?y a qb:Observation .
+?y bind( replace( ?y:prop:geo, " ?w1 .
+?w1 * ", "" ) as ?lastWordOfX ) ?v0 .
 }
-09:19:49.983 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:58 - Querying the endpoint.
-09:19:49.984 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:64 - Getting statements 0 to 10000
+06:11:40.350 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:58 - Querying the endpoint.
+06:11:40.350 [main] INFO  org.aksw.limes.core.io.query.SparqlQueryModule:64 - Getting statements 0 to 1000
