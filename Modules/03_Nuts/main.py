@@ -49,31 +49,10 @@ class Nuts:
 
         ########################################################################################################
         # ToDo: leave self.lvl_geodata unchanged
-        # Todo: move the stuff below into a function that is called on changes of the Selects
-        # Example of deleting NaN Areas from the Plot
         self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
 
-        nan_indices = []
-        values = []
-        for index, nuts_id in enumerate(self.lvl_geodata['Level 3'].data['NUTS_ID']):
-            raw_indices = self.current_dataset.loc[:, 'NUTS_ID'][self.current_dataset.loc[:, 'NUTS_ID'] == nuts_id]
-            raw_index = raw_indices.index[0]
-            observations = self.current_dataset.loc[raw_index, :]['OBSERVATIONS']
-            if observations is None:
-                nan_indices.append(index)
-            else:
-                values.append(float(observations['aei_pr_soiler'][0]['value']))
-
-        # nan_indices.sort(reverse=True)
-        tmp_data = {}
-        for key in self.lvl_geodata['Level 3'].data.keys():
-            tmp_data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
-
-        tmp_data['observation'] = values
-        tmp_data['classified'] = self.classifier(values, 20)
-        self.lvl_geodata['Level 3'] = ColumnDataSource(tmp_data)
+        self.update_datasource(self.lvl_geodata['Level 3'], self.current_dataset, 'Level 3', 'aei_pr_soiler', 10)
         ########################################################################################################
-
 
     def update_datasource(self, datasource, dataset, level, observation_name, period):
         nan_indices = []
@@ -87,7 +66,13 @@ class Nuts:
             else:
                 values.append(float(observations[observation_name][0]['value']))
 
-        nan_indices.sort(reverse=True)
+        tmp_data = {}
+        for key in self.lvl_geodata[level].data.keys():
+            tmp_data[key] = np.delete(self.lvl_geodata[level].data[key], nan_indices)
+
+        tmp_data['observation'] = values
+        tmp_data['classified'] = self.classifier(values, 20)
+        datasource.data = ColumnDataSource(tmp_data).data
 
 
 
