@@ -1,5 +1,12 @@
 from bokeh.plotting import figure
-from bokeh.models import WMTSTileSource, ColumnDataSource
+from bokeh.models import WMTSTileSource,\
+    ColumnDataSource, \
+    LogColorMapper, \
+    HoverTool
+from bokeh.models.widgets import Select
+from bokeh.layouts import column, row
+from bokeh.palettes import Greys256 as palette
+from bokeh.models.glyphs import Patches
 import os
 import math
 import numpy as np
@@ -10,7 +17,100 @@ from shapely.geometry.multipolygon import MultiPolygon
 
 class Nuts:
     def __init__(self, layout):
+        self.lvl_select_options = ["Level 1", "Level 2", "Level 3"]
+        eurostats = self.get_eurostats_geojson_list()
+
+        # collect ID by level
+        available_ids = {
+            "Level 1": [k for k, v in eurostats.items() if 1 in v],
+            "Level 2": [k for k, v in eurostats.items() if 2 in v],
+            "Level 3": [k for k, v in eurostats.items() if 3 in v]
+        }
+        self.id_select = Select(title="ID Select:", value=available_ids["Level 1"][0], options=available_ids["Level 1"])
+        self.id_select.on_change("value", self.on_dataset_select)
+        self.lvl_select = Select(title="Nuts Level:", value="Level 1", options=self.lvl_select_options)
+        self.lvl_select.on_change("value", self.on_lvl_select)
         self.layout = layout
+
+        # Note: this takes a while; maybe it makes sense to load it concurrent
+        self.lvl_geodata = {
+            "Level 1": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_1.geojson"),
+            "Level 2": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_2.geojson"),
+            "Level 3": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson")
+        }
+
+        # ToDo: leave self.lvl_geodata unchanged
+        # Todo: move the stuff below into a function that is called on changes of the Selects
+        # Example of deleting NaN Areas from the Plot
+        self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
+
+        nan_indices = []
+        values = []
+        for index, nuts_id in enumerate(self.lvl_geodata['Level 3'].data['NUTS_ID']):
+            raw_indices = self.current_dataset.loc[:, 'NUTS_ID'][self.current_dataset.loc[:, 'NUTS_ID'] == nuts_id]
+            raw_index = raw_indices.index[0]
+            observations = self.current_dataset.loc[raw_index, :]['OBSERVATIONS']
+            if observations is None:
+                nan_indices.append(index)
+            else:
+                values.append(observations['aei_pr_soiler'][0]['value'])
+
+        nan_indices.sort(reverse=True)
+        tmp_data = {}
+        for key in self.lvl_geodata['Level 3'].data.keys():
+            tmp_data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
+
+        tmp_data['value'] = values
+        tmp_data['classified'] = self.classifier(values, 20)
+        self.lvl_geodata['Level 3'] = ColumnDataSource(tmp_data)
+
+    def classifier(self, data, num_level):
+        _data = [float(i) for i in data]
+        step_size = round((max(_data) - min(_data)) / num_level)
+        breaks = [x for x in range(int(min(_data)), int(max(_data)), int(step_size))]
+
+        ud = []
+        for d in _data:
+            lvl = 0
+            for i, b in enumerate(breaks):
+                if b <= d:
+                    lvl = i
+                else:
+                    break
+            ud.append(lvl)
+        return ud
+
+
+    def on_lvl_select(self, attr, old, new):
+        """
+        Callback for ``self.lvl_select``. The method re-searches the available geojson's and sets
+        the options of ``self.id_select`` to the newly selected level, while trying to remain in the
+        same dataset. If the dataset is not in the selected NUTS level, the selected and displayed
+        dataset is changed.
+
+        This method triggers a redraw of the map and the observation plot.
+
+        :param attr: attribute that triggered this callback
+        :param old: the old value of the attribute
+        :param new: the new value of the attribute
+        """
+        # ToDo: trigger redraw
+        eurostats = self.get_eurostats_geojson_list()
+
+        # collect ID by level
+        available_ids = {
+            "Level 1": [k for k, v in eurostats.items() if 1 in v],
+            "Level 2": [k for k, v in eurostats.items() if 2 in v],
+            "Level 3": [k for k, v in eurostats.items() if 3 in v]
+        }
+        old_selection = self.id_select.value
+        self.id_select.options = available_ids[new]
+        if old_selection in available_ids[new]:
+            self.id_select.value=old_selection
+
+    def on_dataset_select(self, attr, old, new):
+        # ToDo: implement
+        print(new)
 
     @staticmethod
     def get_poly_coordinates(row, geom, coord_type):
@@ -60,7 +160,6 @@ class Nuts:
                     file_list[geojson_name] = [i]
         return file_list
 
-    @staticmethod
     def produce_column_data(self, input_data):
         raw_data = self.explode(input_data)
 
@@ -70,7 +169,7 @@ class Nuts:
 
         # Get coordinates
         raw_data['x'] = raw_data.apply(self.get_poly_coordinates, geom='geometry', coord_type='x', axis=1)
-        raw_data['x'] = raw_data.apply(self.get_poly_coordinates, geom='geometry', coord_type='y', axis=1)
+        raw_data['y'] = raw_data.apply(self.get_poly_coordinates, geom='geometry', coord_type='y', axis=1)
 
         dataframe = raw_data.drop('geometry', axis=1).copy()
         return ColumnDataSource(dataframe)
@@ -78,17 +177,17 @@ class Nuts:
     def show_data(self):
         # Plot map
         tools = "pan,wheel_zoom,box_zoom,reset,tap"
-        bound = 20000000
         p = figure(
             width=800,
             height=600,
             title="NUTS Areas",
             tools=tools,
-            x_range=(-bound, bound),
-            y_range=(-bound, bound)
+            x_range=(-2.45*10**6, 5.12*10**6),
+            y_range=( 3.73*10**6, 1.13*10**7)
         )
         p.title.text_font_size = "25px"
         p.title.align = "center"
+        p.toolbar.logo = None
 
         # Set Tiles
         tile_source = WMTSTileSource(
@@ -97,8 +196,35 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-        self.get_eurostats_geojson_list()
+        patch_source = ColumnDataSource(self.lvl_geodata['Level 3'].data)
 
+        color_mapper = LogColorMapper(palette=palette)
+        glyphs = p.patches(
+            'x', 'y', source=patch_source,
+            fill_color={'field': 'classified', 'transform': color_mapper},
+            fill_alpha=0.5,
+            line_color="black",
+            line_width=0.3
+        )
+        glyphs.nonselection_glyph = Patches(
+            fill_alpha=0.2,
+            line_width=0.3,
+            fill_color={'field': 'classified', 'transform': color_mapper}
+        )
+        glyphs.selection_glyph = Patches(
+            fill_alpha=0.8,
+            line_width=0.8,
+            fill_color={'field': 'classified', 'transform': color_mapper}
+        )
+        glyphs.hover_glyph = Patches(
+            line_width=1,
+            fill_color={'field': 'classified', 'transform': color_mapper}
+        )
+        hover = HoverTool()
+        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@value')]
+        p.add_tools(hover)
+
+        # ToDo remove this crap
         ################################################################
         # random plot
         rand_y_offset = np.random.rand(200)
@@ -108,9 +234,23 @@ class Nuts:
         xs = x.tolist()
         ys = curve.tolist()
         random_source = ColumnDataSource({'x': xs, 'y': ys})
-        p3 = figure(width=800, height=200, title='random data')
+        p2 = figure(width=600, height=200, title='random data 1')
+        p2.line(x='x', y='y', source=random_source)
+        ################################################################
+
+        # ToDo remove this crap, as well
+        ################################################################
+        # random plot
+        rand_y_offset = np.random.rand(200)
+        rand_x_offset = np.random.rand(1) * math.pi / 2
+        x = np.linspace(0, 4 * math.pi, 200)
+        curve = np.sin(x + rand_x_offset) * 3 + rand_y_offset
+        xs = x.tolist()
+        ys = curve.tolist()
+        random_source = ColumnDataSource({'x': xs, 'y': ys})
+        p3 = figure(width=600, height=200, title='random data 2')
         p3.line(x='x', y='y', source=random_source)
         ################################################################
 
-        self.layout.children[1] = p
-        self.layout.children[2] = p3
+        self.layout.children[1] = column(p, row(self.lvl_select, self.id_select))
+        self.layout.children[2] = column(p2, p3)

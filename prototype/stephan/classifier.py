@@ -1,3 +1,5 @@
+import math
+
 
 def classifier(data, num_level):
     step_size = round((max(data) - min(data)) / num_level)
@@ -15,7 +17,7 @@ def classifier(data, num_level):
     return ud
 
 
-data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+data = [0, 1, 2, 3, 4, 5, 6, 7, 8, float('nan'), 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 lvls = 4
 
 ud = classifier(data, lvls)
