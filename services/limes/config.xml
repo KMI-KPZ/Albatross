@@ -2,55 +2,73 @@
 <!DOCTYPE LIMES SYSTEM "limes.dtd">
 <LIMES>
     <PREFIX>
-        <NAMESPACE>http://www.opengis.net/ont/geosparql#</NAMESPACE>
-        <LABEL>geos</LABEL>
+        <NAMESPACE>http://purl.org/linked-data/sdmx/2009/measure#</NAMESPACE>
+        <LABEL>obs</LABEL>
     </PREFIX>
     <PREFIX>
-        <NAMESPACE>http://www.w3.org/1999/02/22-rdf-syntax-ns#</NAMESPACE>
-        <LABEL>rdf</LABEL>
+        <NAMESPACE>http://eurostat.linked-statistics.org/property#</NAMESPACE>
+        <LABEL>prop</LABEL>
     </PREFIX>
     <PREFIX>
+        <NAMESPACE>http://purl.org/linked-data/cube#</NAMESPACE>
+        <LABEL>qb</LABEL>
+    </PREFIX>
+    <PREFIX>
+        <NAMESPACE>http://purl.org/linked-data/sdmx/2009/dimension#</NAMESPACE>
+        <LABEL>sdmx-dimension</LABEL>
+    </PREFIX>
+    <PREFIX>
+        <NAMESPACE>http://nuts.geovocab.org/</NAMESPACE>
+        <LABEL>nuts</LABEL>
+    </PREFIX>
+     <PREFIX>
         <NAMESPACE>http://linkedgeodata.org/ontology/</NAMESPACE>
         <LABEL>lgdo</LABEL>
     </PREFIX>
     <PREFIX>
-        <NAMESPACE>http://www.openvoc.eu/poi#</NAMESPACE>
-        <LABEL>spoi</LABEL>
+        <NAMESPACE>http://www.w3.org/2002/07/owl#</NAMESPACE>
+        <LABEL>owl</LABEL>
     </PREFIX>
     <PREFIX>
-        <NAMESPACE>http://gis.zcu.cz/SPOI/Ontology#</NAMESPACE>
-        <LABEL>sponto</LABEL>
+        <NAMESPACE>http://rdfdata.eionet.europa.eu/ramon/ontology/</NAMESPACE>
+        <LABEL>ramon</LABEL>
     </PREFIX>
+    
+    <PREFIX>
+        <NAMESPACE>http://www.w3.org/1999/02/22-rdf-syntax-ns#</NAMESPACE>
+        <LABEL>rdf</LABEL>
+    </PREFIX>        
+     
     <SOURCE>
-        <ID>spoi</ID>
-        <ENDPOINT>http://data.plan4all.eu/sparql</ENDPOINT>
-        <VAR>?x</VAR>
-        <PAGESIZE>10000</PAGESIZE>
-        <RESTRICTION>?x spoi:class sponto:apartment</RESTRICTION>
-        <PROPERTY>geos:asWKT RENAME point</PROPERTY>
-        <TYPE>sparql</TYPE>
-    </SOURCE>
-    <TARGET>
-        <ID>olu</ID>
-        <ENDPOINT>https://www.foodie-cloud.org/sparql</ENDPOINT>
+        <ID>aei_pr_soiler</ID>
+        <ENDPOINT>aei_pr_soiler.ttl</ENDPOINT>
         <VAR>?y</VAR>
-        <PAGESIZE>-1</PAGESIZE>
-        <RESTRICTION>?s geos:hasGeometry ?y</RESTRICTION>
-        <PROPERTY>geos:asWKT RENAME polygon</PROPERTY>
+        <PAGESIZE>1000</PAGESIZE>
+        <RESTRICTION>?y a qb:Observation</RESTRICTION>
+        <PROPERTY>bind( replace( ?y:prop:geo, "/* ", "" ) as ?lastWordOfX )</PROPERTY>
+        <TYPE>TURTLE</TYPE>
+    </SOURCE>
+    
+    <TARGET>
+        <ID>nuts</ID>
+        <ENDPOINT>https://www.foodie-cloud.org/sparql</ENDPOINT>
+        <VAR>?x</VAR>
+        <PAGESIZE>1000</PAGESIZE>
+        <RESTRICTION>?x a ramon:NUTSRegion</RESTRICTION>
+        <PROPERTY>ramon:code</PROPERTY>
         <TYPE>sparql</TYPE>
     </TARGET>
-    <METRIC>Top_Covered_By(x.point, y.polygon)</METRIC>
+    <METRIC>JaroWinkler(lastWordOfX, x.ramon:code)</METRIC>
     <ACCEPTANCE>
-        <THRESHOLD>0.9</THRESHOLD>
-        <FILE>results/apartment.nt</FILE>
-        <RELATION>lgdo:near</RELATION>
+        <THRESHOLD>0.5</THRESHOLD>
+        <FILE>test.nt</FILE>
+        <RELATION>owl:sameAs</RELATION>
     </ACCEPTANCE>
     <REVIEW>
-        <THRESHOLD>0.1</THRESHOLD>
-        <FILE>results/apartment_review.nt</FILE>
-        <RELATION>lgdo:near</RELATION>
+        <THRESHOLD>0.2</THRESHOLD>
+        <FILE>test_t.nt</FILE>
+        <RELATION>owl:sameAs</RELATION>
     </REVIEW>
-
     <EXECUTION>
         <REWRITER>default</REWRITER>
         <PLANNER>default</PLANNER>

@@ -67,7 +67,7 @@ class DataProcessing():
      
         :return: a list of dictionaries containing the id and file names of the RDFs found. 
         """ 
-        rdf_path_prefix = "data/sandbox/eurostat/tsv" 
+        rdf_path_prefix = "data/sandbox/eurostat/dsd" 
         observation_list = [] 
         for file in os.listdir(rdf_path_prefix): 
             observation = {} 
@@ -142,16 +142,16 @@ class DataProcessing():
         return data_table
     
     
-    def rdf_to_geojson(s): 
+    def rdf_to_geojson(self): 
         """ 
         Callback that generates the list of ready-to-transform-to-GeoJSON RDF files 
         """
-        converter = RDFToGeoJSON(s.layout)
+        converter = RDFToGeoJSON(self.layout)
 
         convert_button = Button(label="Convert to GeoJSON", button_type="success")
         convert_button.on_click(converter.transform)
 
-        s.layout.children[1] = column(widgetbox(converter.rdf_table), convert_button)
+        self.layout.children[1] = column(widgetbox(converter.rdf_table), convert_button)
         # s.layout.children[2] = column(converter.geojson_table)
     
         geojson_table_source = ColumnDataSource(data)
@@ -159,8 +159,8 @@ class DataProcessing():
                    TableColumn(field='id', title="ID")]
         geojson_data_table = DataTable(source=geojson_table_source, columns=columns, width=500, height=400, selectable=True)
         #layout
-        s.layout.children[1] = column(widgetbox(data_table), width=500)
-        s.layout.children[2] = column(widgetbox(geojson_data_table), width=500)
+        #s.layout.children[1] = column(widgetbox(data_table), width=500)
+        self.layout.children[2] = column(widgetbox(geojson_data_table), width=500)
     
 
 class RDFToGeoJSON:
@@ -207,7 +207,8 @@ class RDFToGeoJSON:
         )
         convert_button = Button(label="Convert to GeoJSON", button_type="success")
         convert_button.on_click(self.transform)
-        self.__layout.children[1] = column(widgetbox(self.rdf_table), convert_button)
+        #todo:creates bug - empty table
+        #self.__layout.children[1] = column(widgetbox(self.rdf_table), convert_button)
         self.__layout.children[2] = column(self.geojson_table)
 
     def __on_select(self, attr, old, new):

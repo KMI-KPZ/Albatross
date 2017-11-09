@@ -51,7 +51,7 @@ def define_menu(layout):
     modulelist = get_sub_direct('Modules');
     modulelist.sort()
     for sub in modulelist:
-        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + '/Modules/' + sub + '/config.xml'):
+        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + 'Modules/' + sub + '/config.xml'):
             e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), 'Modules/' + sub + '/config.xml')).getroot()
             titleMenu = e.find('menu').find('title').text;
             
@@ -82,6 +82,7 @@ def define_menu(layout):
                     if m[0] == mclass:
                         re_class =  getattr(module, mclass)
                         class_instance = re_class(layout)
+                        
                         f = getattr(class_instance, function);
                         button_inner.on_click(f)
                 
@@ -91,8 +92,7 @@ def define_menu(layout):
             t.append(row(column([Div(text=menu_inner, height=15), widgetbox(button_box, height=55)])))
     
     layout.children[0] = column(t);
-
-
+    
 class IndexHandler(RequestHandler):
     def get(self):
         env = Environment(loader=FileSystemLoader('templates'))
