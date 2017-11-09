@@ -46,11 +46,14 @@ class Nuts:
             "Level 3": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson")
         }
 
+        self.dataset_path_prefix = r"data/geojson/eurostats/"
+
         ########################################################################################################
         # ToDo: leave self.lvl_geodata unchanged
         self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
 
-        self.update_datasource(self.lvl_geodata['Level 3'], self.current_dataset, 'Level 3', 'aei_pr_soiler', 10)
+        self.current_map_CDS = ColumnDataSource()
+        self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 3', 'aei_pr_soiler', 10)
         ########################################################################################################
 
     def update_datasource(self, datasource, dataset, level, observation_name, period):
@@ -59,11 +62,14 @@ class Nuts:
         for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
             raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
             raw_index = raw_indices.index[0]
-            observations = dataset.loc[raw_index, :]['OBSERVATIONS']
-            if observations is None:
-                nan_indices.append(index)
+            if 'OBSERVATIONS' in dataset.loc[raw_index, :].keys():
+                observations = dataset.loc[raw_index, :]['OBSERVATIONS']
+                if observations is None:
+                    nan_indices.append(index)
+                else:
+                    values.append(float(observations[observation_name][0]['value']))
             else:
-                values.append(float(observations[observation_name][0]['value']))
+                nan_indices.append(index)
 
         tmp_data = {}
         for key in self.lvl_geodata[level].data.keys():
@@ -73,24 +79,22 @@ class Nuts:
         tmp_data['classified'] = self.classifier(values, 20)
         datasource.data = ColumnDataSource(tmp_data).data
 
-
-
     def classifier(self, data, num_level):
-        _data = [float(i) for i in data]
-        step_size = round((max(_data) - min(_data)) / num_level)
-        breaks = [x for x in range(int(min(_data)), int(max(_data)), int(step_size))]
-
         ud = []
-        for d in _data:
-            lvl = 0
-            for i, b in enumerate(breaks):
-                if b <= d:
-                    lvl = i
-                else:
-                    break
-            ud.append(lvl)
-        return ud
+        if len(data) is not 0:
+            _data = [float(i) for i in data]
+            step_size = round((max(_data) - min(_data)) / num_level)
+            breaks = [x for x in range(int(min(_data)), int(max(_data)), int(step_size))]
 
+            for d in _data:
+                lvl = 0
+                for i, b in enumerate(breaks):
+                    if b <= d:
+                        lvl = i
+                    else:
+                        break
+                ud.append(lvl)
+        return ud
 
     def on_lvl_select(self, attr, old, new):
         """
@@ -119,9 +123,15 @@ class Nuts:
         if old_selection in available_ids[new]:
             self.id_select.value=old_selection
 
+        self.current_dataset = gpd.GeoDataFrame.from_file(
+            self.dataset_path_prefix + "nuts_" + new[-1] + "/" + self.id_select.value + ".geojson")
+        self.update_datasource(self.current_map_CDS, self.current_dataset, new, self.id_select.value, 10)
+
     def on_dataset_select(self, attr, old, new):
         # ToDo: implement
-        print(new)
+        self.current_dataset = gpd.GeoDataFrame.from_file(
+            self.dataset_path_prefix + "nuts_" + self.lvl_select.value[-1] + "/" + new + ".geojson")
+        self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, new, 10)
 
     @staticmethod
     def get_poly_coordinates(row, geom, coord_type):
@@ -235,12 +245,11 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-        patch_source = ColumnDataSource(self.lvl_geodata['Level 3'].data)
         #print(self.lvl_geodata['Level 3'].data)
 
         color_mapper = LogColorMapper(palette=palette)
         glyphs = p.patches(
-            'x', 'y', source=patch_source,
+            'x', 'y', source=self.current_map_CDS,
             fill_color={'field': 'classified', 'transform': color_mapper},
             fill_alpha=0.5,
             line_color="black",
