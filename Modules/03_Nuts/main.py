@@ -6,7 +6,7 @@ from bokeh.models import WMTSTileSource,\
 from bokeh.models.widgets import Select
 from bokeh.layouts import column, row
 from bokeh.palettes import PuBu
-from bokeh.palettes import Greys256 as palette
+from bokeh.palettes import Inferno256 as palette
 from bokeh.models.glyphs import Patches
 import os
 import math
@@ -47,6 +47,7 @@ class Nuts:
             "Level 3": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson")
         }
 
+        ########################################################################################################
         # ToDo: leave self.lvl_geodata unchanged
         # Todo: move the stuff below into a function that is called on changes of the Selects
         # Example of deleting NaN Areas from the Plot
@@ -63,14 +64,32 @@ class Nuts:
             else:
                 values.append(float(observations['aei_pr_soiler'][0]['value']))
 
-        nan_indices.sort(reverse=True)
+        # nan_indices.sort(reverse=True)
         tmp_data = {}
         for key in self.lvl_geodata['Level 3'].data.keys():
             tmp_data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
 
-        tmp_data['value'] = values
+        tmp_data['observation'] = values
         tmp_data['classified'] = self.classifier(values, 20)
         self.lvl_geodata['Level 3'] = ColumnDataSource(tmp_data)
+        ########################################################################################################
+
+
+    def update_datasource(self, datasource, dataset, level, observation_name, period):
+        nan_indices = []
+        values = []
+        for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
+            raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
+            raw_index = raw_indices.index[0]
+            observations = dataset.loc[raw_index, :]['OBSERVATIONS']
+            if observations is None:
+                nan_indices.append(index)
+            else:
+                values.append(float(observations[observation_name][0]['value']))
+
+        nan_indices.sort(reverse=True)
+
+
 
     def classifier(self, data, num_level):
         _data = [float(i) for i in data]
@@ -183,9 +202,9 @@ class Nuts:
         return ColumnDataSource(dataframe)
     
     def tap_callback(self, attr, old, new):
-        
+        print(new)
         new_data = {}
-        new_data['value'] = [0]
+        new_data['observation'] = [0]
         new_data['NUTS_ID']  = ['0']
         old_data = self.lvl_geodata['Level 3'].data
         for indices in new["1d"]["indices"]:
@@ -203,11 +222,11 @@ class Nuts:
         title=title,
         x_minor_ticks=2,
         x_range = testdata_source.data["NUTS_ID"],
-        y_range= ranges.Range1d(start=min(testdata_source.data['value']),end=max(testdata_source.data['value'])))
+        y_range= ranges.Range1d(start=min(testdata_source.data['observation']),end=max(testdata_source.data['observation'])))
         
-        labels = LabelSet(x='NUTS_ID', y='value', text='value', level='glyph',
+        labels = LabelSet(x='NUTS_ID', y='observation', text='observation', level='glyph',
         x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
-        p2.vbar(source=testdata_source,x='NUTS_ID',top='value',bottom=0,width=0.3,color=PuBu[7][2])
+        p2.vbar(source=testdata_source,x='NUTS_ID',top='observation',bottom=0,width=0.3,color=PuBu[7][2])
         
         self.layout.children[2] = column(p2)
 
@@ -262,7 +281,7 @@ class Nuts:
         glyphs.data_source.on_change('selected', self.tap_callback)
         
         hover = HoverTool()
-        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@value')]
+        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@observation')]
         p.add_tools(hover)
 
         # ToDo remove this crap

@@ -51,7 +51,7 @@ def define_menu(layout):
     modulelist = get_sub_direct('Modules');
     modulelist.sort()
     for sub in modulelist:
-        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + 'Modules/' + sub + '/config.xml'):
+        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + '/Modules/' + sub + '/config.xml'):
             e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), 'Modules/' + sub + '/config.xml')).getroot()
             titleMenu = e.find('menu').find('title').text;
             
@@ -123,7 +123,7 @@ class MainHandler(tornado.web.RequestHandler):
         #print(curdoc().template)
         theme = Theme(filename="theme.yaml")
         doc.theme = theme
-        layout = row([Div(), Div(), Div()], width=1200)
+        layout = row([Div(), Div(), Div()], width=1700)
         define_menu(layout)
         
         doc_by_user_str[user_str] = doc
