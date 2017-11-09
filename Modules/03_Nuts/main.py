@@ -48,15 +48,21 @@ class Nuts:
 
         self.dataset_path_prefix = r"data/geojson/eurostats/"
 
-        ########################################################################################################
-        # ToDo: leave self.lvl_geodata unchanged
         self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
-
         self.current_map_CDS = ColumnDataSource()
         self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 3', 'aei_pr_soiler', 10)
-        ########################################################################################################
 
     def update_datasource(self, datasource, dataset, level, observation_name, period):
+        """
+        Updates the datasource to contain the datasets observations (observation_name and period)
+        in the passed NUTS level.
+        :param datasource: The ColumnDataSource to update.
+        :param dataset: The dataset to get the observations from.
+        :param level: The NUTS Level.
+        :param observation_name: The name of the observation.
+        :param period: The period of interest.
+        :return:
+        """
         nan_indices = []
         values = []
         for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
@@ -79,7 +85,15 @@ class Nuts:
         tmp_data['classified'] = self.classifier(values, 20)
         datasource.data = ColumnDataSource(tmp_data).data
 
-    def classifier(self, data, num_level):
+    @staticmethod
+    def classifier(data, num_level):
+        """
+        Categorizes each element in data into one of the num_level classes.
+        The class separation is linear.
+        :param data: the list of elements that will be classified.
+        :param num_level: number of classes.
+        :return: The list of associated classes.
+        """
         ud = []
         if len(data) is not 0:
             _data = [float(i) for i in data]
@@ -134,11 +148,18 @@ class Nuts:
         self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, new, 10)
 
     @staticmethod
-    def get_poly_coordinates(row, geom, coord_type):
-        """Returns the coordinates ('x' or 'y') of edges of a Polygon exterior"""
+    def get_poly_coordinates(line, geom, coord_type):
+        """
+        Returns the coordinates ('x' or 'y') of edges of a Polygon exterior.
+
+        :param line: The current line to extract coordinates from.
+        :param geom: The geometry key in the line.
+        :param coord_type: either 'x' or 'y'.
+        :return: x or y values of the polygon edges.
+        """
 
         # Parse the exterior of the coordinate
-        exterior = row[geom].exterior
+        exterior = line[geom].exterior
 
         if coord_type == 'x':
             # Get the x coordinates of the exterior
@@ -149,6 +170,13 @@ class Nuts:
 
     @staticmethod
     def explode(input_data):
+        """
+        Extracts geometry from the geojson passed by input_data.
+        The types of geometry that are extracted are Polygon and MultiPolygon.
+
+        :param input_data: Path to the geojson
+        :return: Dataframe with the geometry.
+        """
         input_dataframe = gpd.GeoDataFrame.from_file(input_data)
         output_dataframe = gpd.GeoDataFrame(columns=input_dataframe.columns)
         for idx, row in input_dataframe.iterrows():
@@ -168,7 +196,7 @@ class Nuts:
         """
         Generates dictionary of the eurostats geojson files and their NUTS level
 
-        :return: Dirctionary of eurostats ID's and NUTS level that where found in data/geojson/eurostats/nuts_*
+        :return: Dictionary of eurostats ID's and NUTS level that where found in data/geojson/eurostats/nuts_*
         """
         geojson_path_prefix = "data/geojson/eurostats/nuts_"
         file_list = {}
@@ -182,6 +210,13 @@ class Nuts:
         return file_list
 
     def produce_column_data(self, input_data):
+        """
+        Generates a ColumnDataSource from the geojson path passed by input_data containing
+        the coordinates for patches to draw on a map.
+
+        :param input_data: Path to a geojson.
+        :return: ColumnDataSource containing the coordinates for patches to draw on a map.
+        """
         raw_data = self.explode(input_data)
 
         # Transform CRS
@@ -224,6 +259,9 @@ class Nuts:
         self.layout.children[2] = column(p2)
 
     def show_data(self):
+        """
+        Setup plots and commit them into the layout.
+        """
         # Plot map
         tools = "pan,wheel_zoom,box_zoom,reset,tap"
         p = figure(
