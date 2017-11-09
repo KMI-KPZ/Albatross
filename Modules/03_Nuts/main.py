@@ -21,7 +21,7 @@ from bokeh.models.widgets.markups import Paragraph
 
 class Nuts:
     
-    _chart_data = {}
+    _selected_year = ''
     
     
     def __init__(self, layout):
@@ -193,6 +193,7 @@ class Nuts:
         new_data['NUTS_ID']  = ['0']
         old_data = self.lvl_geodata['Level 3'].data
         for indices in new["1d"]["indices"]:
+            print(indices)
             new_data['value'].append(old_data['value'][indices])
             new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
         

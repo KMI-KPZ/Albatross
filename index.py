@@ -51,7 +51,7 @@ def define_menu(layout):
     modulelist = get_sub_direct('Modules');
     modulelist.sort()
     for sub in modulelist:
-        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + '/Modules/' + sub + '/config.xml'):
+        if sub != 'Menu' and os.path.isfile(os.path.dirname(__file__) + 'Modules/' + sub + '/config.xml'):
             e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), 'Modules/' + sub + '/config.xml')).getroot()
             titleMenu = e.find('menu').find('title').text;
             
