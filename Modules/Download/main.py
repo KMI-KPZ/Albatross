@@ -1,4 +1,5 @@
 import os
+import json
         
 def get_files(prefix): 
     """ 
@@ -21,9 +22,17 @@ def get_files(prefix):
 def return_view_args():
     rdf_obslist = get_files("data/rdf/eurostats/")
     original_obslist = get_files("data/sandbox/eurostat/tsv")
-    geojson_obslist = get_files("data/geojson/eurostats/")
-    
-    
-    return dict(rdf_obslist=rdf_obslist, original_obslist=original_obslist, geojson_obslist=geojson_obslist)
+
+    a_dir = r"data/geojson/eurostats/"
+    geojson_levels = [name for name in os.listdir(a_dir)
+            if os.path.isdir(os.path.join(a_dir, name))]
+
+    geojson_files = {}
+    geojson_lvl = []
+    for lvl in geojson_levels:
+        geojson_files[lvl] = get_files(os.path.join(a_dir, lvl + "/"))
+        geojson_lvl.append({'dir_name': lvl, 'display_name': lvl.upper().replace("_", " ")})
+
+    return dict(rdf_obslist=rdf_obslist, original_obslist=original_obslist, geojson_levels=geojson_lvl, geojson_files=geojson_files)
     
     
