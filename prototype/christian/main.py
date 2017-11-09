@@ -1,86 +1,29 @@
-import pandas as pd
-
-from bokeh.layouts import row, widgetbox
-from bokeh.models import Select
-from bokeh.palettes import Spectral5
-from bokeh.plotting import curdoc, figure
-from bokeh.sampledata.autompg import autompg_clean as df
-from bokeh.themes.theme import Theme
-from jinja2.environment import Template
-
-df = df.copy()
-
-SIZES = list(range(6, 22, 3))
-COLORS = Spectral5
-
-# data cleanup
-df.cyl = df.cyl.astype(str)
-df.yr = df.yr.astype(str)
-del df['name']
-
-columns = sorted(df.columns)
-discrete = [x for x in columns if df[x].dtype == object]
-continuous = [x for x in columns if x not in discrete]
-quantileable = [x for x in continuous if len(df[x].unique()) > 20]
-
-def create_figure():
-    xs = df[x.value].values
-    ys = df[y.value].values
-    x_title = x.value.title()
-    y_title = y.value.title()
-
-    kw = dict()
-    if x.value in discrete:
-        kw['x_range'] = sorted(set(xs))
-    if y.value in discrete:
-        kw['y_range'] = sorted(set(ys))
-    kw['title'] = "%s vs %s" % (x_title, y_title)
-
-    p = figure(plot_height=600, plot_width=800, tools='pan,box_zoom,reset', **kw)
-    p.xaxis.axis_label = x_title
-    p.yaxis.axis_label = y_title
-
-    if x.value in discrete:
-        p.xaxis.major_label_orientation = pd.np.pi / 4
-
-    sz = 9
-    if size.value != 'None':
-        groups = pd.qcut(df[size.value].values, len(SIZES))
-        sz = [SIZES[xx] for xx in groups.codes]
-
-    c = "#31AADE"
-    if color.value != 'None':
-        groups = pd.qcut(df[color.value].values, len(COLORS))
-        c = [COLORS[xx] for xx in groups.codes]
-    p.circle(x=xs, y=ys, color=c, size=sz, line_color="white", alpha=0.6, hover_color='white', hover_alpha=0.5)
-
-    return p
+from bokeh.palettes import PuBu
+from bokeh.io import show
+from bokeh.models import ColumnDataSource, ranges, LabelSet
+from bokeh.plotting import figure, output_file
 
 
-def update(attr, old, new):
-    layout.children[1] = create_figure()
+tmp_data = {}
+tmp_data['value'] = [1, 2, 4, 5]
+tmp_data['NUTS_ID'] = ['De', 'AU', 'DS', 'ää']
+testdata_source = ColumnDataSource(tmp_data)
+x_label = "test"
+y_label = "moretest"
+title = "Visme"
+p2 = figure(plot_width=600, plot_height=300, tools="save",
+x_axis_label = x_label,
+y_axis_label = y_label,
+title=title,
+x_minor_ticks=2,
+x_range = testdata_source.data["NUTS_ID"],
+y_range= ranges.Range1d(start=min(testdata_source.data['value']),end=max(testdata_source.data['value'])))
 
 
-x = Select(title='X-Axis', value='mpg', options=columns)
-x.on_change('value', update)
-
-y = Select(title='Y-Axis', value='hp', options=columns)
-y.on_change('value', update)
-
-size = Select(title='Size', value='None', options=['None'] + quantileable)
-size.on_change('value', update)
-
-color = Select(title='Color', value='None', options=['None'] + quantileable)
-color.on_change('value', update)
-
-controls = widgetbox([x, y, color, size], width=200)
-layout = row(controls, create_figure())
-
-curdoc().add_root(layout)
-curdoc().title = "Crossfilter"
-theme = Theme(filename="theme.yaml")
-curdoc().theme = theme
-html = open("templates/index.html", 'r').read()
-temp = Template(html)
-
-curdoc().template = temp
+labels = LabelSet(x='NUTS_ID', y='value', text='value', level='glyph',
+x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
+p2.vbar(source=testdata_source,x='NUTS_ID',top='value',bottom=0,width=0.3,color=PuBu[7][2])
+        
+        
+output_file('histogram.html', title="histogram.py example")
+show(p2)

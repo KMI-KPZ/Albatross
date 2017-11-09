@@ -146,7 +146,21 @@ class DataProcessing():
         """ 
         Callback that generates the list of ready-to-transform-to-GeoJSON RDF files 
         """
-        RDFToGeoJSON(s.layout)
+        converter = RDFToGeoJSON(self.layout) 
+ 
+        convert_button = Button(label="Convert to GeoJSON", button_type="success") 
+        convert_button.on_click(converter.transform) 
+ 
+        self.layout.children[1] = column(widgetbox(converter.rdf_table), convert_button) 
+        # s.layout.children[2] = column(converter.geojson_table) 
+     
+        geojson_table_source = ColumnDataSource(data) 
+        columns = [TableColumn(field='lvl', title="NUTS Level"), 
+                   TableColumn(field='id', title="ID")] 
+        geojson_data_table = DataTable(source=geojson_table_source, columns=columns, width=500, height=400, selectable=True) 
+        #layout 
+        #s.layout.children[1] = column(widgetbox(data_table), width=500) 
+        self.layout.children[2] = column(widgetbox(geojson_data_table), width=500) 
     
 
 class RDFToGeoJSON:

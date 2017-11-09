@@ -2,9 +2,10 @@ from bokeh.plotting import figure
 from bokeh.models import WMTSTileSource,\
     ColumnDataSource, \
     LogColorMapper, \
-    HoverTool
+    HoverTool, ranges, LabelSet
 from bokeh.models.widgets import Select
 from bokeh.layouts import column, row
+from bokeh.palettes import PuBu
 from bokeh.palettes import Greys256 as palette
 from bokeh.models.glyphs import Patches
 import os
@@ -13,9 +14,15 @@ import numpy as np
 import geopandas as gpd
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
+import scipy.special
+from bokeh.layouts import gridplot
 
 
 class Nuts:
+    
+    _chart_data = {}
+    
+    
     def __init__(self, layout):
         self.lvl_select_options = ["Level 1", "Level 2", "Level 3"]
         eurostats = self.get_eurostats_geojson_list()
@@ -53,7 +60,7 @@ class Nuts:
             if observations is None:
                 nan_indices.append(index)
             else:
-                values.append(observations['aei_pr_soiler'][0]['value'])
+                values.append(float(observations['aei_pr_soiler'][0]['value']))
 
         nan_indices.sort(reverse=True)
         tmp_data = {}
@@ -173,6 +180,34 @@ class Nuts:
 
         dataframe = raw_data.drop('geometry', axis=1).copy()
         return ColumnDataSource(dataframe)
+    
+    def tap_callback(self, attr, old, new):
+        
+        new_data = {}
+        new_data['value'] = [0]
+        new_data['NUTS_ID']  = ['0']
+        old_data = self.lvl_geodata['Level 3'].data
+        new_data['value'].append(old_data['value'][new["1d"]["indices"][0]])
+        new_data['NUTS_ID'].append(old_data['NUTS_ID'][new["1d"]["indices"][0]])
+        print(new_data)
+        testdata_source = ColumnDataSource(new_data)
+        # dont work with to large datasets
+        x_label = "test"
+        y_label = "moretest"
+        title = "Visme"
+        p2 = figure(plot_width=600, plot_height=300, tools="save",
+        x_axis_label = x_label,
+        y_axis_label = y_label,
+        title=title,
+        x_minor_ticks=2,
+        x_range = testdata_source.data["NUTS_ID"],
+        y_range= ranges.Range1d(start=min(testdata_source.data['value']),end=max(testdata_source.data['value'])))
+        
+        labels = LabelSet(x='NUTS_ID', y='value', text='value', level='glyph',
+        x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
+        p2.vbar(source=testdata_source,x='NUTS_ID',top='value',bottom=0,width=0.3,color=PuBu[7][2])
+        
+        self.layout.children[2] = column(p2)
 
     def show_data(self):
         # Plot map
@@ -197,6 +232,7 @@ class Nuts:
         p.axis.visible = False
 
         patch_source = ColumnDataSource(self.lvl_geodata['Level 3'].data)
+        #print(self.lvl_geodata['Level 3'].data)
 
         color_mapper = LogColorMapper(palette=palette)
         glyphs = p.patches(
@@ -220,37 +256,38 @@ class Nuts:
             line_width=1,
             fill_color={'field': 'classified', 'transform': color_mapper}
         )
+         # set the callback for the tap tool
+        glyphs.data_source.on_change('selected', self.tap_callback)
+        
         hover = HoverTool()
         hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@value')]
         p.add_tools(hover)
 
         # ToDo remove this crap
         ################################################################
-        # random plot
-        rand_y_offset = np.random.rand(200)
-        rand_x_offset = np.random.rand(1) * math.pi / 2
-        x = np.linspace(0, 4 * math.pi, 200)
-        curve = np.sin(x + rand_x_offset) * 3 + rand_y_offset
-        xs = x.tolist()
-        ys = curve.tolist()
-        random_source = ColumnDataSource({'x': xs, 'y': ys})
-        p2 = figure(width=600, height=200, title='random data 1')
-        p2.line(x='x', y='y', source=random_source)
-        ################################################################
-
-        # ToDo remove this crap, as well
-        ################################################################
-        # random plot
-        rand_y_offset = np.random.rand(200)
-        rand_x_offset = np.random.rand(1) * math.pi / 2
-        x = np.linspace(0, 4 * math.pi, 200)
-        curve = np.sin(x + rand_x_offset) * 3 + rand_y_offset
-        xs = x.tolist()
-        ys = curve.tolist()
-        random_source = ColumnDataSource({'x': xs, 'y': ys})
-        p3 = figure(width=600, height=200, title='random data 2')
-        p3.line(x='x', y='y', source=random_source)
+        
+        tmp_data = {}
+        tmp_data['value'] = [1, 2, 4, 5]
+        tmp_data['NUTS_ID'] = ['De', 'AU', 'DS', 'ää']
+        testdata_source = ColumnDataSource(tmp_data)
+        # dont work with to large datasets
+        x_label = "test"
+        y_label = "moretest"
+        title = "Visme"
+        p2 = figure(plot_width=600, plot_height=300, tools="save",
+        x_axis_label = x_label,
+        y_axis_label = y_label,
+        title=title,
+        x_minor_ticks=2,
+        x_range = testdata_source.data["NUTS_ID"],
+        y_range= ranges.Range1d(start=min(testdata_source.data['value']),end=max(testdata_source.data['value'])))
+        
+        
+        labels = LabelSet(x='NUTS_ID', y='value', text='value', level='glyph',
+        x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
+        p2.vbar(source=testdata_source,x='NUTS_ID',top='value',bottom=0,width=0.3,color=PuBu[7][2])
+        
         ################################################################
 
         self.layout.children[1] = column(p, row(self.lvl_select, self.id_select))
-        self.layout.children[2] = column(p2, p3)
+        self.layout.children[2] = column(p2)
