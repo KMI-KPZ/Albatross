@@ -5,7 +5,7 @@ from bokeh.models import WMTSTileSource,\
     HoverTool
 from bokeh.models.widgets import Select
 from bokeh.layouts import column, row
-from bokeh.palettes import Greys256 as palette
+from bokeh.palettes import Inferno256 as palette
 from bokeh.models.glyphs import Patches
 import os
 import math
@@ -60,7 +60,7 @@ class Nuts:
         for key in self.lvl_geodata['Level 3'].data.keys():
             tmp_data[key] = np.delete(self.lvl_geodata['Level 3'].data[key], nan_indices)
 
-        tmp_data['value'] = values
+        tmp_data['observation'] = values
         tmp_data['classified'] = self.classifier(values, 20)
         self.lvl_geodata['Level 3'] = ColumnDataSource(tmp_data)
 
@@ -221,7 +221,7 @@ class Nuts:
             fill_color={'field': 'classified', 'transform': color_mapper}
         )
         hover = HoverTool()
-        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@value')]
+        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@observation')]
         p.add_tools(hover)
 
         # ToDo remove this crap
