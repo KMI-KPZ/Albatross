@@ -43,8 +43,9 @@ class DataProcessing():
         rdf_data_table = self.generate_rdf_column_data_source(files)
         button_dl = Button(label="Convert CSV to RDF", button_type="success")
         button_dl.on_click(callback_generate_RDF)
+        para = Div(text='This module uses <a href="https://github.com/linked-statistics/eurostat" target="_blank">Eurostat dataset</a> as a service.')
         #layout
-        self.layout.children[1] = column([Paragraph(text="Downloaded Sources"),widgetbox(data_table), widgetbox(button_dl)], width=400)
+        self.layout.children[1] = column([Paragraph(text="Downloaded Sources"),widgetbox(data_table), widgetbox(para), widgetbox(button_dl)], width=400)
         self.layout.children[2] = column([Paragraph(text="Existing RDF"), widgetbox(rdf_data_table)], width=400)
         
         
@@ -139,6 +140,7 @@ class DataProcessing():
         convert_button = Button(label="Convert to GeoJSON", button_type="success")
         convert_button.on_click(converter.transform)
 
+        
         self.layout.children[1] = column(widgetbox(converter.rdf_table), convert_button)
         # # s.layout.children[2] = column(converter.geojson_table)
         #

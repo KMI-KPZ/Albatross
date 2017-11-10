@@ -14,6 +14,9 @@ import geopandas as gpd
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 from bokeh.models.widgets.markups import Paragraph
+import xml.etree.ElementTree
+import lxml.etree as le
+
 
 
 class Nuts:
@@ -28,11 +31,11 @@ class Nuts:
 
         # collect ID by level
         available_ids = {
-            "Level 1": [k for k, v in eurostats.items() if 1 in v],
-            "Level 2": [k for k, v in eurostats.items() if 2 in v],
-            "Level 3": [k for k, v in eurostats.items() if 3 in v]
+            "Level 1": [self.get_real_name(k) for k, v in eurostats.items() if 1 in v],
+            "Level 2": [self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
+            "Level 3": [self.get_real_name(k) for k, v in eurostats.items() if 3 in v]
         }
-        self.id_select = Select(title="ID Select:", value=available_ids["Level 1"][0], options=available_ids["Level 1"])
+        self.id_select = Select(title="ID Select:", value=available_ids["Level 1"][0][0], options=available_ids["Level 1"])
         self.id_select.on_change("value", self.on_dataset_select)
         self.lvl_select = Select(title="Nuts Level:", value="Level 1", options=self.lvl_select_options)
         self.lvl_select.on_change("value", self.on_lvl_select)
@@ -54,7 +57,37 @@ class Nuts:
         self.year_select = Select(title="Year (Period)", value=self._selected_year, options=self._years)
         self.year_select.on_change("value", self.on_year_select)
         
+    def get_real_name(self, k):
+        """
+        @param str k: represents the filename of eurostats
+        @return option tuple (value, label)
+        """
+        label = self.match_file_to_name(k)
+        tuple = (k, label)
+        return tuple
+    
+    def match_file_to_name(self, name):
+        '''
+            getting the real name from xml
+            :param str xml: filename
+            :return xml title text
+        '''
+        global namespaces
+        
+        ET = xml.etree.ElementTree
+        e = le.parse('data/toc.xml')
+        namespaces = {'nt': 'urn:eu.europa.ec.eurostat.navtree'} # add more as needed
+        for node in e.findall('.//nt:downloadLink[@format="tsv"]', namespaces):
+            if name in node.text:
+                parent = node.find('..', namespaces)
+                title = parent.find('nt:title[@language="en"]', namespaces);
+        
+        return title.text
+    
     def on_year_select(self, attr, old, new):
+        """
+        updatefunction for years
+        """
         self._selected_year = new
         self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, self.id_select.value, 10)
 
@@ -168,9 +201,9 @@ class Nuts:
 
         # collect ID by level
         available_ids = {
-            "Level 1": [k for k, v in eurostats.items() if 1 in v],
-            "Level 2": [k for k, v in eurostats.items() if 2 in v],
-            "Level 3": [k for k, v in eurostats.items() if 3 in v]
+            "Level 1": [self.get_real_name(k) for k, v in eurostats.items() if 1 in v],
+            "Level 2": [self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
+            "Level 3": [self.get_real_name(k) for k, v in eurostats.items() if 3 in v]
         }
         old_selection = self.id_select.value
         self.id_select.options = available_ids[new]
@@ -234,6 +267,7 @@ class Nuts:
     def get_eurostats_geojson_list():
         """
         Generates dictionary of the eurostats geojson files and their NUTS level
+        example: {'aei_pr_soiler': [1, 2, 3], 'trng_lfse_04': [1, 2]}
 
         :return: Dictionary of eurostats ID's and NUTS level that where found in data/geojson/eurostats/nuts_*
         """
@@ -246,13 +280,14 @@ class Nuts:
                     file_list[geojson_name].append(i)
                 else:
                     file_list[geojson_name] = [i]
+        
         return file_list
 
     def produce_column_data(self, input_data):
         """
         Generates a ColumnDataSource from the geojson path passed by input_data containing
         the coordinates for patches to draw on a map.
-
+        
         :param input_data: Path to a geojson.
         :return: ColumnDataSource containing the coordinates for patches to draw on a map.
         """
@@ -312,7 +347,7 @@ class Nuts:
         p = figure(
             width=800,
             height=600,
-            title="NUTS Areas",
+            title="",
             tools=tools,
             x_range=(-2.45*10**6, 5.12*10**6),
             y_range=( 3.73*10**6, 1.13*10**7)
@@ -362,5 +397,5 @@ class Nuts:
         
         p2 = Paragraph(text="No data selected. Please select region.")
         
-        self.layout.children[1] = column(p, row(self.lvl_select, self.id_select, self.year_select))
+        self.layout.children[1] = column(row(self.id_select),row(self.lvl_select, self.year_select), p)
         self.layout.children[2] = column(p2)
