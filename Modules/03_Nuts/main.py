@@ -51,7 +51,7 @@ class Nuts:
         self.dataset_path_prefix = r"data/geojson/eurostats/"
 
         # self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_2/trng_lfse_04.geojson")
-        self.current_dataset = ColumnDataSource()
+        self.current_dataset = gpd.GeoDataFrame()
         self.current_map_CDS = ColumnDataSource({'x': [], 'y': [], 'classified': []})
         # self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 2', 'trng_lfse_04', 10)
         
@@ -197,7 +197,6 @@ class Nuts:
         :param old: the old value of the attribute
         :param new: the new value of the attribute
         """
-        # ToDo: trigger redraw
         eurostats = self.get_eurostats_geojson_list()
 
         # collect ID by level
