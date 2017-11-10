@@ -111,6 +111,29 @@ class DownloadHandler(RequestHandler):
         print(req_args)
         self.write(template.render(script=script, **req_args))
 
+class LinkingHandler(RequestHandler):
+    def get(self):
+        env = Environment(loader=FileSystemLoader('templates'))
+        template = env.get_template('linking.html')
+        script = server_document('http://localhost:5006/linking')
+        import Modules.Linking.main
+        req_args = Modules.Linking.main.return_view_args()
+        
+        self.write(template.render(script=script, **req_args))
+
+class UploadHandler(tornado.web.RequestHandler):
+    def post(self):
+        __UPLOADS__ = 'services/limes/'
+        fileinfo = self.request.files['filearg'][0]
+        fname = fileinfo['filename']
+        extn = os.path.splitext(fname)[1]
+        print(extn)
+        if extn == '.xml' :
+            fh = open(__UPLOADS__ + fname, 'wb')
+            fh.write(fileinfo['body'])
+            
+            self.redirect('/linking')
+
 
 class MainHandler(tornado.web.RequestHandler):
     @staticmethod
@@ -163,7 +186,15 @@ def start_server():
     script_path = os.path.join(os.path.dirname(__file__), 'data')
     css_path = os.path.join(os.path.dirname(__file__), 'static/css')
     bokeh_app = bokeh.application.Application(FunctionHandler(MainHandler.def_platform))
-    server = Server({'/index': bokeh_app}, num_procs=1, extra_patterns=[('/', IndexHandler), (r"/data/(.*)", tornado.web.StaticFileHandler, {"path": script_path}), (r"/css/(.*)", tornado.web.StaticFileHandler, {"path": css_path}), (r'/download', DownloadHandler)])
+    server = Server({'/index': bokeh_app}, num_procs=1, extra_patterns=[
+        ('/', IndexHandler), 
+        (r"/data/(.*)", tornado.web.StaticFileHandler, {"path": script_path}), 
+        (r"/css/(.*)", tornado.web.StaticFileHandler, {"path": css_path}), 
+        (r"/fonts/(.*)", tornado.web.StaticFileHandler, {"path": 'fonts'}),
+        (r'/download', DownloadHandler),
+        (r'/linking', LinkingHandler),
+        (r'/upload', UploadHandler),
+        ])
     server.start()
     return server
 

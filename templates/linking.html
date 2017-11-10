@@ -43,7 +43,7 @@
         </style>
     </head>
     <body>
-    <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -59,13 +59,14 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li><a href="/">Main </span></a></li>
-                <li><a href="/linking">Linking</a></li>
-                <li class="active"><a href="/download">Download Center <span class="sr-only">(current)</span></a></li>
+                <li ><a href="/">Main <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="/linking">Linking</a> <span class="sr-only">(current)</span></li>
+                <li><a href="/download">Download Center</a></li>
               </ul>
             </div>
           </div>
         </nav>
+        
         <div class="jumbotron">
             <div class="container">
             <h2>Albatross</h2>
@@ -73,48 +74,38 @@
             <p>Created by the DataBio Linked Data Group</p>
             </div>    
         </div>
-        <div class="container" style="min-height:500px;">
+        <div class="jumbotron" style="min-height:500px;">
+<div class="container">
+<h2>Linking Upload</h2>
+<p>uses the service of the <a href="https://github.com/dice-group/LIMES">LIMES</a> Toolset (License GNU Affero General Public License v3.0: <a href="https://github.com/dice-group/LIMES/blob/master/LICENSE">https://github.com/dice-group/LIMES/blob/master/LICENSE</a>)</p>
+<div class="alert alert-warning"><p><span class="glyphicon glyphicon-wrench"></span>  Sorry this function is still under construction</p></div>
+</div>
+<div class="container" >
             <div class="row">
                 <div class="col-md-4">
-                    <h2>Downloaded Eurostats Datasets</h2>
+                    <h2>Uploaded LIMES XML</h2>
                      <ul>
-                        {% for org_file in original_obslist %}
+                        {% for file in files %}
                             
-                        <li><a href="{{ org_file["url"] }}" target="_blank">{{ org_file["id"] }}</a></li>
-                            
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h2>Created RDFs</h2>
-                     <ul>
-                        {% for rdf_file in rdf_obslist %}
-                            
-                        <li><a href="{{ rdf_file["url"] }}" target="_blank">{{ rdf_file["id"] }}</a></li>
-                            
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h2>Created Geojsons</h2>
-                     <ul>
-                        {% for geo_level in geojson_levels %}
-
-                         <li>{{ geo_level["display_name"] }}
-                            <ul>
-                                {% for geo_file in geojson_files[geo_level["dir_name"]] %}
-
-                                <li><a href="{{ geo_file["url"] }}" target="_blank">{{ geo_file["id"] }}</a></li>
-
-                                {% endfor %}
-                            </ul>
-                         </li>
+                        <li>{{ file["id"] }} <button>Run</button></li>
                             
                         {% endfor %}
                     </ul>
                 </div>
             </div>
-        </div>
+</div>
+        
+<div class="container">
+<p><h3>Select & Upload</h3></p>
+<form enctype="multipart/form-data" action="/upload" method="post">
+File: <input type="file" name="filearg" />
+<br />
+<br />
+<input type="submit" value="Upload LIMES XML" />
+</form>
+</div>
+         </div>
+        
         <footer class="footer" style="background:#363839;color:#8c8989;">        
             <div class="container">
                 <div class="row">
