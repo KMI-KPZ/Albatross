@@ -27,15 +27,7 @@ class DataSources():
         self.layout = layout
         
         # layout texts
-        
-        
-        
-    """
-    TODO: List of Endpoint which may used for GeoJSON creation
-    """
-    def listEndpoints(self):
-        print('something takes a part of me')
-
+    
             
     def showTOC(self):
         global namespaces, title, link, source

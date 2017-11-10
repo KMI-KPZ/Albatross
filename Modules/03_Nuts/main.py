@@ -23,21 +23,25 @@ class Nuts:
     
     _selected_year = None
     _years = []
+    year_select = Select(title="Years", value=" ", options=[" "])
     
     
     def __init__(self, layout):
-        self.lvl_select_options = ["Level 1", "Level 2", "Level 3"]
+        self.lvl_select_options = [" ", "Level 1", "Level 2", "Level 3"]
         eurostats = self.get_eurostats_geojson_list()
 
         # collect ID by level
         available_ids = {
             "Level 1": [self.get_real_name(k) for k, v in eurostats.items() if 1 in v],
-            "Level 2": [self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
+            "Level 2": [ self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
             "Level 3": [self.get_real_name(k) for k, v in eurostats.items() if 3 in v]
         }
-        self.id_select = Select(title="ID Select:", value=available_ids["Level 1"][0][0], options=available_ids["Level 1"])
+        available_ids['Level 1'].append(" ")
+        available_ids['Level 2'].append(" ")
+        available_ids['Level 3'].append(" ")
+        self.id_select = Select(title="ID Select:", value=" ", options=available_ids["Level 1"])
         self.id_select.on_change("value", self.on_dataset_select)
-        self.lvl_select = Select(title="Nuts Level:", value="Level 1", options=self.lvl_select_options)
+        self.lvl_select = Select(title="Nuts Level:", value=" ", options=self.lvl_select_options)
         self.lvl_select.on_change("value", self.on_lvl_select)
         self.layout = layout
 
@@ -55,8 +59,6 @@ class Nuts:
         self.current_map_CDS = ColumnDataSource({'x': [], 'y': [], 'classified': []})
         # self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 2', 'trng_lfse_04', 10)
         
-        self.year_select = Select(title="Year (Period)", value=self._selected_year, options=self._years)
-        self.year_select.on_change("value", self.on_year_select)
         
     def get_real_name(self, k):
         """
@@ -124,6 +126,7 @@ class Nuts:
         nan_indices = []
         values = []
         units = []
+        self._years = []
         for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
             raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
             
@@ -149,6 +152,7 @@ class Nuts:
                 nan_indices.append(index)
         
         self._years.sort()
+        self.set_new_year_selector()
         
         tmp_data = {}
         for key in self.lvl_geodata[level].data.keys():
@@ -158,6 +162,14 @@ class Nuts:
         tmp_data['unit'] = units
         tmp_data['classified'] = self.classifier(values, 20)
         datasource.data = ColumnDataSource(tmp_data).data
+    
+    def set_new_year_selector(self):
+        if self._selected_year is not None:
+            self.year_select = Select(title="Year (Period)", value=self._selected_year, options=self._years)
+            self.year_select.on_change("value", self.on_year_select)
+            
+            self.layout.children[1].children[1].children[1].children[0] = self.year_select
+            
 
     @staticmethod
     def classifier(data, num_level):
@@ -397,5 +409,7 @@ class Nuts:
         
         p2 = Paragraph(text="No data selected. Please select region.")
         
-        self.layout.children[1] = column(row(self.id_select),row(self.lvl_select, self.year_select), p)
+        self.layout.children[1] = column([row(self.id_select),row(self.lvl_select, self.year_select), p])
         self.layout.children[2] = column(p2)
+        self.set_new_year_selector()
+        

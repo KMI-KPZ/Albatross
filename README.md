@@ -17,4 +17,5 @@ The service will be accessible at [http://127.0.0.1:5006](http://127.0.0.1:5006)
 - [Install Pysal](http://pysal.readthedocs.io/en/latest/index.html): `sudo pip install -U pysal`
 - [Install Bokeh](https://bokeh.pydata.org/en/latest/): `sudo pip install bokeh`
 - [Install lxml](http://lxml.de/): `sudo pip install lxml`
+- [Install SPARQLWrapper](https://rdflib.github.io/sparqlwrapper/): `sudo pip install SPARQLWrapper`
 - [Install Tornado](http://www.tornadoweb.org/en/stable/): `sudo pip install tornado`
