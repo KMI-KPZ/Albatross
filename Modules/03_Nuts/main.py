@@ -9,13 +9,10 @@ from bokeh.palettes import PuBu
 from bokeh.palettes import Inferno256 as palette
 from bokeh.models.glyphs import Patches
 import os
-import math
 import numpy as np
 import geopandas as gpd
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
-import scipy.special
-from bokeh.layouts import gridplot
 from bokeh.models.widgets.markups import Paragraph
 
 
@@ -298,7 +295,8 @@ class Nuts:
         labels = LabelSet(x='NUTS_ID', y='observation', text='observation', level='glyph',
         x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
         p2.vbar(source=testdata_source,x='NUTS_ID',top='observation',bottom=0,width=0.3,color=PuBu[7][2])
-        
+        p2.toolbar.logo = None
+
         self.layout.children[2] = column(p2)
 
     def show_data(self):
