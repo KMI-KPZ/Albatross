@@ -1,6 +1,7 @@
-import sparql
 import os
 import xml.etree.ElementTree
+
+from prototype import sparql
 
 e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), 'config.xml')).getroot()
 

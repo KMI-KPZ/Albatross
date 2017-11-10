@@ -1,22 +1,24 @@
-import geopandas as gpd
 import math
+
+import geopandas as gpd
 import numpy as np
+from bokeh.layouts import widgetbox, row, column
 from bokeh.models import \
     ColumnDataSource, \
     HoverTool, \
     LogColorMapper, \
     LassoSelectTool
+from bokeh.models import WMTSTileSource
 from bokeh.models.glyphs import Patches
+from bokeh.models.ranges import FactorRange
+from bokeh.models.widgets import Select
 from bokeh.palettes import Greys256 as palette
 from bokeh.plotting import figure
-from bokeh.io import curdoc
-from bokeh.models.ranges import FactorRange
-from bokeh.layouts import widgetbox, row, column
-from bokeh.models.widgets import Select
-from bokeh.models import WMTSTileSource
-from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
-import spq_plat
+from shapely.geometry.polygon import Polygon
+
+from prototype import spq_plat
+
 
 # TODO: neither lasso nor box select work at the moment
 # TODO: the bar graph is only a demonstration for the selection
