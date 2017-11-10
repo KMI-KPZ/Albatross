@@ -97,9 +97,17 @@
                 <div class="col-md-4">
                     <h2>Created Geojsons</h2>
                      <ul>
-                        {% for geo_file in geojson_obslist %}
-                            
-                        <li><a href="{{ geo_file["url"] }}" target="_blank">{{ geo_file["id"] }}</a></li>
+                        {% for geo_level in geojson_levels %}
+
+                         <li>{{ geo_level["display_name"] }}
+                            <ul>
+                                {% for geo_file in geojson_files[geo_level["dir_name"]] %}
+
+                                <li><a href="{{ geo_file["url"] }}" target="_blank">{{ geo_file["id"] }}</a></li>
+
+                                {% endfor %}
+                            </ul>
+                         </li>
                             
                         {% endfor %}
                     </ul>

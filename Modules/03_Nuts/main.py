@@ -47,24 +47,36 @@ class Nuts:
             "Level 3": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson")
         }
 
-        ########################################################################################################
-        # ToDo: leave self.lvl_geodata unchanged
-        self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
+        self.dataset_path_prefix = r"data/geojson/eurostats/"
 
-        self.update_datasource(self.lvl_geodata['Level 3'], self.current_dataset, 'Level 3', 'aei_pr_soiler', 10)
-        ########################################################################################################
+        self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
+        self.current_map_CDS = ColumnDataSource()
+        self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 3', 'aei_pr_soiler', 10)
 
     def update_datasource(self, datasource, dataset, level, observation_name, period):
+        """
+        Updates the datasource to contain the datasets observations (observation_name and period)
+        in the passed NUTS level.
+        :param datasource: The ColumnDataSource to update.
+        :param dataset: The dataset to get the observations from.
+        :param level: The NUTS Level.
+        :param observation_name: The name of the observation.
+        :param period: The period of interest.
+        :return:
+        """
         nan_indices = []
         values = []
         for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
             raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
             raw_index = raw_indices.index[0]
-            observations = dataset.loc[raw_index, :]['OBSERVATIONS']
-            if observations is None:
-                nan_indices.append(index)
+            if 'OBSERVATIONS' in dataset.loc[raw_index, :].keys():
+                observations = dataset.loc[raw_index, :]['OBSERVATIONS']
+                if observations is None:
+                    nan_indices.append(index)
+                else:
+                    values.append(float(observations[observation_name][0]['value']))
             else:
-                values.append(float(observations[observation_name][0]['value']))
+                nan_indices.append(index)
 
         tmp_data = {}
         for key in self.lvl_geodata[level].data.keys():
@@ -74,24 +86,30 @@ class Nuts:
         tmp_data['classified'] = self.classifier(values, 20)
         datasource.data = ColumnDataSource(tmp_data).data
 
-
-
-    def classifier(self, data, num_level):
-        _data = [float(i) for i in data]
-        step_size = round((max(_data) - min(_data)) / num_level)
-        breaks = [x for x in range(int(min(_data)), int(max(_data)), int(step_size))]
-
+    @staticmethod
+    def classifier(data, num_level):
+        """
+        Categorizes each element in data into one of the num_level classes.
+        The class separation is linear.
+        :param data: the list of elements that will be classified.
+        :param num_level: number of classes.
+        :return: The list of associated classes.
+        """
         ud = []
-        for d in _data:
-            lvl = 0
-            for i, b in enumerate(breaks):
-                if b <= d:
-                    lvl = i
-                else:
-                    break
-            ud.append(lvl)
-        return ud
+        if len(data) is not 0:
+            _data = [float(i) for i in data]
+            step_size = round((max(_data) - min(_data)) / num_level)
+            breaks = [x for x in range(int(min(_data)), int(max(_data)), int(step_size))]
 
+            for d in _data:
+                lvl = 0
+                for i, b in enumerate(breaks):
+                    if b <= d:
+                        lvl = i
+                    else:
+                        break
+                ud.append(lvl)
+        return ud
 
     def on_lvl_select(self, attr, old, new):
         """
@@ -120,16 +138,29 @@ class Nuts:
         if old_selection in available_ids[new]:
             self.id_select.value=old_selection
 
+        self.current_dataset = gpd.GeoDataFrame.from_file(
+            self.dataset_path_prefix + "nuts_" + new[-1] + "/" + self.id_select.value + ".geojson")
+        self.update_datasource(self.current_map_CDS, self.current_dataset, new, self.id_select.value, 10)
+
     def on_dataset_select(self, attr, old, new):
         # ToDo: implement
-        print(new)
+        self.current_dataset = gpd.GeoDataFrame.from_file(
+            self.dataset_path_prefix + "nuts_" + self.lvl_select.value[-1] + "/" + new + ".geojson")
+        self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, new, 10)
 
     @staticmethod
-    def get_poly_coordinates(row, geom, coord_type):
-        """Returns the coordinates ('x' or 'y') of edges of a Polygon exterior"""
+    def get_poly_coordinates(line, geom, coord_type):
+        """
+        Returns the coordinates ('x' or 'y') of edges of a Polygon exterior.
+
+        :param line: The current line to extract coordinates from.
+        :param geom: The geometry key in the line.
+        :param coord_type: either 'x' or 'y'.
+        :return: x or y values of the polygon edges.
+        """
 
         # Parse the exterior of the coordinate
-        exterior = row[geom].exterior
+        exterior = line[geom].exterior
 
         if coord_type == 'x':
             # Get the x coordinates of the exterior
@@ -140,6 +171,13 @@ class Nuts:
 
     @staticmethod
     def explode(input_data):
+        """
+        Extracts geometry from the geojson passed by input_data.
+        The types of geometry that are extracted are Polygon and MultiPolygon.
+
+        :param input_data: Path to the geojson
+        :return: Dataframe with the geometry.
+        """
         input_dataframe = gpd.GeoDataFrame.from_file(input_data)
         output_dataframe = gpd.GeoDataFrame(columns=input_dataframe.columns)
         for idx, row in input_dataframe.iterrows():
@@ -159,7 +197,7 @@ class Nuts:
         """
         Generates dictionary of the eurostats geojson files and their NUTS level
 
-        :return: Dirctionary of eurostats ID's and NUTS level that where found in data/geojson/eurostats/nuts_*
+        :return: Dictionary of eurostats ID's and NUTS level that where found in data/geojson/eurostats/nuts_*
         """
         geojson_path_prefix = "data/geojson/eurostats/nuts_"
         file_list = {}
@@ -173,6 +211,13 @@ class Nuts:
         return file_list
 
     def produce_column_data(self, input_data):
+        """
+        Generates a ColumnDataSource from the geojson path passed by input_data containing
+        the coordinates for patches to draw on a map.
+
+        :param input_data: Path to a geojson.
+        :return: ColumnDataSource containing the coordinates for patches to draw on a map.
+        """
         raw_data = self.explode(input_data)
 
         # Transform CRS
@@ -217,6 +262,9 @@ class Nuts:
         self.layout.children[2] = column(p2)
 
     def show_data(self):
+        """
+        Setup plots and commit them into the layout.
+        """
         # Plot map
         tools = "pan,wheel_zoom,box_zoom,reset,tap"
         p = figure(
@@ -238,12 +286,11 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-        patch_source = ColumnDataSource(self.lvl_geodata['Level 3'].data)
         #print(self.lvl_geodata['Level 3'].data)
 
         color_mapper = LogColorMapper(palette=palette)
         glyphs = p.patches(
-            'x', 'y', source=patch_source,
+            'x', 'y', source=self.current_map_CDS,
             fill_color={'field': 'classified', 'transform': color_mapper},
             fill_alpha=0.5,
             line_color="black",
