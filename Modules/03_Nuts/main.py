@@ -9,13 +9,10 @@ from bokeh.palettes import PuBu
 from bokeh.palettes import Inferno256 as palette
 from bokeh.models.glyphs import Patches
 import os
-import math
 import numpy as np
 import geopandas as gpd
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
-import scipy.special
-from bokeh.layouts import gridplot
 from bokeh.models.widgets.markups import Paragraph
 import xml.etree.ElementTree
 import lxml.etree as le
@@ -125,6 +122,7 @@ class Nuts:
         """
         nan_indices = []
         values = []
+        units = []
         for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
             raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
             
@@ -142,6 +140,7 @@ class Nuts:
                     #if year is set... do it
                     if year_index is not False:
                         values.append(float(observations[observation_name][year_index]['value']))
+                        units.append(observations[observation_name][year_index]['unit'])
                     else:
                         nan_indices.append(index)
                 
@@ -155,6 +154,7 @@ class Nuts:
             tmp_data[key] = np.delete(self.lvl_geodata[level].data[key], nan_indices)
 
         tmp_data['observation'] = values
+        tmp_data['unit'] = units
         tmp_data['classified'] = self.classifier(values, 20)
         datasource.data = ColumnDataSource(tmp_data).data
 
@@ -215,7 +215,6 @@ class Nuts:
         self.update_datasource(self.current_map_CDS, self.current_dataset, new, self.id_select.value, 10)
 
     def on_dataset_select(self, attr, old, new):
-        # ToDo: implement
         self.current_dataset = gpd.GeoDataFrame.from_file(
             self.dataset_path_prefix + "nuts_" + self.lvl_select.value[-1] + "/" + new + ".geojson")
         self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, new, 10)
@@ -310,17 +309,19 @@ class Nuts:
         new_data = {}
         new_data['observation'] = [0]
         new_data['NUTS_ID']  = ['0']
+        new_data['unit'] = [' ']
         old_data = self.current_map_CDS.data
         
         for indices in new["1d"]["indices"]:
             
             new_data['observation'].append(old_data['observation'][indices])
+            new_data['unit'].append(old_data['unit'][indices])
             new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
         
         testdata_source = ColumnDataSource(new_data)
         # dont work with to large datasets
         x_label = "Region"
-        y_label = "Selected Indicator"
+        y_label = "Selected Indicator in {}".format(new_data['unit'][1])
         title = "Visualisation"
         p2 = figure(plot_width=500, plot_height=300, tools="save",
         x_axis_label = x_label,
@@ -333,7 +334,8 @@ class Nuts:
         labels = LabelSet(x='NUTS_ID', y='observation', text='observation', level='glyph',
         x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
         p2.vbar(source=testdata_source,x='NUTS_ID',top='observation',bottom=0,width=0.3,color=PuBu[7][2])
-        
+        p2.toolbar.logo = None
+
         self.layout.children[2] = column(p2)
 
     def show_data(self):
