@@ -21,7 +21,8 @@ from bokeh.models.widgets.markups import Paragraph
 
 class Nuts:
     
-    _selected_year = ''
+    _selected_year = None
+    _years = []
     
     
     def __init__(self, layout):
@@ -52,6 +53,31 @@ class Nuts:
         self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_3/aei_pr_soiler.geojson")
         self.current_map_CDS = ColumnDataSource()
         self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 3', 'aei_pr_soiler', 10)
+        
+        self.year_select = Select(title="Year (Period)", value=self._selected_year, options=self._years)
+        self.year_select.on_change("value", self.on_year_select)
+        
+    def on_year_select(self, attr, old, new):
+        self._selected_year = new
+        self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, self.id_select.value, 10)
+
+    
+    def get_selected_year_index(self, observation):
+        """
+        Return the index for the selected year. will also set the list _years
+        :param obersavation: The observation preselection observation[name]
+        :return false or id
+        """
+        
+        for id, v in enumerate(observation):
+            
+            if v['period'] not in self._years:
+                self._years.append(v['period'])
+            if v['period'] == self._selected_year:
+                return id
+        
+        return False
+        
 
     def update_datasource(self, datasource, dataset, level, observation_name, period):
         """
@@ -68,16 +94,29 @@ class Nuts:
         values = []
         for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
             raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
+            
             raw_index = raw_indices.index[0]
             if 'OBSERVATIONS' in dataset.loc[raw_index, :].keys():
                 observations = dataset.loc[raw_index, :]['OBSERVATIONS']
+                
                 if observations is None:
                     nan_indices.append(index)
                 else:
-                    values.append(float(observations[observation_name][0]['value']))
+                    # init first year if not set yet
+                    if self._selected_year is None:
+                        self._selected_year = observations[observation_name][0]['period']
+                    year_index = self.get_selected_year_index(observations[observation_name])
+                    #if year is set... do it
+                    if year_index is not False:
+                        values.append(float(observations[observation_name][year_index]['value']))
+                    else:
+                        nan_indices.append(index)
+                
             else:
                 nan_indices.append(index)
-
+        
+        self._years.sort()
+        
         tmp_data = {}
         for key in self.lvl_geodata[level].data.keys():
             tmp_data[key] = np.delete(self.lvl_geodata[level].data[key], nan_indices)
@@ -232,14 +271,15 @@ class Nuts:
         return ColumnDataSource(dataframe)
     
     def tap_callback(self, attr, old, new):
-        print(new)
+        
         new_data = {}
         new_data['observation'] = [0]
         new_data['NUTS_ID']  = ['0']
-        old_data = self.lvl_geodata['Level 3'].data
+        old_data = self.current_map_CDS.data
+        
         for indices in new["1d"]["indices"]:
-            print(indices)
-            new_data['value'].append(old_data['value'][indices])
+            
+            new_data['observation'].append(old_data['observation'][indices])
             new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
         
         testdata_source = ColumnDataSource(new_data)
@@ -317,11 +357,8 @@ class Nuts:
         hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@observation')]
         p.add_tools(hover)
 
-        # ToDo remove this crap
-        ################################################################
         
         p2 = Paragraph(text="No data selected. Please select region.")
-        ################################################################
-
-        self.layout.children[1] = column(p, row(self.lvl_select, self.id_select))
+        
+        self.layout.children[1] = column(p, row(self.lvl_select, self.id_select, self.year_select))
         self.layout.children[2] = column(p2)
