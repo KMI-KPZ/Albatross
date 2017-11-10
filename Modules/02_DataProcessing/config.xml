@@ -11,7 +11,7 @@
         </point>
         <point>
             <name>Endpoint ↦ GeoJSON</name>
-            <callback>rdf_to_geojson</callback>
+            <callback>endpoint_to_geojson</callback>
         </point>
     </menu>
 </module>
