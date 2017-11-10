@@ -50,9 +50,10 @@ class Nuts:
 
         self.dataset_path_prefix = r"data/geojson/eurostats/"
 
-        self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_2/trng_lfse_04.geojson")
-        self.current_map_CDS = ColumnDataSource()
-        self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 2', 'trng_lfse_04', 10)
+        # self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_2/trng_lfse_04.geojson")
+        self.current_dataset = ColumnDataSource()
+        self.current_map_CDS = ColumnDataSource({'x': [], 'y': [], 'classified': []})
+        # self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 2', 'trng_lfse_04', 10)
         
         self.year_select = Select(title="Year (Period)", value=self._selected_year, options=self._years)
         self.year_select.on_change("value", self.on_year_select)
