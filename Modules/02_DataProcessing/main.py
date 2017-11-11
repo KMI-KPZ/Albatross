@@ -30,6 +30,8 @@ class DataProcessing():
             subprocess.call(['sh', 'Main.sh', '-i', 'sdmx-code/sdmx-code.ttl'], cwd='services/eurostat/parser/')
             # move rdf
             directory = 'data/sandbox/eurostat/data/'
+            if not os.path.exists(directory):
+                os.makedirs(directory)
             for filename in os.listdir(directory):
                 
                 if filename.endswith(".rdf"): 
@@ -57,7 +59,9 @@ class DataProcessing():
         :return: a list of dictionaries containing the id and file names of the RDFs found. 
         """ 
         rdf_path_prefix = "data/sandbox/eurostat/dsd" 
-        observation_list = [] 
+        observation_list = []
+        if not os.path.exists(rdf_path_prefix):
+            os.makedirs(rdf_path_prefix)
         for file in os.listdir(rdf_path_prefix): 
             observation = {} 
             observation_name = str(os.path.basename(file).split('.')[0]) 
@@ -92,6 +96,9 @@ class DataProcessing():
         geojson_path_prefix = "data/geojson/eurostats/nuts_"
         file_list = {}
         for i in range(1, 4):
+            if not os.path.exists(geojson_path_prefix + str(i)):
+                os.makedirs(geojson_path_prefix + str(i))
+            
             for file in os.listdir(geojson_path_prefix + str(i)):
                 geojson_name = str(os.path.basename(file).split('.')[0])
                 if geojson_name in file_list:

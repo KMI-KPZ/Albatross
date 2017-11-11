@@ -56,8 +56,8 @@ class Nuts:
         
     def get_custom_maps(self):
         geojson_path = "data/geojson/custom"
-        if not os.path.exists(get_custom_maps):
-            os.makedirs(get_custom_maps)
+        if not os.path.exists(geojson_path):
+            os.makedirs(geojson_path)
         file_list = []
         for file in os.listdir(geojson_path):
             geojson_name = str(os.path.basename(file).split('.')[0])
