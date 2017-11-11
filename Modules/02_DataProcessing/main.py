@@ -26,6 +26,25 @@ class DataProcessing():
             """
             Callback on button generates RDF from exsiting Source
             """
+            directory = 'data/sandbox/eurostat/data/'
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            req_directory = 'data/sandbox/eurostat/raw-data/'
+            if not os.path.exists(req_directory):
+                os.makedirs(req_directory)
+            req_directory = 'data/sandbox/eurostat/dsd/'
+            if not os.path.exists(req_directory):
+                os.makedirs(req_directory)
+            req_directory = 'data/sandbox/eurostat/data/'
+            if not os.path.exists(req_directory):
+                os.makedirs(req_directory)
+            req_directory = 'data/sandbox/eurostat/logs/'
+            if not os.path.exists(req_directory):
+                os.makedirs(req_directory)
+            req_directory = 'data/sandbox/eurostat/tsv/'
+            if not os.path.exists(req_directory):
+                os.makedirs(req_directory)
+            
             # call java
             subprocess.call(['sh', 'Main.sh', '-i', 'sdmx-code/sdmx-code.ttl'], cwd='services/eurostat/parser/')
             # move rdf
@@ -39,10 +58,10 @@ class DataProcessing():
                     # filename = filename.split('/')[-1]
                     os.rename(os.path.join(directory, filename), os.path.join("data/rdf/eurostats/", filename))
         
-        data_table = self.show_rdf_files('ID')
+        rdf_data_table = self.show_rdf_files('ID')
         
         files = self.get_eurostats_source_file_list() 
-        rdf_data_table = self.generate_rdf_column_data_source(files)
+        data_table = self.generate_rdf_column_data_source(files)
         button_dl = Button(label="Convert CSV to RDF", button_type="success")
         button_dl.on_click(callback_generate_RDF)
         para = Div(text='This module uses <a href="https://github.com/linked-statistics/eurostat" target="_blank">Eurostat dataset</a> as a service.')
@@ -52,13 +71,13 @@ class DataProcessing():
         
         
     
-    def get_eurostats_source_file_list(s): 
+    def get_eurostats_source_file_list(self): 
         """ 
         This function generates the file names for every RDF in the "data/rdf/eurostats" subdirectory. 
      
         :return: a list of dictionaries containing the id and file names of the RDFs found. 
         """ 
-        rdf_path_prefix = "data/sandbox/eurostat/dsd" 
+        rdf_path_prefix = "data/sandbox/eurostat/tsv" 
         observation_list = []
         if not os.path.exists(rdf_path_prefix):
             os.makedirs(rdf_path_prefix)

@@ -451,7 +451,7 @@ class Nuts:
         glyphs.data_source.on_change('selected', self.tap_callback)
         
         hover = HoverTool()
-        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@observation')]
+        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Indicator', '@observation')]
         p.add_tools(hover)
 
         
