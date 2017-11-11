@@ -330,6 +330,8 @@ class Nuts:
         geojson_path_prefix = "data/geojson/eurostats/nuts_"
         file_list = {}
         for i in range(1, 4):
+            if not os.path.exists(geojson_path_prefix + str(i)):
+                os.makedirs(geojson_path_prefix + str(i))
             for file in os.listdir(geojson_path_prefix + str(i)):
                 geojson_name = str(os.path.basename(file).split('.')[0])
                 if geojson_name in file_list:
