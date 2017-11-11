@@ -5,6 +5,9 @@ import os
 e = xml.etree.ElementTree.parse(os.path.join(os.path.dirname(__file__), 'config.xml')).getroot()
 
 #TODO improve xml query
+'''
+TODO: <unit>amount_unit</unit> implement crop_type etc...
+'''
 def buildqueryselect():
     # read xml file
     # first only selects without using them as properties for geojson
@@ -17,6 +20,7 @@ def buildqueryselect():
     for prop in e.findall('properties'):
         for p in prop.findall('property'):
             selectstring = selectstring + ' ?' + p.find('sparql').find('select').text
+            selectstring = selectstring + ' ?' + p.find('sparql').find('unit').text
         selectstring = selectstring + ' ?' + prop.find('date').text
         selectstring = selectstring + ' ?' + prop.find('geo').text
     

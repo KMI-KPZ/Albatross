@@ -9,7 +9,7 @@
         </prefixes>
         <select>mzone</select>
         <select>crop_desc</select>
-        <select>amount_unit</select>
+        
         <where>
             ?mzone a foodie:ManagementZone .
             ?mzone foodie:cropSpecies ?crop .
@@ -31,13 +31,10 @@
     </sparql> 
     <properties>
         <property>
+            <name>Yield</name>
             <sparql>
                 <select>amount_value</select>
-            </sparql>
-        </property>
-        <property>
-            <sparql>
-                <select>crop_variety</select>
+                <unit>amount_unit</unit>
             </sparql>
         </property>
         <date>prod_date</date>

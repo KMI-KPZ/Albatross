@@ -4,7 +4,7 @@ import rdflib as rdf
 from SPARQLWrapper import SPARQLWrapper, JSON
 import os
 import subprocess
-from bokeh.models import Button, Paragraph
+from bokeh.models import Button, Paragraph, Div
 from bokeh.layouts import column, widgetbox
 from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets.tables import TableColumn, DataTable

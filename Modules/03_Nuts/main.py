@@ -24,42 +24,48 @@ class Nuts:
     _selected_year = None
     _years = []
     year_select = Select(title="Years", value=" ", options=[" "])
+    current_custom_file = ''
+    
     
     
     def __init__(self, layout):
-        self.lvl_select_options = [" ", "Level 1", "Level 2", "Level 3"]
-        eurostats = self.get_eurostats_geojson_list()
-
-        # collect ID by level
-        available_ids = {
-            "Level 1": [self.get_real_name(k) for k, v in eurostats.items() if 1 in v],
-            "Level 2": [ self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
-            "Level 3": [self.get_real_name(k) for k, v in eurostats.items() if 3 in v]
-        }
-        available_ids['Level 1'].append(" ")
-        available_ids['Level 2'].append(" ")
-        available_ids['Level 3'].append(" ")
-        self.id_select = Select(title="ID Select:", value=" ", options=available_ids["Level 1"])
-        self.id_select.on_change("value", self.on_dataset_select)
-        self.lvl_select = Select(title="Nuts Level:", value=" ", options=self.lvl_select_options)
-        self.lvl_select.on_change("value", self.on_lvl_select)
-        self.layout = layout
-
-        # Note: this takes a while; maybe it makes sense to load it concurrent
+         # Note: this takes a while; maybe it makes sense to load it concurrent
         self.lvl_geodata = {
             "Level 1": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_1.geojson"),
             "Level 2": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_2.geojson"),
             "Level 3": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_3.geojson")
         }
+        self.lvl_select_options = [" ", "Level 1", "Level 2", "Level 3", "Custom"]
+        self.set_available_ids()
+        
+        self.id_select = Select(title="ID Select:", value=" ", options=self.available_ids["Level 1"])
+        self.id_select.on_change("value", self.on_dataset_select)
+        self.lvl_select = Select(title="Nuts Level:", value=" ", options=self.lvl_select_options)
+        self.lvl_select.on_change("value", self.on_lvl_select)
+        self.layout = layout
+
+       
 
         self.dataset_path_prefix = r"data/geojson/eurostats/"
+        self.dataset_path_custom_prefix = r"data/geojson/custom/"
 
         # self.current_dataset = gpd.GeoDataFrame.from_file(r"data/geojson/eurostats/nuts_2/trng_lfse_04.geojson")
         self.current_dataset = gpd.GeoDataFrame()
         self.current_map_CDS = ColumnDataSource({'x': [], 'y': [], 'classified': []})
         # self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 2', 'trng_lfse_04', 10)
         
-        
+    def get_custom_maps(self):
+        geojson_path = "data/geojson/custom"
+        file_list = []
+        for file in os.listdir(geojson_path):
+            geojson_name = str(os.path.basename(file).split('.')[0])
+            self.lvl_geodata['Custom'] = {}
+            self.lvl_geodata['Custom'][geojson_name] = self.produce_column_data(r"data/geojson/custom/"+file)
+            
+            file_list.append((geojson_name,geojson_name))
+        return file_list
+
+    
     def get_real_name(self, k):
         """
         @param str k: represents the filename of eurostats
@@ -126,13 +132,29 @@ class Nuts:
         nan_indices = []
         values = []
         units = []
-        self._years = []
-        for index, nuts_id in enumerate(self.lvl_geodata[level].data['NUTS_ID']):
-            raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
+        tmp_data = {}
+        self._years = [""]
+        
+        if level != 'Custom':
+            edata = self.lvl_geodata[level].data 
+
+        else:
+            edata = self.lvl_geodata[level][self.current_custom_file].data
+        
+        enum = edata['NUTS_ID']
+        keys = edata.keys()
+        
+        for index, nuts_id in enumerate(enum):
             
+            raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
+                
             raw_index = raw_indices.index[0]
             if 'OBSERVATIONS' in dataset.loc[raw_index, :].keys():
                 observations = dataset.loc[raw_index, :]['OBSERVATIONS']
+                if level == 'Custom':
+                    #TODO- make more than one observation accessable
+                    obs_keys = list(observations.keys())
+                    observation_name = obs_keys[0]
                 
                 if observations is None:
                     nan_indices.append(index)
@@ -145,24 +167,23 @@ class Nuts:
                     if year_index is not False:
                         values.append(float(observations[observation_name][year_index]['value']))
                         units.append(observations[observation_name][year_index]['unit'])
+                        
                     else:
                         nan_indices.append(index)
-                
+                    
             else:
                 nan_indices.append(index)
         
+        for key in keys:
+            tmp_data[key] = np.delete(edata[key], nan_indices)
         self._years.sort()
         self.set_new_year_selector()
         
-        tmp_data = {}
-        for key in self.lvl_geodata[level].data.keys():
-            tmp_data[key] = np.delete(self.lvl_geodata[level].data[key], nan_indices)
-
         tmp_data['observation'] = values
         tmp_data['unit'] = units
         tmp_data['classified'] = self.classifier(values, 20)
         datasource.data = ColumnDataSource(tmp_data).data
-    
+        
     def set_new_year_selector(self):
         if self._selected_year is not None:
             self.year_select = Select(title="Year (Period)", value=self._selected_year, options=self._years)
@@ -195,6 +216,21 @@ class Nuts:
                         break
                 ud.append(lvl)
         return ud
+    
+    def set_available_ids(self):
+         # collect ID by level
+        eurostats = self.get_eurostats_geojson_list()
+        self.available_ids = {
+            "Level 1": [self.get_real_name(k) for k, v in eurostats.items() if 1 in v],
+            "Level 2": [ self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
+            "Level 3": [self.get_real_name(k) for k, v in eurostats.items() if 3 in v],
+            "Custom": self.get_custom_maps()
+        }
+        self.available_ids['Level 1'].append(" ")
+        self.available_ids['Level 2'].append(" ")
+        self.available_ids['Level 3'].append(" ")
+        self.available_ids['Custom'].append(" ")
+        
 
     def on_lvl_select(self, attr, old, new):
         """
@@ -212,23 +248,31 @@ class Nuts:
         eurostats = self.get_eurostats_geojson_list()
 
         # collect ID by level
-        available_ids = {
-            "Level 1": [self.get_real_name(k) for k, v in eurostats.items() if 1 in v],
-            "Level 2": [self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
-            "Level 3": [self.get_real_name(k) for k, v in eurostats.items() if 3 in v]
-        }
+        self.set_available_ids()
         old_selection = self.id_select.value
-        self.id_select.options = available_ids[new]
-        if old_selection in available_ids[new]:
+        self.id_select.options = self.available_ids[new]
+        
+        
+        if old_selection in self.available_ids[new]:
             self.id_select.value=old_selection
-
-        self.current_dataset = gpd.GeoDataFrame.from_file(
-            self.dataset_path_prefix + "nuts_" + new[-1] + "/" + self.id_select.value + ".geojson")
+        
+        #TODO: Check empty cases!!
+        if new == 'Custom':
+            self.current_dataset = gpd.GeoDataFrame.from_file(
+                self.dataset_path_custom_prefix + self.id_select.value + ".geojson")
+        else:
+            self.current_dataset = gpd.GeoDataFrame.from_file(
+                self.dataset_path_prefix + "nuts_" + new[-1] + "/" + self.id_select.value + ".geojson")
         self.update_datasource(self.current_map_CDS, self.current_dataset, new, self.id_select.value, 10)
 
     def on_dataset_select(self, attr, old, new):
-        self.current_dataset = gpd.GeoDataFrame.from_file(
-            self.dataset_path_prefix + "nuts_" + self.lvl_select.value[-1] + "/" + new + ".geojson")
+        if self.lvl_select.value == 'Custom':
+            self.current_custom_file = new
+            self.current_dataset = gpd.GeoDataFrame.from_file(
+                self.dataset_path_custom_prefix + new + ".geojson")
+        else:
+            self.current_dataset = gpd.GeoDataFrame.from_file(
+                self.dataset_path_prefix + "nuts_" + self.lvl_select.value[-1] + "/" + new + ".geojson")
         self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, new, 10)
 
     @staticmethod
