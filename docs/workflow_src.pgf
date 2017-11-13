@@ -11,15 +11,14 @@
 	\node(two) at (-12,-2){$2$};
 	\node(three) at (-12,-4){$3$};
 
+	\draw[dashed, color=gray](one)+(.5,0) -- (download) -- (endpoint) -- (11.5,0);
+	\draw[dashed, color=gray](two)+(.5,0) -- (rdf) -- (11.5,-2);
+	\draw[dashed, color=gray](three)+(.5,0) -- (visual) -- (center) -- (11.5,-4);
+
 	\draw[->, >=stealth, line width=2](download) |- (rdf);
 	\draw[->, >=stealth, line width=2](endpoint) |- (rdf);
 	\draw[->, >=stealth, line width=2](rdf) |- (visual);
 	\draw[->, >=stealth, line width=2](rdf) |- (center);
-
-
-	\draw[dashed, color=gray](one)+(.5,0) -- (download) -- (endpoint) -- (11.5,0);
-	\draw[dashed, color=gray](two)+(.5,0) -- (rdf) -- (11.5,-2);
-	\draw[dashed, color=gray](three)+(.5,0) -- (visual) -- (center) -- (11.5,-4);
 
 	\node[](title) at (0, 2){\Huge\textbf{Albatross Workflow}};
 
