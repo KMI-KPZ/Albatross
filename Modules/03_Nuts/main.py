@@ -68,8 +68,10 @@ class Nuts:
     
     def get_real_name(self, k):
         """
-        @param str k: represents the filename of eurostats
-        @return option tuple (value, label)
+        ...
+
+        :param str k: represents the filename of eurostats
+        :return: option tuple (value, label)
         """
         label = self.match_file_to_name(k)
         tuple = (k, label)
@@ -78,8 +80,9 @@ class Nuts:
     def match_file_to_name(self, name):
         '''
             getting the real name from xml
+
             :param str xml: filename
-            :return xml title text
+            :return: xml title text
         '''
         global namespaces
         
@@ -104,8 +107,9 @@ class Nuts:
     def get_selected_year_index(self, observation):
         """
         Return the index for the selected year. will also set the list _years
+
         :param obersavation: The observation preselection observation[name]
-        :return false or id
+        :return: false or id
         """
         
         for id, v in enumerate(observation):
@@ -122,6 +126,7 @@ class Nuts:
         """
         Updates the datasource to contain the datasets observations (observation_name and period)
         in the passed NUTS level.
+
         :param datasource: The ColumnDataSource to update.
         :param dataset: The dataset to get the observations from.
         :param level: The NUTS Level.
@@ -197,6 +202,7 @@ class Nuts:
         """
         Categorizes each element in data into one of the num_level classes.
         The class separation is linear.
+
         :param data: the list of elements that will be classified.
         :param num_level: number of classes.
         :return: The list of associated classes.
@@ -323,7 +329,7 @@ class Nuts:
     def get_eurostats_geojson_list():
         """
         Generates dictionary of the eurostats geojson files and their NUTS level
-        example: {'aei_pr_soiler': [1, 2, 3], 'trng_lfse_04': [1, 2]}
+        example: ``{'aei_pr_soiler': [1, 2, 3], 'trng_lfse_04': [1, 2]}``
 
         :return: Dictionary of eurostats ID's and NUTS level that where found in data/geojson/eurostats/nuts_*
         """
@@ -456,4 +462,3 @@ class Nuts:
         self.layout.children[1] = column([row(self.id_select),row(self.lvl_select, self.year_select), p])
         self.layout.children[2] = column(p2)
         self.set_new_year_selector()
-        
