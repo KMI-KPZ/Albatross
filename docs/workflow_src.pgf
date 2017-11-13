@@ -1,0 +1,26 @@
+
+\begin{tikzpicture}
+
+	\node[draw, minimum width=8cm, minimum height=1cm](download) at (-5,0){Eurostats Database Download Center};
+	\node[draw, minimum width=8cm, minimum height=1cm](endpoint) at (5,0){Endpoint $\mapsto$ GeoJSON};
+	\node[draw, minimum width=8cm, minimum height=1cm](rdf) at (0,-2){RDF $\mapsto$ GeoJSON};
+	\node[draw, minimum width=8cm, minimum height=1cm](visual) at (-5, -4){Visualiser};
+	\node[draw, minimum width=8cm, minimum height=1cm](center) at (5, -4){Download Center};
+
+	\node(one) at (-12,0){$1$};
+	\node(two) at (-12,-2){$2$};
+	\node(three) at (-12,-4){$3$};
+
+	\draw[->, >=stealth, line width=2](download) |- (rdf);
+	\draw[->, >=stealth, line width=2](endpoint) |- (rdf);
+	\draw[->, >=stealth, line width=2](rdf) |- (visual);
+	\draw[->, >=stealth, line width=2](rdf) |- (center);
+
+
+	\draw[dashed, color=gray](one)+(.5,0) -- (download) -- (endpoint) -- (11.5,0);
+	\draw[dashed, color=gray](two)+(.5,0) -- (rdf) -- (11.5,-2);
+	\draw[dashed, color=gray](three)+(.5,0) -- (visual) -- (center) -- (11.5,-4);
+
+	\node[](title) at (0, 2){\Huge\textbf{Albatross Workflow}};
+
+\end{tikzpicture}
