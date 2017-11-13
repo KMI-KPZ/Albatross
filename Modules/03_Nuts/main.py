@@ -1,5 +1,5 @@
 from bokeh.plotting import figure
-from bokeh.models import WMTSTileSource,\
+from bokeh.models import WMTSTileSource, \
     ColumnDataSource, \
     LogColorMapper, \
     HoverTool, ranges, LabelSet
@@ -13,23 +13,19 @@ import numpy as np
 import geopandas as gpd
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
-from bokeh.models.widgets.markups import Paragraph
+from bokeh.models.widgets.markups import Paragraph, Div
 import xml.etree.ElementTree
 import lxml.etree as le
 
 
-
 class Nuts:
-    
     _selected_year = None
     _years = []
     year_select = Select(title="Years", value=" ", options=[" "])
     current_custom_file = ''
-    
-    
-    
+
     def __init__(self, layout):
-         # Note: this takes a while; maybe it makes sense to load it concurrent
+        # Note: this takes a while; maybe it makes sense to load it concurrent
         self.lvl_geodata = {
             "Level 1": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_1.geojson"),
             "Level 2": self.produce_column_data(r"data/geojson/eurostats/nuts_rg_60M_2013_lvl_2.geojson"),
@@ -37,14 +33,12 @@ class Nuts:
         }
         self.lvl_select_options = [" ", "Level 1", "Level 2", "Level 3", "Custom"]
         self.set_available_ids()
-        
+
         self.id_select = Select(title="ID Select:", value=" ", options=self.available_ids["Level 1"])
         self.id_select.on_change("value", self.on_dataset_select)
         self.lvl_select = Select(title="Nuts Level:", value=" ", options=self.lvl_select_options)
         self.lvl_select.on_change("value", self.on_lvl_select)
         self.layout = layout
-
-       
 
         self.dataset_path_prefix = r"data/geojson/eurostats/"
         self.dataset_path_custom_prefix = r"data/geojson/custom/"
@@ -53,19 +47,18 @@ class Nuts:
         self.current_dataset = gpd.GeoDataFrame()
         self.current_map_CDS = ColumnDataSource({'x': [], 'y': [], 'classified': []})
         # self.update_datasource(self.current_map_CDS, self.current_dataset, 'Level 2', 'trng_lfse_04', 10)
-        
+
     def get_custom_maps(self):
         geojson_path = "data/geojson/custom"
         file_list = []
         for file in os.listdir(geojson_path):
             geojson_name = str(os.path.basename(file).split('.')[0])
             self.lvl_geodata['Custom'] = {}
-            self.lvl_geodata['Custom'][geojson_name] = self.produce_column_data(r"data/geojson/custom/"+file)
-            
-            file_list.append((geojson_name,geojson_name))
+            self.lvl_geodata['Custom'][geojson_name] = self.produce_column_data(r"data/geojson/custom/" + file)
+
+            file_list.append((geojson_name, geojson_name))
         return file_list
 
-    
     def get_real_name(self, k):
         """
         ...
@@ -76,7 +69,7 @@ class Nuts:
         label = self.match_file_to_name(k)
         tuple = (k, label)
         return tuple
-    
+
     def match_file_to_name(self, name):
         '''
             getting the real name from xml
@@ -85,25 +78,25 @@ class Nuts:
             :return: xml title text
         '''
         global namespaces
-        
+
         ET = xml.etree.ElementTree
         e = le.parse('data/toc.xml')
-        namespaces = {'nt': 'urn:eu.europa.ec.eurostat.navtree'} # add more as needed
+        namespaces = {'nt': 'urn:eu.europa.ec.eurostat.navtree'}  # add more as needed
         for node in e.findall('.//nt:downloadLink[@format="tsv"]', namespaces):
             if name in node.text:
                 parent = node.find('..', namespaces)
                 title = parent.find('nt:title[@language="en"]', namespaces);
-        
+
         return title.text
-    
+
     def on_year_select(self, attr, old, new):
         """
         updatefunction for years
         """
         self._selected_year = new
-        self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, self.id_select.value, 10)
+        self.update_datasource(self.current_map_CDS, self.current_dataset, self.lvl_select.value, self.id_select.value,
+                               10)
 
-    
     def get_selected_year_index(self, observation):
         """
         Return the index for the selected year. will also set the list _years
@@ -111,16 +104,15 @@ class Nuts:
         :param obersavation: The observation preselection observation[name]
         :return: false or id
         """
-        
+
         for id, v in enumerate(observation):
-            
+
             if v['period'] not in self._years:
                 self._years.append(v['period'])
             if v['period'] == self._selected_year:
                 return id
-        
+
         return False
-        
 
     def update_datasource(self, datasource, dataset, level, observation_name, period):
         """
@@ -139,28 +131,28 @@ class Nuts:
         units = []
         tmp_data = {}
         self._years = [""]
-        
+
         if level != 'Custom':
-            edata = self.lvl_geodata[level].data 
+            edata = self.lvl_geodata[level].data
 
         else:
             edata = self.lvl_geodata[level][self.current_custom_file].data
-        
+
         enum = edata['NUTS_ID']
         keys = edata.keys()
-        
+
         for index, nuts_id in enumerate(enum):
-            
+
             raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
-                
+
             raw_index = raw_indices.index[0]
             if 'OBSERVATIONS' in dataset.loc[raw_index, :].keys():
                 observations = dataset.loc[raw_index, :]['OBSERVATIONS']
                 if level == 'Custom':
-                    #TODO- make more than one observation accessable
+                    # TODO- make more than one observation accessable
                     obs_keys = list(observations.keys())
                     observation_name = obs_keys[0]
-                
+
                 if observations is None:
                     nan_indices.append(index)
                 else:
@@ -168,34 +160,33 @@ class Nuts:
                     if self._selected_year is None:
                         self._selected_year = observations[observation_name][0]['period']
                     year_index = self.get_selected_year_index(observations[observation_name])
-                    #if year is set... do it
+                    # if year is set... do it
                     if year_index is not False:
                         values.append(float(observations[observation_name][year_index]['value']))
                         units.append(observations[observation_name][year_index]['unit'])
-                        
+
                     else:
                         nan_indices.append(index)
-                    
+
             else:
                 nan_indices.append(index)
-        
+
         for key in keys:
             tmp_data[key] = np.delete(edata[key], nan_indices)
         self._years.sort()
         self.set_new_year_selector()
-        
+
         tmp_data['observation'] = values
         tmp_data['unit'] = units
         tmp_data['classified'] = self.classifier(values, 20)
         datasource.data = ColumnDataSource(tmp_data).data
-        
+
     def set_new_year_selector(self):
         if self._selected_year is not None:
             self.year_select = Select(title="Year (Period)", value=self._selected_year, options=self._years)
             self.year_select.on_change("value", self.on_year_select)
-            
+
             self.layout.children[1].children[1].children[1].children[0] = self.year_select
-            
 
     @staticmethod
     def classifier(data, num_level):
@@ -222,13 +213,13 @@ class Nuts:
                         break
                 ud.append(lvl)
         return ud
-    
+
     def set_available_ids(self):
-         # collect ID by level
+        # collect ID by level
         eurostats = self.get_eurostats_geojson_list()
         self.available_ids = {
             "Level 1": [self.get_real_name(k) for k, v in eurostats.items() if 1 in v],
-            "Level 2": [ self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
+            "Level 2": [self.get_real_name(k) for k, v in eurostats.items() if 2 in v],
             "Level 3": [self.get_real_name(k) for k, v in eurostats.items() if 3 in v],
             "Custom": self.get_custom_maps()
         }
@@ -236,7 +227,6 @@ class Nuts:
         self.available_ids['Level 2'].append(" ")
         self.available_ids['Level 3'].append(" ")
         self.available_ids['Custom'].append(" ")
-        
 
     def on_lvl_select(self, attr, old, new):
         """
@@ -257,12 +247,11 @@ class Nuts:
         self.set_available_ids()
         old_selection = self.id_select.value
         self.id_select.options = self.available_ids[new]
-        
-        
+
         if old_selection in self.available_ids[new]:
-            self.id_select.value=old_selection
-        
-        #TODO: Check empty cases!!
+            self.id_select.value = old_selection
+
+        # TODO: Check empty cases!!
         if new == 'Custom':
             self.current_dataset = gpd.GeoDataFrame.from_file(
                 self.dataset_path_custom_prefix + self.id_select.value + ".geojson")
@@ -342,7 +331,7 @@ class Nuts:
                     file_list[geojson_name].append(i)
                 else:
                     file_list[geojson_name] = [i]
-        
+
         return file_list
 
     def produce_column_data(self, input_data):
@@ -365,54 +354,79 @@ class Nuts:
 
         dataframe = raw_data.drop('geometry', axis=1).copy()
         return ColumnDataSource(dataframe)
-    
-    def tap_callback(self, attr, old, new):
-        
-        new_data = {}
-        new_data['observation'] = [0]
-        new_data['NUTS_ID']  = ['0']
-        new_data['unit'] = [' ']
-        old_data = self.current_map_CDS.data
-        
-        for indices in new["1d"]["indices"]:
-            
-            new_data['observation'].append(old_data['observation'][indices])
-            new_data['unit'].append(old_data['unit'][indices])
-            new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
-        
-        testdata_source = ColumnDataSource(new_data)
-        # dont work with to large datasets
-        x_label = "Region"
-        y_label = "Selected Indicator in {}".format(new_data['unit'][1])
-        title = "Visualisation"
-        p2 = figure(plot_width=500, plot_height=300, tools="save",
-        x_axis_label = x_label,
-        y_axis_label = y_label,
-        title=title,
-        x_minor_ticks=2,
-        x_range = testdata_source.data["NUTS_ID"],
-        y_range= ranges.Range1d(start=min(testdata_source.data['observation']),end=max(testdata_source.data['observation'])))
-        
-        labels = LabelSet(x='NUTS_ID', y='observation', text='observation', level='glyph',
-        x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
-        p2.vbar(source=testdata_source,x='NUTS_ID',top='observation',bottom=0,width=0.3,color=PuBu[7][2])
-        p2.toolbar.logo = None
 
-        self.layout.children[2] = column(p2)
+    def tap_callback(self, attr, old, new):
+
+        if len(new["1d"]["indices"]) > 0:
+            new_data = {}
+            new_data['observation'] = [0]
+            new_data['NUTS_ID'] = ['0']
+            new_data['unit'] = [' ']
+            old_data = self.current_map_CDS.data
+
+            for indices in new["1d"]["indices"]:
+                new_data['observation'].append(old_data['observation'][indices])
+                new_data['unit'].append(old_data['unit'][indices])
+                new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
+
+            testdata_source = ColumnDataSource(new_data)
+            # dont work with to large datasets
+            x_label = "Region"
+            y_label = "Selected Indicator in {}".format(new_data['unit'][1])
+            title = "Visualisation"
+            p2 = figure(plot_width=500, plot_height=300, tools="save",
+                        x_axis_label=x_label,
+                        y_axis_label=y_label,
+                        title=title,
+                        x_minor_ticks=2,
+                        x_range=testdata_source.data["NUTS_ID"],
+                        y_range=ranges.Range1d(start=min(testdata_source.data['observation']),
+                                               end=max(testdata_source.data['observation'])))
+
+            labels = LabelSet(x='NUTS_ID', y='observation', text='observation', level='glyph',
+                              x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
+            p2.vbar(source=testdata_source, x='NUTS_ID', top='observation', bottom=0, width=0.3, color=PuBu[7][2])
+            p2.toolbar.logo = None
+            self.layout.children[2] = column(p2)
+        else:
+
+            style = {"font-size": "20px"}
+            unit = self.current_map_CDS.data['unit'][0]
+            mean = np.mean(self.current_map_CDS.data['observation'])
+            deviation = np.std(self.current_map_CDS.data['observation'])
+
+            p_mean_title = Div(text="Mean:", style=style)
+            p_mean_value = Div(text="{:10,.3} {}".format(mean, unit), style=style)
+
+            p_deviation_title = Paragraph(text="Standard Deviation:", style=style)
+            p_deviation_value = Paragraph(text="{:10,.3} {}".format(deviation, unit), style=style)
+
+            hist, edges = np.histogram(
+                self.current_map_CDS.data['observation'],
+                density=True,
+                bins=30)
+            p2 = figure()
+            p2.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:])
+
+            self.layout.children[2] = column(
+                row(p_mean_title, p_mean_value),
+                row(p_deviation_title, p_deviation_value),
+                p2,
+                width=500)
 
     def show_data(self):
         """
         Setup plots and commit them into the layout.
         """
         # Plot map
-        tools = "pan,wheel_zoom,box_zoom,reset,tap"
+        tools = "pan,wheel_zoom,box_zoom,reset,tap,save"
         p = figure(
             width=800,
             height=600,
             title="",
             tools=tools,
-            x_range=(-2.45*10**6, 5.12*10**6),
-            y_range=( 3.73*10**6, 1.13*10**7)
+            x_range=(-2.45 * 10 ** 6, 5.12 * 10 ** 6),
+            y_range=(3.73 * 10 ** 6, 1.13 * 10 ** 7)
         )
         p.title.text_font_size = "25px"
         p.title.align = "center"
@@ -425,7 +439,7 @@ class Nuts:
         p.add_tile(tile_source)
         p.axis.visible = False
 
-        #print(self.lvl_geodata['Level 3'].data)
+        # print(self.lvl_geodata['Level 3'].data)
 
         color_mapper = LogColorMapper(palette=palette)
         glyphs = p.patches(
@@ -449,16 +463,15 @@ class Nuts:
             line_width=1,
             fill_color={'field': 'classified', 'transform': color_mapper}
         )
-         # set the callback for the tap tool
+        # set the callback for the tap tool
         glyphs.data_source.on_change('selected', self.tap_callback)
-        
+
         hover = HoverTool()
         hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@observation')]
         p.add_tools(hover)
 
-        
         p2 = Paragraph(text="No data selected. Please select region.")
-        
-        self.layout.children[1] = column([row(self.id_select),row(self.lvl_select, self.year_select), p])
+
+        self.layout.children[1] = column([row(self.id_select), row(self.lvl_select, self.year_select), p])
         self.layout.children[2] = column(p2)
         self.set_new_year_selector()
