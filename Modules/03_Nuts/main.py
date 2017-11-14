@@ -16,6 +16,7 @@ from shapely.geometry.multipolygon import MultiPolygon
 from bokeh.models.widgets.markups import Paragraph, Div
 import xml.etree.ElementTree
 import lxml.etree as le
+from datetime import date
 
 
 class Nuts:
@@ -364,10 +365,27 @@ class Nuts:
             new_data['unit'] = [' ']
             old_data = self.current_map_CDS.data
 
+            temporal_data = {'NUTS_ID': [], 'observations': [], 'periods': [], 'units': [], 'colors': []}
             for indices in new["1d"]["indices"]:
                 new_data['observation'].append(old_data['observation'][indices])
                 new_data['unit'].append(old_data['unit'][indices])
                 new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
+                raw_index = self.current_dataset.loc[:, :][
+                    self.current_dataset.loc[:, 'NUTS_ID'] == old_data['NUTS_ID'][indices]].index[0]
+                observations = self.current_dataset.loc[raw_index, :]['OBSERVATIONS'][self.id_select.value]
+                sorted_obs = sorted(observations, key=lambda k: k['period'])
+
+                periods = []
+                for timestamp in [k['period'] for k in sorted_obs]:
+                    s = timestamp.split('-')
+                    periods.append(date(int(s[0]), int(s[1]), int(s[2])))
+
+                temporal_data['NUTS_ID'].append(old_data['observation'][indices])
+                temporal_data['periods'].append(periods)
+                temporal_data['observations'].append([k['value'] for k in sorted_obs])
+                temporal_data['units'].append([k['unit'] for k in sorted_obs])
+                temporal_data['colors'].append(PuBu[7][2])
+
 
             testdata_source = ColumnDataSource(new_data)
             # dont work with to large datasets
@@ -387,7 +405,24 @@ class Nuts:
                               x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
             p2.vbar(source=testdata_source, x='NUTS_ID', top='observation', bottom=0, width=0.3, color=PuBu[7][2])
             p2.toolbar.logo = None
-            self.layout.children[2] = column(p2)
+
+            p3 = figure(plot_width=500, plot_height=300, tools="save",
+                        x_axis_type='datetime',
+                        y_axis_label=y_label,
+                        x_axis_label='Period',
+                        title='Time Series'
+                        )
+            p3.toolbar.logo = None
+            for index, value in enumerate(temporal_data['NUTS_ID']):
+                tmp_CDS = ColumnDataSource(
+                    {'NUTS_ID': [value]*len(temporal_data['observations'][index]),
+                     'observations': temporal_data['observations'][index],
+                     'periods': temporal_data['periods'][index],
+                     'units': temporal_data['units'][index]
+                     })
+                p3.line(x='periods', y='observations', color=PuBu[7][2], source=tmp_CDS)
+
+            self.layout.children[2] = column(p2, p3)
         else:
 
             style = {"font-size": "20px"}
@@ -405,8 +440,8 @@ class Nuts:
                 self.current_map_CDS.data['observation'],
                 density=True,
                 bins=30)
-            p2 = figure()
-            p2.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:])
+            p2 = figure(height=300)
+            p2.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:], color=PuBu[7][2])
 
             self.layout.children[2] = column(
                 row(p_mean_title, p_mean_value),
