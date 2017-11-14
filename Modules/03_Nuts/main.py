@@ -8,6 +8,7 @@ from bokeh.layouts import column, row
 from bokeh.palettes import PuBu
 from bokeh.palettes import Inferno256 as palette
 from bokeh.models.glyphs import Patches
+from bokeh.models.layouts import Spacer
 import os
 import numpy as np
 import geopandas as gpd
@@ -156,7 +157,7 @@ class Nuts:
             if 'OBSERVATIONS' in dataset.loc[raw_index, :].keys():
                 observations = dataset.loc[raw_index, :]['OBSERVATIONS']
                 if level == 'Custom':
-                    # TODO- make more than one observation accessable
+                    # TODO: make more than one observation accessable
                     obs_keys = list(observations.keys())
                     observation_name = obs_keys[0]
 
@@ -266,6 +267,31 @@ class Nuts:
             self.current_dataset = gpd.GeoDataFrame.from_file(
                 self.dataset_path_prefix + "nuts_" + new[-1] + "/" + self.id_select.value + ".geojson")
         self.update_datasource(self.current_map_CDS, self.current_dataset, new, self.id_select.value, 10)
+
+        style = {"font-size": "20px"}
+        unit = self.current_map_CDS.data['unit'][0]
+        mean = np.mean(self.current_map_CDS.data['observation'])
+        deviation = np.std(self.current_map_CDS.data['observation'])
+
+        p_mean_title = Div(text="Mean:", style=style)
+        p_mean_value = Div(text="{:10,.3} {}".format(mean, unit), style=style)
+
+        p_deviation_title = Paragraph(text="Standard Deviation:", style=style)
+        p_deviation_value = Paragraph(text="{:10,.3} {}".format(deviation, unit), style=style)
+
+        hist, edges = np.histogram(
+            self.current_map_CDS.data['observation'],
+            density=True,
+            bins=30)
+        p2 = figure(height=300)
+        p2.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:], color=PuBu[7][2])
+
+        self.layout.children[2] = column(
+            row(p_mean_title, p_mean_value),
+            row(p_deviation_title, p_deviation_value),
+            Spacer(height=46),
+            p2,
+            width=500)
 
     def on_dataset_select(self, attr, old, new):
         if self.lvl_select.value == 'Custom':
@@ -431,7 +457,7 @@ class Nuts:
                      })
                 p3.line(x='periods', y='observations', color=self.color_by_id[value], source=tmp_CDS)
 
-            self.layout.children[2] = column(p2, p3)
+            self.layout.children[2] = column(Spacer(height=144), p2, p3)
         else:
 
             style = {"font-size": "20px"}
@@ -455,6 +481,7 @@ class Nuts:
             self.layout.children[2] = column(
                 row(p_mean_title, p_mean_value),
                 row(p_deviation_title, p_deviation_value),
+                Spacer(height=46),
                 p2,
                 width=500)
 
