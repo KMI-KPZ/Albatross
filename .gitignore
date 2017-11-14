@@ -4,7 +4,7 @@
 .pydevproject
 __pycache__/
 
-
+prototype/
 data/geojson
 data/rdf
 data/sandbox

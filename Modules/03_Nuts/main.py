@@ -53,6 +53,8 @@ class Nuts:
 
     def get_custom_maps(self):
         geojson_path = "data/geojson/custom"
+        if not os.path.exists(geojson_path):
+            os.makedirs(geojson_path)
         file_list = []
         for file in os.listdir(geojson_path):
             geojson_name = str(os.path.basename(file).split('.')[0])
@@ -330,6 +332,8 @@ class Nuts:
         geojson_path_prefix = "data/geojson/eurostats/nuts_"
         file_list = {}
         for i in range(1, 4):
+            if not os.path.exists(geojson_path_prefix + str(i)):
+                os.makedirs(geojson_path_prefix + str(i))
             for file in os.listdir(geojson_path_prefix + str(i)):
                 geojson_name = str(os.path.basename(file).split('.')[0])
                 if geojson_name in file_list:
@@ -507,7 +511,7 @@ class Nuts:
         glyphs.data_source.on_change('selected', self.tap_callback)
 
         hover = HoverTool()
-        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('aei_pr_soiler', '@observation')]
+        hover.tooltips = [('NUTS_ID', '@NUTS_ID'), ('Indicator', '@observation')]
         p.add_tools(hover)
 
         p2 = Paragraph(text="No data selected. Please select region.")

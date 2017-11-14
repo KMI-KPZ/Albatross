@@ -1,9 +1,0 @@
-{
-    "id": "aei_pr_soiler",
-    "rdf": "../../data/rdf/eurostats/aei_pr_soiler.rdf",
-    "geojson": {
-        "nuts1": "../../data/geojson/eurostats/nuts1_aei_pr_soiler.geojson",
-        "nuts2": "../../data/geojson/eurostats/nuts2_aei_pr_soiler.geojson",
-        "nuts3": "../../data/geojson/eurostats/nuts3_aei_pr_soiler.geojson"
-    }
-}

@@ -1,6 +1,6 @@
 <module>
     <menu>
-        <title>Nuts</title>
+        <title>Analysis</title>
         <point>
             <name>Visualiser</name>
             <callback>show_data</callback>
