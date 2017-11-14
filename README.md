@@ -1,6 +1,12 @@
 # Albatross
 
 Run `index.py`
+or
+Run `python index.py`
+or
+Run `python3 index.py`
+
+
 
 The service will be accessible at [http://127.0.0.1:5006](http://127.0.0.1:5006).
 
