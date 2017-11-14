@@ -17,6 +17,7 @@ from bokeh.models.widgets.markups import Paragraph, Div
 import xml.etree.ElementTree
 import lxml.etree as le
 from datetime import date
+from random import randint
 
 
 class Nuts:
@@ -40,6 +41,7 @@ class Nuts:
         self.lvl_select = Select(title="Nuts Level:", value=" ", options=self.lvl_select_options)
         self.lvl_select.on_change("value", self.on_lvl_select)
         self.layout = layout
+        self.color_by_id = {}
 
         self.dataset_path_prefix = r"data/geojson/eurostats/"
         self.dataset_path_custom_prefix = r"data/geojson/custom/"
@@ -143,6 +145,8 @@ class Nuts:
         keys = edata.keys()
 
         for index, nuts_id in enumerate(enum):
+            if nuts_id not in self.color_by_id.keys():
+                self.color_by_id[nuts_id] = "#{:02x}{:02x}{:02x}".format(randint(50,255),randint(50,255),randint(50,255))
 
             raw_indices = dataset.loc[:, 'NUTS_ID'][dataset.loc[:, 'NUTS_ID'] == nuts_id]
 
@@ -363,6 +367,7 @@ class Nuts:
             new_data['observation'] = [0]
             new_data['NUTS_ID'] = ['0']
             new_data['unit'] = [' ']
+            new_data['color'] = ['#000000']
             old_data = self.current_map_CDS.data
 
             temporal_data = {'NUTS_ID': [], 'observations': [], 'periods': [], 'units': [], 'colors': []}
@@ -370,6 +375,7 @@ class Nuts:
                 new_data['observation'].append(old_data['observation'][indices])
                 new_data['unit'].append(old_data['unit'][indices])
                 new_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
+                new_data['color'].append(self.color_by_id[old_data['NUTS_ID'][indices]])
                 raw_index = self.current_dataset.loc[:, :][
                     self.current_dataset.loc[:, 'NUTS_ID'] == old_data['NUTS_ID'][indices]].index[0]
                 observations = self.current_dataset.loc[raw_index, :]['OBSERVATIONS'][self.id_select.value]
@@ -380,12 +386,11 @@ class Nuts:
                     s = timestamp.split('-')
                     periods.append(date(int(s[0]), int(s[1]), int(s[2])))
 
-                temporal_data['NUTS_ID'].append(old_data['observation'][indices])
+                temporal_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
                 temporal_data['periods'].append(periods)
                 temporal_data['observations'].append([k['value'] for k in sorted_obs])
                 temporal_data['units'].append([k['unit'] for k in sorted_obs])
                 temporal_data['colors'].append(PuBu[7][2])
-
 
             testdata_source = ColumnDataSource(new_data)
             # dont work with to large datasets
@@ -403,7 +408,7 @@ class Nuts:
 
             labels = LabelSet(x='NUTS_ID', y='observation', text='observation', level='glyph',
                               x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
-            p2.vbar(source=testdata_source, x='NUTS_ID', top='observation', bottom=0, width=0.3, color=PuBu[7][2])
+            p2.vbar(source=testdata_source, x='NUTS_ID', top='observation', bottom=0, width=0.3, color='color')
             p2.toolbar.logo = None
 
             p3 = figure(plot_width=500, plot_height=300, tools="save",
@@ -420,7 +425,7 @@ class Nuts:
                      'periods': temporal_data['periods'][index],
                      'units': temporal_data['units'][index]
                      })
-                p3.line(x='periods', y='observations', color=PuBu[7][2], source=tmp_CDS)
+                p3.line(x='periods', y='observations', color=self.color_by_id[value], source=tmp_CDS)
 
             self.layout.children[2] = column(p2, p3)
         else:
