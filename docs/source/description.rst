@@ -15,7 +15,7 @@ The application additionally will have the feature to download this visualisatio
 In App Workflow
 ---------------
 
-.. image:: workflow.png
+.. image:: img/workflow.png
 
 
 .. _Estimated soil erosion by water: https://data.europa.eu/euodp/en/data/dataset/L3AfXzHroGVUIo1xzwJlw

@@ -16,7 +16,7 @@ The charts will be configurable to visualised the right information for user pur
 
 The application additionally will have the feature to download this visualisation in graphical formats (PNG), RDFs and GeoJSONs.
 
-![Workflow](docs/workflow.png)
+![Workflow](docs/source/img/workflow.png)
 
 
 ## Requirements
