@@ -24,14 +24,14 @@ The application additionally will have the feature to download this visualisatio
 - Install current version of the JRE to use services of [LIMES](https://github.com/dice-group/LIMES) and [Eurostats dataset](https://github.com/linked-statistics/eurostat)
 - Install current version of Python3
 - Install pip3
-- [Install Geopandas](http://geopandas.org/): `sudo pip3 install geopandas`
-- [Install MatPlotLib](https://matplotlib.org/): `sudo apt-get install python-matplotlib`
-- [Install Pysal](http://pysal.readthedocs.io/en/latest/index.html): `sudo pip3 install -U pysal`
-- [Install Bokeh](https://bokeh.pydata.org/en/latest/): `sudo pip3 install bokeh`
-- [Install lxml](http://lxml.de/): `sudo pip3 install lxml`
-- [Install SPARQLWrapper](https://rdflib.github.io/sparqlwrapper/): `sudo pip3 install SPARQLWrapper`
-- [Install Tornado](http://www.tornadoweb.org/en/stable/): `sudo pip3 install tornado`
-
+- `sudo pip3 install geopandas matplotlib pysal bokeh lxml SPARQLWrapper tornado`
+  - [Install Geopandas](http://geopandas.org/): `sudo pip3 install geopandas`
+  - [Install MatPlotLib](https://matplotlib.org/): `sudo apt-get install python-matplotlib`
+  - [Install Pysal](http://pysal.readthedocs.io/en/latest/index.html): `sudo pip3 install -U pysal`
+  - [Install Bokeh](https://bokeh.pydata.org/en/latest/): `sudo pip3 install bokeh`
+  - [Install lxml](http://lxml.de/): `sudo pip3 install lxml`
+  - [Install SPARQLWrapper](https://rdflib.github.io/sparqlwrapper/): `sudo pip3 install SPARQLWrapper`
+  - [Install Tornado](http://www.tornadoweb.org/en/stable/): `sudo pip3 install tornado`
 
 
 [aei_pr_soiler]: https://data.europa.eu/euodp/en/data/dataset/L3AfXzHroGVUIo1xzwJlw
