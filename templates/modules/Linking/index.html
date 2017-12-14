@@ -1,0 +1,26 @@
+<div class="container" >
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Uploaded LIMES XML</h2>
+                     <ul>
+                        {% for file in args['files'] %}
+                            
+                        <li>{{ file["id"] }} <button>Run</button></li>
+                            
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+</div>
+        
+<div class="container">
+<p><h3>Select & Upload</h3></p>
+<form enctype="multipart/form-data" action="/upload" method="post">
+File: <input type="file" name="filearg" />
+<br />
+<br />
+<input type="submit" value="Upload LIMES XML" />
+</form>
+</div>
+         </div>
+

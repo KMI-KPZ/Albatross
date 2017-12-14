@@ -1,9 +1,10 @@
 <module>
     <menu>
         <title>Analysis</title>
-        <point>
-            <name>Visualiser</name>
-            <callback>show_data</callback>
-        </point>
+        <callback>show_data</callback>
+        <url>analysis</url>
+        <callback>show_data</callback>
     </menu>
+    <type>bokeh</type>
+    <template>template/index.html</template>
 </module>

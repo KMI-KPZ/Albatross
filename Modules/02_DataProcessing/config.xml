@@ -1,17 +1,24 @@
 <module>
     <menu>
         <title>Data Processing</title>
+        <url>datasprocessing</url>
+        <callback>sourceToRDF</callback>
         <point>
             <name>Linked Data Creation</name>
+            <url>LDC</url>
             <callback>sourceToRDF</callback>
         </point>
         <point>
             <name>RDF ↦ GeoJSON</name>
+            <url>RDFGeo</url>
             <callback>rdf_to_geojson</callback>
         </point>
         <point>
             <name>Endpoint ↦ GeoJSON</name>
+            <url>endpoint</url>
             <callback>endpoint_to_geojson</callback>
         </point>
     </menu>
+    <type>bokeh</type>
+    <template>template/index.html</template>
 </module>

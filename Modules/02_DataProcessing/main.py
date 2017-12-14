@@ -4,21 +4,54 @@ import rdflib as rdf
 from SPARQLWrapper import SPARQLWrapper, JSON
 import os
 import subprocess
+from jinja2 import Environment,  FileSystemLoader
 from bokeh.models import Button, Paragraph, Div
-from bokeh.layouts import column, widgetbox
+from bokeh.layouts import column, widgetbox,  row
 from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets.tables import TableColumn, DataTable
 from bokeh.models.widgets.inputs import TextInput
 
-
+class Layout():
+    _menu = None
+    
+    def __init__(self,  menu):
+       self._menu = menu
+       
+    def set_layout(self, doc):
+        env = Environment(loader=FileSystemLoader('templates'))
+        template = env.get_template('frameing.html')
+        doc.template = template;
+        
+        user_str = doc.session_context.id
+        layout = row([Div(), Div(), Div()], width=1700)
+        # menu
+        doc.template_variables["menu"] = self._menu
+        print(self._menu)
+        doc.add_root(layout)
+        return layout
+   
+    def sourceToRDF(self,  doc):
+        layout = self.set_layout(doc)
+        dp = DataProcessing(layout)
+        dp.sourceToRDFFunction()
+    
+    def rdf_to_geojson(self,  doc):
+        layout = self.set_layout(doc)
+        dp = DataProcessing(layout)
+        dp.rdf_to_geojson()
+        
+    def endpoint_to_geojson(self,  doc):
+        layout = self.set_layout(doc)
+        dp = DataProcessing(layout)
+        dp.endpoint_to_geojson()
+        
 class DataProcessing():
     
     def __init__(self, layout):
         self.layout = layout
     
-   
-    
-    def sourceToRDF(self):
+    def sourceToRDFFunction(self):
+        
         """
         Callback generates view on RDF and Eurostats Source Files
         """

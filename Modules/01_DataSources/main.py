@@ -7,12 +7,37 @@ import lxml.etree as le
 import gzip
 from lxml import etree
 from bokeh.application.handlers import FunctionHandler
+from jinja2 import Environment,  FileSystemLoader
 from functools import partial
 from html5lib.constants import namespaces
 from bokeh.models import Button, CustomJS, Div, MultiSelect, Paragraph
 from bokeh.layouts import column, widgetbox, row
 from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets.tables import TableColumn, DataTable
+
+class Layout():
+    _menu = None
+    
+    def __init__(self,  menu):
+       self._menu = menu
+       
+    def set_layout(self, doc):
+        env = Environment(loader=FileSystemLoader('templates'))
+        template = env.get_template('frameing.html')
+        doc.template = template;
+        
+        user_str = doc.session_context.id
+        layout = row([Div(), Div(), Div()], width=1700)
+        # menu
+        doc.template_variables["menu"] = self._menu
+        print(self._menu)
+        doc.add_root(layout)
+        return layout
+   
+    def showTOC(self,  doc):
+        layout = self.set_layout(doc)
+        dp = DataSources(layout)
+        dp.showTOC()
 
 class DataSources():
     

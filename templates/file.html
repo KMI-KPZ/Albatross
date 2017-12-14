@@ -17,6 +17,9 @@
         <title></title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+                {{ bokeh_css }}
+        {{ bokeh_js }}
+
         
         
         <script>
@@ -43,7 +46,7 @@
         </style>
     </head>
     <body>
-    <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -59,62 +62,25 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li><a href="/">Main </span></a></li>
+                <li class="active"><a href="/">Main <span class="sr-only">(current)</span></a></li>
                 <li><a href="/linking">Linking</a></li>
-                <li class="active"><a href="/download">Download Center <span class="sr-only">(current)</span></a></li>
+                <li><a href="/download">Download Center</a></li>
               </ul>
             </div>
           </div>
         </nav>
+        
         <div class="jumbotron">
             <div class="container">
             <h2>Albatross</h2>
-            <p>Linked (Open) Data Processing and Analysis</p>
-            <p>Created by the DataBio Linked Data Group</p>
+            <p>Linked (Open) Data Processing and Analysis<br>Created by the DataBio Linked Data Group</p>
             </div>    
         </div>
-        <div class="container" style="min-height:500px;">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2>Downloaded Eurostats Datasets</h2>
-                     <ul>
-                        {% for org_file in original_obslist %}
-                            
-                        <li><a href="{{ org_file["url"] }}" target="_blank">{{ org_file["id"] }}</a></li>
-                            
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h2>Created RDFs</h2>
-                     <ul>
-                        {% for rdf_file in rdf_obslist %}
-                            
-                        <li><a href="{{ rdf_file["url"] }}" target="_blank">{{ rdf_file["id"] }}</a></li>
-                            
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h2>Created Geojsons</h2>
-                     <ul>
-                        {% for geo_level in geojson_levels %}
-
-                         <li>{{ geo_level["display_name"] }}
-                            <ul>
-                                {% for geo_file in geojson_files[geo_level["dir_name"]] %}
-
-                                <li><a href="{{ geo_file["url"] }}" target="_blank">{{ geo_file["id"] }}</a></li>
-
-                                {% endfor %}
-                            </ul>
-                         </li>
-                            
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <div class="jumbotron" style="min-height:900px;">
+          {{ plot_div|indent(8) }}
+        {{ plot_script|indent(8) }}
+         </div>
+        
         <footer class="footer" style="background:#363839;color:#8c8989;">        
             <div class="container">
                 <div class="row">

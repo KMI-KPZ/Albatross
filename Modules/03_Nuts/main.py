@@ -11,7 +11,9 @@ from bokeh.models.glyphs import Patches
 from bokeh.models.layouts import Spacer
 import os
 import numpy as np
+import pandas as pd
 import geopandas as gpd
+from jinja2 import Environment,  FileSystemLoader
 from shapely.geometry.polygon import Polygon
 from shapely.geometry.multipolygon import MultiPolygon
 from bokeh.models.widgets.markups import Paragraph, Div
@@ -19,6 +21,38 @@ import xml.etree.ElementTree
 import lxml.etree as le
 from datetime import date
 from random import randint
+import pyflux as pf
+
+class Layout():
+    _menu = None
+    
+    def __init__(self,  menu):
+       self._menu = menu
+       
+    def set_layout(self, doc):
+        env = Environment(loader=FileSystemLoader('templates'))
+        template = env.get_template('frameing.html')
+        doc.template = template;
+        
+        user_str = doc.session_context.id
+        layout = row([Div(), Div(), Div()], width=1700)
+        # menu
+        doc.template_variables["menu"] = self._menu
+        print(self._menu)
+        doc.add_root(layout)
+        return layout
+   
+    def show_data(self,  doc):
+        """
+        Init function 
+        first off all set layout... 
+        """
+        layout =  self.set_layout(doc)
+        nuts = Nuts(layout)
+        nuts.show_data()
+
+        
+        
 
 
 class Nuts:
@@ -418,7 +452,7 @@ class Nuts:
 
                 temporal_data['NUTS_ID'].append(old_data['NUTS_ID'][indices])
                 temporal_data['periods'].append(periods)
-                temporal_data['observations'].append([k['value'] for k in sorted_obs])
+                temporal_data['observations'].append([float(k['value']) for k in sorted_obs])
                 temporal_data['units'].append([k['unit'] for k in sorted_obs])
                 temporal_data['colors'].append(PuBu[7][2])
 
@@ -435,7 +469,7 @@ class Nuts:
                         x_range=testdata_source.data["NUTS_ID"],
                         y_range=ranges.Range1d(start=min(testdata_source.data['observation']),
                                                end=max(testdata_source.data['observation'])))
-
+            
             labels = LabelSet(x='NUTS_ID', y='observation', text='observation', level='glyph',
                               x_offset=-13.5, y_offset=0, source=testdata_source, render_mode='canvas')
             p2.vbar(source=testdata_source, x='NUTS_ID', top='observation', bottom=0, width=0.3, color='color')
@@ -448,6 +482,7 @@ class Nuts:
                         title='Time Series'
                         )
             p3.toolbar.logo = None
+            
             for index, value in enumerate(temporal_data['NUTS_ID']):
                 tmp_CDS = ColumnDataSource(
                     {'NUTS_ID': [value]*len(temporal_data['observations'][index]),
@@ -456,6 +491,16 @@ class Nuts:
                      'units': temporal_data['units'][index]
                      })
                 p3.line(x='periods', y='observations', color=self.color_by_id[value], source=tmp_CDS)
+            
+            da = pd.DataFrame(np.diff(np.log(tmp_CDS.data['observations'])))
+            #da.index = tmp_CDS.data['periods']
+            #model = pf.GARCH(p=1, q=1, data=da)
+            #model.adjust_prior(1, pf.TruncatedNormal(0.01, 0.5, lower=0.0, upper=1.0))
+            #model.adjust_prior(2, pf.TruncatedNormal(0.97, 0.5, lower=0.0, upper=1.0))
+            #res = model.fit('M-H', nsims=20000)
+            #print('success')
+            #pre_data = model.predict(10)
+            #print(pre_data)    
 
             self.layout.children[2] = column(Spacer(height=144), p2, p3)
         else:

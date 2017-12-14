@@ -9,3 +9,5 @@ data/geojson
 data/rdf
 data/sandbox
 *.pyc
+
+*.e4p

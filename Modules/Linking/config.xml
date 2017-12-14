@@ -1,0 +1,9 @@
+<module>
+    <menu>
+    <title>Linking</title>
+	<url>linking</url>
+	<callback>return_view_args</callback>
+    </menu>
+    <type>tornado</type>
+    <template>index.html</template>
+ </module>

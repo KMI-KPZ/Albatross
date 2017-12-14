@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#"><img src="css/logo_m.png" height="30px;" /></a>
+            </div>
+         
+            <!-- Collect the nav links, forms, and oher content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Main <span class="sr-only">(current)</span></a></li>
+                {% for pointer in menu %}
+                    {% for point in pointer %}
+                        {% if pointer[point]['children']|length > 1 %}
+                            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ pointer[point]['name'] }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                            {% for sub_men in pointer[point]['children'] %}
+                                {%  for sub_key in sub_men %}
+                                <li><a href="{{ sub_key }}">{{ sub_men[sub_key] }}</a></li>
+                                {% endfor %}
+                            {% endfor %}
+                            </ul>
+                        {% else %} 
+                            <li>
+                            <a href="{{ point }}">{{ pointer[point]['name'] }}</a>
+                        {% endif %}
+                        
+                    </li>
+                    {% endfor %}
+                {% endfor %}
+                    
+                </ul>
+            </div>
+          </div>
+        </nav>

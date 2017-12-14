@@ -1,0 +1,9 @@
+<module>
+    <menu>
+    <title>Download</title>
+	<url>download</url>
+	<callback>return_view_args</callback>
+    </menu>
+    <type>tornado</type>
+    <template>index.html</template>
+ </module>

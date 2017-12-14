@@ -1,0 +1,42 @@
+<div class="container" style="min-height:500px;">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Downloaded Eurostats Datasets</h2>
+             <ul>
+                {% for org_file in args['original_obslist'] %}
+                    
+                <li><a href="{{ org_file["url"] }}" target="_blank">{{ org_file["id"] }}</a></li>
+                    
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h2>Created RDFs</h2>
+             <ul>
+                {% for rdf_file in args['rdf_obslist'] %}
+                    
+                <li><a href="{{ rdf_file["url"] }}" target="_blank">{{ rdf_file["id"] }}</a></li>
+                    
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h2>Created Geojsons</h2>
+             <ul>
+                {% for geo_level in args['geojson_levels'] %}
+
+                 <li>{{ geo_level["display_name"] }}
+                    <ul>
+                        {% for geo_file in args['geojson_files'][geo_level["dir_name"]] %}
+
+                        <li><a href="{{ geo_file["url"] }}" target="_blank">{{ geo_file["id"] }}</a></li>
+
+                        {% endfor %}
+                    </ul>
+                 </li>
+                    
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 <module>
     <menu>
-        <title>Data Sources</title>
-        <point>
-            <name>Eurostats Database Download Center</name>
-            <callback>showTOC</callback>
-        </point>
+    <title>Data Sources</title>
+	<url>datasource</url>
+    <callback>showTOC</callback>
     </menu>
- </module>
+	<type>bokeh</type>
+    <template>index.html</template>
+</module>
