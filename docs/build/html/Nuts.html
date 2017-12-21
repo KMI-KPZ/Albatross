@@ -95,7 +95,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="description.html">Description</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="coderef.html">Code Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Nuts</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Nuts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-the-data">Loading the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#controling-the-presentation">Controling the presentation</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="DataSources.html">DataSources</a></li>
 </ul>
 </li>
@@ -166,212 +171,44 @@
             
   <div class="section" id="nuts">
 <h1>Nuts<a class="headerlink" href="#nuts" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="Modules.03_Nuts.main.Nuts">
-<em class="property">class </em><code class="descclassname">Modules.03_Nuts.main.</code><code class="descname">Nuts</code><span class="sig-paren">(</span><em>layout</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="staticmethod">
-<dt id="Modules.03_Nuts.main.Nuts.classifier">
-<em class="property">static </em><code class="descname">classifier</code><span class="sig-paren">(</span><em>data</em>, <em>num_level</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.classifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>Categorizes each element in data into one of the num_level classes.
-The class separation is linear.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> – the list of elements that will be classified.</li>
-<li><strong>num_level</strong> – number of classes.</li>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Write Doc!</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Images need to be updated after a colorscheme is chosen.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/albatross_thumbnail.png" src="_images/albatross_thumbnail.png" />
+<p>The NUTS modul is responsible for the visual presentation of geographic data based on the <a class="reference external" href="http://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_CLS_DLD&amp;StrNom=NUTS_2013L&amp;StrLanguageCode=EN&amp;StrLayoutCode=HIERARCHIC">NUTS</a>-tiling. The main tool for the presentation is a map, but a bar- and line-plot are provided aswell. Apart from the plots, the datas presentation is controllable by several components to select a dataset and datapoint.</p>
+<ul>
+<li><p class="first">The <strong>Map</strong> is for displaying the geographic distribution of the selected datapoint. It is also the way to select regions for the two other plots.</p>
+<img alt="_images/albatross_map.png" src="_images/albatross_map.png" />
+</li>
+<li><p class="first">The <strong>barplot</strong> provides the ability to compare selected regions.</p>
+<img alt="_images/barplot.png" src="_images/barplot.png" />
+</li>
+<li><p class="first">The <strong>lineplot</strong> draws the whole timeseries of the selected regions.</p>
+<img alt="_images/lineplot.png" src="_images/lineplot.png" />
+</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The list of associated classes.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="Modules.03_Nuts.main.Nuts.explode">
-<em class="property">static </em><code class="descname">explode</code><span class="sig-paren">(</span><em>input_data</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.explode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts geometry from the geojson passed by input_data.
-The types of geometry that are extracted are Polygon and MultiPolygon.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_data</strong> – Path to the geojson</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dataframe with the geometry.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="Modules.03_Nuts.main.Nuts.get_eurostats_geojson_list">
-<em class="property">static </em><code class="descname">get_eurostats_geojson_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.get_eurostats_geojson_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates dictionary of the eurostats geojson files and their NUTS level
-example: <code class="docutils literal"><span class="pre">{'aei_pr_soiler':</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">'trng_lfse_04':</span> <span class="pre">[1,</span> <span class="pre">2]}</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary of eurostats ID’s and NUTS level that where found in data/geojson/eurostats/nuts_*</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="Modules.03_Nuts.main.Nuts.get_poly_coordinates">
-<em class="property">static </em><code class="descname">get_poly_coordinates</code><span class="sig-paren">(</span><em>line</em>, <em>geom</em>, <em>coord_type</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.get_poly_coordinates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the coordinates (‘x’ or ‘y’) of edges of a Polygon exterior.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>line</strong> – The current line to extract coordinates from.</li>
-<li><strong>geom</strong> – The geometry key in the line.</li>
-<li><strong>coord_type</strong> – either ‘x’ or ‘y’.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">x or y values of the polygon edges.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.get_real_name">
-<code class="descname">get_real_name</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.get_real_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>…</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>k</strong> (<em>str</em>) – represents the filename of eurostats</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">option tuple (value, label)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.get_selected_year_index">
-<code class="descname">get_selected_year_index</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.get_selected_year_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the index for the selected year. will also set the list _years</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obersavation</strong> – The observation preselection observation[name]</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">false or id</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.match_file_to_name">
-<code class="descname">match_file_to_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.match_file_to_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>getting the real name from xml</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xml</strong> (<em>str</em>) – filename</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">xml title text</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.on_lvl_select">
-<code class="descname">on_lvl_select</code><span class="sig-paren">(</span><em>attr</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.on_lvl_select" title="Permalink to this definition">¶</a></dt>
-<dd><p>Callback for <code class="docutils literal"><span class="pre">self.lvl_select</span></code>. The method re-searches the available geojson’s and sets
-the options of <code class="docutils literal"><span class="pre">self.id_select</span></code> to the newly selected level, while trying to remain in the
-same dataset. If the dataset is not in the selected NUTS level, the selected and displayed
-dataset is changed.</p>
-<p>This method triggers a redraw of the map and the observation plot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>attr</strong> – attribute that triggered this callback</li>
-<li><strong>old</strong> – the old value of the attribute</li>
-<li><strong>new</strong> – the new value of the attribute</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.on_year_select">
-<code class="descname">on_year_select</code><span class="sig-paren">(</span><em>attr</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.on_year_select" title="Permalink to this definition">¶</a></dt>
-<dd><p>updatefunction for years</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.produce_column_data">
-<code class="descname">produce_column_data</code><span class="sig-paren">(</span><em>input_data</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.produce_column_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a ColumnDataSource from the geojson path passed by input_data containing
-the coordinates for patches to draw on a map.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_data</strong> – Path to a geojson.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ColumnDataSource containing the coordinates for patches to draw on a map.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.show_data">
-<code class="descname">show_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.show_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Setup plots and commit them into the layout.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.03_Nuts.main.Nuts.update_datasource">
-<code class="descname">update_datasource</code><span class="sig-paren">(</span><em>datasource</em>, <em>dataset</em>, <em>level</em>, <em>observation_name</em>, <em>period</em><span class="sig-paren">)</span><a class="headerlink" href="#Modules.03_Nuts.main.Nuts.update_datasource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the datasource to contain the datasets observations (observation_name and period)
-in the passed NUTS level.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>datasource</strong> – The ColumnDataSource to update.</li>
-<li><strong>dataset</strong> – The dataset to get the observations from.</li>
-<li><strong>level</strong> – The NUTS Level.</li>
-<li><strong>observation_name</strong> – The name of the observation.</li>
-<li><strong>period</strong> – The period of interest.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+</div>
+<div class="section" id="loading-the-data">
+<h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Write Doc!</p>
+</div>
+</div>
+<div class="section" id="controling-the-presentation">
+<h2>Controling the presentation<a class="headerlink" href="#controling-the-presentation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Write Doc!</p>
+</div>
+</div>
 </div>
 
 
